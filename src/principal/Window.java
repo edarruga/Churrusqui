@@ -11,8 +11,8 @@ import java.awt.image.ImageObserver;
 
 public class Window extends JFrame implements Runnable{
 
-    public static final int anchuraVentana = Toolkit.getDefaultToolkit().getScreenSize().width; //anchura de la ventana
-    public static final int alturaVentana = Toolkit.getDefaultToolkit().getScreenSize().height; //altura de la ventana
+    private static final int anchuraVentana = Toolkit.getDefaultToolkit().getScreenSize().width; //anchura de la ventana
+    private static final int alturaVentana = Toolkit.getDefaultToolkit().getScreenSize().height; //altura de la ventana
     private Canvas canvas;//Lienzo de dibujado
     private Thread hilo; //Hilo encargado de mostrar la ventana
     private boolean funcionando = false;//Controlar si el hilo tiene que estar funcionando o tine que parar
@@ -56,12 +56,11 @@ public class Window extends JFrame implements Runnable{
         }
         g=bs.getDrawGraphics();
         //----Empieza a dibujar----
-        g.setColor(Color.green);
+        g.setColor(Color.white);
         g.fillRect(0,0,anchuraVentana,alturaVentana);
 
 
         g.drawImage(Assets.fondo,0,0,null);
-        g.drawImage(Assets.prueba,0,0,null);
         this.estadoJuego.dibujar(g);
         
         g.drawString("FPS: "+promedioFPS,10,10); //Dibuja el contador de fotogramas
@@ -122,5 +121,11 @@ public class Window extends JFrame implements Runnable{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static int getAnchuraVentana(){
+        return anchuraVentana;
+    }
+    public static int getAlturaVentana(){
+        return alturaVentana;
     }
 }

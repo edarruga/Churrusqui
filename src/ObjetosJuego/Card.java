@@ -3,6 +3,7 @@ package ObjetosJuego;
 import Matematica.Vector2D;
 import graficos.Loader;
 import ObjetosJuego.ObjetoJuego;
+import principal.Window;
 
 
 import java.awt.*;
@@ -15,8 +16,8 @@ public class Card extends ObjetoJuego{
     private int suit;   //Oro=1,Copa=2,Espada=3,Basto=4
 
     private int value;  //The value is between 1-10, but our methods show the 8, 9 and 10 as 10, 11 and 12, respectically
-    private static int anchuraCarta=Toolkit.getDefaultToolkit().getScreenSize().width/26;
-    private static int alturaCarta=Toolkit.getDefaultToolkit().getScreenSize().height/9;
+    private static int anchuraCarta=Window.getAnchuraVentana()/12;
+    private static int alturaCarta=Window.getAlturaVentana()/4;
     private static boolean estigma=false;
 
     public Card(){
