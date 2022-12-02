@@ -1,7 +1,9 @@
-package src.ObjetosJuego;
+package ObjetosJuego;
 
 import Matematica.Vector2D;
 import graficos.Loader;
+import ObjetosJuego.ObjetoJuego;
+
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

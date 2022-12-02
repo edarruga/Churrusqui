@@ -1,4 +1,4 @@
-package src.Matematica;
+package Matematica;
 
 public class Vector2D {
     private double x;

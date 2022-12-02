@@ -1,4 +1,4 @@
-package src.Estados;
+package Estados;
 
 import Matematica.Vector2D;
 import ObjetosJuego.Card;

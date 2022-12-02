@@ -1,4 +1,4 @@
-package src.ObjetosJuego;
+package ObjetosJuego;
 
 import Matematica.Vector2D;
 

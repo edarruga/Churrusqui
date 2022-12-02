@@ -1,4 +1,4 @@
-package src.graficos;
+package graficos;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
