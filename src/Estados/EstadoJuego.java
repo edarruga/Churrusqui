@@ -9,7 +9,7 @@ public class EstadoJuego {
     private Card carta;
     private Card carta2;
     public EstadoJuego(){
-        this.carta=new Card(4,7,new Vector2D(40,50));//hola
+        this.carta=new Card(4,7,new Vector2D(40,50));
         this.carta2=new Card(0,1,new Vector2D(120,50));
     }
 

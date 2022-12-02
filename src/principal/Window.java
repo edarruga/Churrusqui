@@ -25,7 +25,7 @@ public class Window extends JFrame implements Runnable{
 
     private EstadoJuego estadoJuego;
     public Window(){
-        setTitle("Cinquillo");//Titulo de la ventana
+        setTitle("Churrusqui");//Titulo de la ventana
         setSize(anchuraVentana,alturaVentana);//Definimos las dimensiones de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//La ventana se cerrará al pulsar la "X"
         setResizable(false);//la ventana no se podrá redimensionar en tiempo de ejecución
