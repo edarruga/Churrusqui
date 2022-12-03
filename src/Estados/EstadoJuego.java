@@ -55,6 +55,20 @@ public class EstadoJuego {
 
     public void actualizar(){
         this.mazoPropio.actualizar();
+        this.mazoRival.actualizar();
+
+        this.pila1.actualizar();
+        this.pila2.actualizar();
+
+        this.pos1Rival.actualizar();
+        this.pos2Rival.actualizar();
+        this.pos3Rival.actualizar();
+        this.pos4Rival.actualizar();
+
+        this.pos1Propio.actualizar();
+        this.pos2Propio.actualizar();
+        this.pos3Propio.actualizar();
+        this.pos4Propio.actualizar();
     }
 
     public void dibujar(Graphics g){

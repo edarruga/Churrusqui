@@ -10,6 +10,7 @@ import principal.Window;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLOutput;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
 
@@ -24,6 +25,12 @@ public class Card extends ObjetoJuego{
     private Rectangle hitBox;
     private double posicionInicialX;
     private double posicionInicialY;
+    private boolean primeraVez=false;
+    private int diferenciaX;
+    private int diferenciaY;
+    private boolean tocada=false;
+    private boolean meTienen=false;
+
 
 
     public Card(){
@@ -169,22 +176,56 @@ public class Card extends ObjetoJuego{
     @Override
     public void actualizar() {
         //System.out.println(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY));
-        if(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
-            mouseIn=true;
-            //System.out.println("Entro");
-        }else{
-            mouseIn=false;
-        }
-        if(mouseIn && MouseInput.botonIzquierdo){
-            this.posicionInicialX=this.posicion.getX();
-            this.posicionInicialY=this.posicion.getY();
-            //System.out.println("Preparado para actualizar");
-            while(MouseInput.botonIzquierdo){
-                this.posicion.setX(MouseInput.RatonX);
-                this.posicion.setY(MouseInput.RatonY);
-                //this.dibujar();
+        if(!MouseInput.tengoCarta || (MouseInput.tengoCarta && meTienen)){
+            if(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
+                mouseIn=true;
+                //System.out.println("Entro");
+            }else{
+                mouseIn=false;
+                primeraVez=false;
+
+            }
+            if(mouseIn && MouseInput.botonIzquierdo){
+                if(!primeraVez){
+                    if(!MouseInput.tengoCarta){
+                        this.meTienen=true;
+                        MouseInput.tengoCarta=true;
+                    }
+                    this.tocada=true;
+                    this.posicionInicialX=this.posicion.getX();
+                    this.posicionInicialY=this.posicion.getY();
+                    this.diferenciaX=MouseInput.RatonX-(int)this.posicion.getX();
+                    this.diferenciaY=MouseInput.RatonY-(int)this.posicion.getY();
+                /*
+                System.out.println("---------------------------------------------------------------------------------");
+                System.out.println("La posicion de raton es X:"+MouseInput.RatonX+" ,Y: "+MouseInput.RatonY);
+                System.out.println("La carta se encuentra en X:"+this.posicion.getX()+" ,Y: "+this.posicion.getY());
+                System.out.println("La hitbox se encuentra en X:"+this.hitBox.x+" ,Y: "+this.hitBox.y);
+                System.out.println("difernecia X: "+this.diferenciaX+" ,diferencia Y:"+this.diferenciaY);
+                System.out.println("---------------------------------------------------------------------------------");
+                */
+                    primeraVez=true;
+                }
+                if(meTienen){
+                    MouseInput.tengoCarta=true;
+                    super.posicion.setX(MouseInput.RatonX-this.diferenciaX);
+                    super.posicion.setY(MouseInput.RatonY-this.diferenciaY);
+                    this.hitBox.x=MouseInput.RatonX-this.diferenciaX;
+                    this.hitBox.y=MouseInput.RatonY-this.diferenciaY;
+                }
+
+            }else if(this.primeraVez ||(!this.primeraVez && this.tocada && !mouseIn)){//El raton habra soltado la carta
+
+                MouseInput.tengoCarta=false;
+                this.meTienen=false;
+                super.posicion.setX(this.posicionInicialX);
+                super.posicion.setY(this.posicionInicialY);
+                this.hitBox.x=(int)this.posicionInicialX;
+                this.hitBox.y=(int)this.posicionInicialY;
             }
         }
+
+
     }
 
     @Override

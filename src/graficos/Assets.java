@@ -1,7 +1,6 @@
 package graficos;
 
 import java.awt.image.BufferedImage;
-import graficos.Loader;
 import principal.Window;
 
 
