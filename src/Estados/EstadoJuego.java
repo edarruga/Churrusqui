@@ -54,7 +54,7 @@ public class EstadoJuego {
     }
 
     public void actualizar(){
-
+        this.mazoPropio.actualizar();
     }
 
     public void dibujar(Graphics g){

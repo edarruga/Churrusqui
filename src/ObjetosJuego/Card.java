@@ -3,6 +3,7 @@ package ObjetosJuego;
 import Matematica.Vector2D;
 import graficos.Loader;
 import ObjetosJuego.ObjetoJuego;
+import input.MouseInput;
 import principal.Window;
 
 
@@ -19,12 +20,17 @@ public class Card extends ObjetoJuego{
     private static int anchuraCarta=Window.getAnchuraVentana()/12;
     private static int alturaCarta=Window.getAlturaVentana()/4;
     private static boolean estigma=false;
+    private boolean mouseIn;//Para saber si el mouse se encuentra dentro de la hitbox de la carta
+    private Rectangle hitBox;
+    private double posicionInicialX;
+    private double posicionInicialY;
+
 
     public Card(){
         //PRECONDITION:
         //POSTCONDITION: the card is initialized
         super(Loader.cargadorDeImagenes(buscarRutaTextura(0,0),anchuraCarta,alturaCarta),new Vector2D());
-        //this.escalarTextura(60,100);
+        this.hitBox=new Rectangle(0, 0,anchuraCarta,alturaCarta);
         this.suit=0;
         this.value=0;
     }
@@ -32,8 +38,8 @@ public class Card extends ObjetoJuego{
         //PRECONDITION: the card must be initialized
         //POSTCONDITION: creates the card with its own value and suit
         super(Loader.cargadorDeImagenes(buscarRutaTextura(s,v),anchuraCarta,alturaCarta),v2d);
-        //this.escalarTextura(60,100);
-
+        this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),anchuraCarta,alturaCarta);
+        System.out.println("Carta "+v+" de "+s+" el rectangulo empieza en X:"+(int) v2d.getX()+" ,Y: "+(int) v2d.getY()+", y la imagen mide "+anchuraCarta+" x "+alturaCarta);
         this.suit=s;
         this.value=v;
 
@@ -162,11 +168,30 @@ public class Card extends ObjetoJuego{
 
     @Override
     public void actualizar() {
-
+        //System.out.println(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY));
+        if(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
+            mouseIn=true;
+            //System.out.println("Entro");
+        }else{
+            mouseIn=false;
+        }
+        if(mouseIn && MouseInput.botonIzquierdo){
+            this.posicionInicialX=this.posicion.getX();
+            this.posicionInicialY=this.posicion.getY();
+            //System.out.println("Preparado para actualizar");
+            while(MouseInput.botonIzquierdo){
+                this.posicion.setX(MouseInput.RatonX);
+                this.posicion.setY(MouseInput.RatonY);
+                //this.dibujar();
+            }
+        }
     }
 
     @Override
     public void dibujar(Graphics g) {
         g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
+        //System.out.println("dibujado");
+        //Graphics2D g2d=(Graphics2D) g;
+        //g2d.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
     }
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Estados.EstadoJuego;
 import graficos.Assets;
+import input.MouseInput;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -18,12 +19,13 @@ public class Window extends JFrame implements Runnable{
     private boolean funcionando = false;//Controlar si el hilo tiene que estar funcionando o tine que parar
     private BufferStrategy bs;//Para organizar la memoria
     private Graphics g;//permiten que una aplicación se dibuje en componentes que se realizan en varios dispositivos, así como en imágenes fuera de pantalla
-    private final int FPS=60;//Numero maximo de fotogramas por segundo que mostrará la aplicación
+    private final int FPS=6000;//Numero maximo de fotogramas por segundo que mostrará la aplicación
     private double targettime=1000000000/FPS;//Objetivo para fijar los fotogramas, lo definimos en nanosegundos para ser lo más precisos posibles
     private double tiempoTranscurrido=0;//Almacenamos el tiempo que transcurra en el programa
     private int promedioFPS=FPS;//Nos permitirá conocer a cuantos FPS esta funcionado la aplicación
 
     private EstadoJuego estadoJuego;
+    private MouseInput mouseinput;
     public Window(){
         setTitle("Churrusqui");//Titulo de la ventana
         setSize(anchuraVentana,alturaVentana);//Definimos las dimensiones de la ventana
@@ -33,12 +35,15 @@ public class Window extends JFrame implements Runnable{
         setVisible(true);//Hacer la ventana visible
 
         canvas=new Canvas();//Creamos el lienzo
+        mouseinput=new MouseInput();
         canvas.setPreferredSize(new Dimension(anchuraVentana,alturaVentana));
         canvas.setMaximumSize(new Dimension(anchuraVentana,alturaVentana));
         canvas.setMinimumSize(new Dimension(anchuraVentana,alturaVentana));
         canvas.setFocusable(true); //Para poder recivir entradas por parte del teclado
 
         add(canvas);//añadimos el canvas
+        canvas.addMouseListener(mouseinput);
+        canvas.addMouseMotionListener(mouseinput);
     }
     public static void main(String[] args){
         new Window().empezar();
@@ -46,6 +51,7 @@ public class Window extends JFrame implements Runnable{
 
     private void actualizar(){
         this.estadoJuego.actualizar();
+
     }
 
     private void dibujar(){
@@ -82,7 +88,7 @@ public class Window extends JFrame implements Runnable{
         long ultimoTiempo=System.nanoTime();//Almacenamos la hora actual del sistema en nanosegundos
         int frames=0;//Numero de fotoframas
         long time=0;
-        
+
         iniciar();
         
         while(funcionando){//Ciclo de dibujado de la pantalla
@@ -107,6 +113,7 @@ public class Window extends JFrame implements Runnable{
 
         terminar();
     }
+
 
     private void empezar(){
         hilo=new Thread(this);
