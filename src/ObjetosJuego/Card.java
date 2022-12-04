@@ -30,6 +30,7 @@ public class Card extends ObjetoJuego{
     private int diferenciaY;
     private boolean tocada=false;
     private boolean meTienen=false;
+    private boolean yaJugada=false;
 
 
 
@@ -46,11 +47,15 @@ public class Card extends ObjetoJuego{
         //POSTCONDITION: creates the card with its own value and suit
         super(Loader.cargadorDeImagenes(buscarRutaTextura(s,v),anchuraCarta,alturaCarta),v2d);
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),anchuraCarta,alturaCarta);
-        System.out.println("Carta "+v+" de "+s+" el rectangulo empieza en X:"+(int) v2d.getX()+" ,Y: "+(int) v2d.getY()+", y la imagen mide "+anchuraCarta+" x "+alturaCarta);
+        //System.out.println("Carta "+v+" de "+s+" el rectangulo empieza en X:"+(int) v2d.getX()+" ,Y: "+(int) v2d.getY()+", y la imagen mide "+anchuraCarta+" x "+alturaCarta);
         this.suit=s;
         this.value=v;
-
-        //super.textura.getScaledInstance()
+    }
+    public Card(CartaSimple cs,Vector2D v2d){
+        super(Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getSuit()),anchuraCarta,alturaCarta),v2d);
+        this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),anchuraCarta,alturaCarta);
+        this.suit=cs.getSuit();
+        this.value=cs.getSuit();
     }
     public int getValue(){
         //PRECONDITION: the card must be initialized
@@ -92,6 +97,22 @@ public class Card extends ObjetoJuego{
             return true;
         }
         return false;
+    }
+    public static int getAnchuraCarta(){
+        return Card.anchuraCarta;
+    }
+    public static int getAlturaCarta(){
+        return Card.alturaCarta;
+    }
+    public boolean getYaJugada(){
+        return this.yaJugada;
+    }
+    public void actualizarEstadoDeCarta(CartaSimple cs){
+        super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta);
+        this.suit=cs.getSuit();
+        this.value=cs.getSuit();
+        this.hitBox.x=(int)super.posicion.getX();
+        this.hitBox.y=(int)super.posicion.getY();
     }
     public void showCard(){
         //PRECONDITION: the card must be initialized
@@ -169,7 +190,7 @@ public class Card extends ObjetoJuego{
                 case 4://Basto
                     return "recursos/Cartas/"+v+"-Basto.png";
             }
-            return "recursos/Cartas/9-Basto.png";
+            return "recursos/Cartas/Invisible.png";
         }
     }
 
@@ -214,7 +235,7 @@ public class Card extends ObjetoJuego{
                     this.hitBox.y=MouseInput.RatonY-this.diferenciaY;
                 }
 
-            }else if(this.primeraVez ||(!this.primeraVez && this.tocada && !mouseIn)){//El raton habra soltado la carta
+            }else if(this.primeraVez ||(!this.primeraVez && this.tocada && !mouseIn)){//El raton habra soltado la carta (acordarse de mover la hitbox de una carta jugada a la posicion -1000, -1000)
 
                 MouseInput.tengoCarta=false;
                 this.meTienen=false;
@@ -230,9 +251,11 @@ public class Card extends ObjetoJuego{
 
     @Override
     public void dibujar(Graphics g) {
-        g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
-        //System.out.println("dibujado");
-        //Graphics2D g2d=(Graphics2D) g;
-        //g2d.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
+        if(!this.getYaJugada()){
+            g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
+        }else{
+            g.drawImage(super.textura,-1000,-1000,null);
+        }
+
     }
 }

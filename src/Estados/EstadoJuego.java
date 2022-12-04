@@ -23,17 +23,17 @@ public class EstadoJuego {
     private Card pos4Propio;
 
     //--------------Posiciones de las Cartas en el juego---------------//
-    private static double ordenadaRival=Window.getAlturaVentana()*(0.15)/(4);
-    private static double ordenadaPropia=Window.getAlturaVentana()*(2.65)/(4);
-    private static double abcisaMazoRival=Window.getAnchuraVentana()*(1.75)/(12);
-    private static double abcisaMazoPropio=Window.getAnchuraVentana()*(9.25)/(12);
-    private static double abcisaPos1Jugadores=Window.getAnchuraVentana()*(3.25)/(12);
-    private static double abcisaPos2Jugadores=Window.getAnchuraVentana()*(4.75)/(12);
-    private static double abcisaPos3Jugadores=Window.getAnchuraVentana()*(6.25)/(12);
-    private static double abcisaPos4Jugadores=Window.getAnchuraVentana()*(7.75)/(12);
-    private static double ordenadaPilas=Window.getAlturaVentana()*(1.4)/(4);
-    private static double abcisaPila1=Window.getAnchuraVentana()*(4.5)/(12);
-    private static double abcisaPila2=Window.getAnchuraVentana()*(6.5)/(12);
+    private static double ordenadaRival=Card.getAlturaCarta()*(0.15);
+    private static double ordenadaPropia=Card.getAlturaCarta()*(2.65);
+    private static double abcisaMazoRival=Card.getAnchuraCarta()*(1.75);
+    private static double abcisaMazoPropio=Card.getAnchuraCarta()*(9.25);
+    private static double abcisaPos1Jugadores=Card.getAnchuraCarta()*(3.25);
+    private static double abcisaPos2Jugadores=Card.getAnchuraCarta()*(4.75);
+    private static double abcisaPos3Jugadores=Card.getAnchuraCarta()*(6.25);
+    private static double abcisaPos4Jugadores=Card.getAnchuraCarta()*(7.75);
+    private static double ordenadaPilas=Card.getAlturaCarta()*(1.4);
+    private static double abcisaPila1=Card.getAnchuraCarta()*(4.5);
+    private static double abcisaPila2=Card.getAnchuraCarta()*(6.5);
 
     //-----------------------------------------------------------------//
     public EstadoJuego(){
