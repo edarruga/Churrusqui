@@ -14,12 +14,13 @@ public class Mazo {
 
     public Mazo(){
         this.cards = new CartaSimple [40];
-        num=40;
+        num=0;
         for(int i=0;i<40;i++){
             this.cards[i] = new CartaSimple(0, 0);
         }
     }
     public void llenarMazo(){
+        num=40;
         for(int i=0;i<40;i++){
             this.cards[i] = new CartaSimple(i/10+1, (i%10)+1);
         }
@@ -48,12 +49,13 @@ public class Mazo {
         return this.cards[this.num];
     }
     public void insertarCartaSimple(CartaSimple cs){
+        this.cards[this.num].setSuit(cs.getSuit());
+        this.cards[this.num].setValue(cs.getValue());
         this.num++;
-        this.cards[this.num]=cs;
     }
     public void insertarCartasSimples(CartaSimple[] csv){
-        for(CartaSimple cs:csv){
-            this.insertarCartaSimple(cs);
+        for(int i=0;i<csv.length;i++){
+            this.insertarCartaSimple(csv[i]);
         }
     }
 
@@ -61,6 +63,14 @@ public class Mazo {
         //PRECONDITION: the deck must be initialized
         //POSTCONDITION: returns the number of cards in the deck
         return this.num;
+    }
+    public void showmazo(){
+        for(int i=0;i<num;i++){
+            this.cards[i].showCard();
+        }
+    }
+    public CartaSimple getUltimaCarta(){
+        return this.cards[this.num-1];
     }
 
 }

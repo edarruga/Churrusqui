@@ -52,10 +52,10 @@ public class Card extends ObjetoJuego{
         this.value=v;
     }
     public Card(CartaSimple cs,Vector2D v2d){
-        super(Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getSuit()),anchuraCarta,alturaCarta),v2d);
+        super(Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta),v2d);
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),anchuraCarta,alturaCarta);
         this.suit=cs.getSuit();
-        this.value=cs.getSuit();
+        this.value=cs.getValue();
     }
     public int getValue(){
         //PRECONDITION: the card must be initialized
@@ -98,22 +98,6 @@ public class Card extends ObjetoJuego{
         }
         return false;
     }
-    public static int getAnchuraCarta(){
-        return Card.anchuraCarta;
-    }
-    public static int getAlturaCarta(){
-        return Card.alturaCarta;
-    }
-    public boolean getYaJugada(){
-        return this.yaJugada;
-    }
-    public void actualizarEstadoDeCarta(CartaSimple cs){
-        super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta);
-        this.suit=cs.getSuit();
-        this.value=cs.getSuit();
-        this.hitBox.x=(int)super.posicion.getX();
-        this.hitBox.y=(int)super.posicion.getY();
-    }
     public void showCard(){
         //PRECONDITION: the card must be initialized
         //POSTCONDITION: shows the card value and suit on screen
@@ -140,30 +124,36 @@ public class Card extends ObjetoJuego{
             System.out.println("[" + trueValue + " de "+trueSuit+"]");
         }
     }
-    public boolean ImmediatelyNext(Card c){//The card c is the one that is already on the table.
-        //PRECONDITION: the cards must be initialized
-        //POSTCONDITION: returns true if the card given is higher than
-        // the instance card by one unit, false otherwise.
-        if(this.sameSuit(c) && this.getValue()==c.getValue()+1){
-            return true;
-        }
-        return false;
+    public static int getAnchuraCarta(){
+        return Card.anchuraCarta;
     }
-    public boolean ImmediatelyPrevious(Card c){//La carta c es la que esta ya en la mesa
-        //PRECONDITION: the cards must be initialized
-        //POSTCONDITION: returns tre if the card given is lower than
-        // the instance card by one unit, false otherwise.
-        if(this.sameSuit(c) && this.getValue()==c.getValue()-1){
-            return true;
-        }
-        return false;
+    public static int getAlturaCarta(){
+        return Card.alturaCarta;
     }
+    public boolean getYaJugada(){
+        return this.yaJugada;
+    }
+    public void setYaJugada(boolean b){
+        this.yaJugada=b;
+    }
+    public void actualizarEstadoDeCarta(CartaSimple cs){
+        super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta);
+        this.suit=cs.getSuit();
+        this.value=cs.getValue();
+        this.hitBox.x=(int)super.posicion.getX();
+        this.hitBox.y=(int)super.posicion.getY();
+    }
+
+
     public void copyCard(Card c){
         //PRECONDITION: the cards must be initialized
         //POSTCONDITION: copies the value and suit of 'c'
         this.setValue(c.getValue());
         this.setSuit(c.getSuit());
         super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(c.getValue(),c.getSuit()),anchuraCarta,alturaCarta);
+    }
+    public CartaSimple CartaACartaSimple(Card c){
+        return new CartaSimple(c.getSuit(),c.getValue());
     }
     public static void activarEstigma(){
         estigma=true;
@@ -198,6 +188,11 @@ public class Card extends ObjetoJuego{
     public void actualizar() {
         //System.out.println(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY));
         if(!MouseInput.tengoCarta || (MouseInput.tengoCarta && meTienen)){
+            /*
+            System.out.println("-----------------------------------------------------");
+            System.out.println("La carta :"+this.value+" ,de: "+this.suit);
+            System.out.println("La hitbox se encuentra en X:"+this.hitBox.x+" ,Y: "+this.hitBox.y);
+             */
             if(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
                 mouseIn=true;
                 //System.out.println("Entro");
@@ -205,11 +200,13 @@ public class Card extends ObjetoJuego{
                 mouseIn=false;
                 primeraVez=false;
 
+
             }
             if(mouseIn && MouseInput.botonIzquierdo){
                 if(!primeraVez){
                     if(!MouseInput.tengoCarta){
                         this.meTienen=true;
+                        JugadorHumano.setCartaJugada(this.getSuit(),this.getValue());
                         MouseInput.tengoCarta=true;
                     }
                     this.tocada=true;
@@ -226,6 +223,7 @@ public class Card extends ObjetoJuego{
                 System.out.println("---------------------------------------------------------------------------------");
                 */
                     primeraVez=true;
+
                 }
                 if(meTienen){
                     MouseInput.tengoCarta=true;
@@ -235,14 +233,46 @@ public class Card extends ObjetoJuego{
                     this.hitBox.y=MouseInput.RatonY-this.diferenciaY;
                 }
 
-            }else if(this.primeraVez ||(!this.primeraVez && this.tocada && !mouseIn)){//El raton habra soltado la carta (acordarse de mover la hitbox de una carta jugada a la posicion -1000, -1000)
+            }else if(this.primeraVez ||(!this.primeraVez && this.tocada && !mouseIn )){//El raton habra soltado la carta (acordarse de mover la hitbox de una carta jugada a la posicion -1000, -1000)
+                System.out.println("-------------");
+                System.out.println("1");
+                if(JugadorHumano.getMazoDeApilar1().getPosibleJugada()){
+                    System.out.println("2");
+                    if(JugadorHumano.getCartaJugada().getSuit()!=0){
+                        System.out.println("3");
+                        if(JugadorHumano.getMazoDeApilar1().esJugable(JugadorHumano.getMazoDeApilar1().getUltimaCarta(),JugadorHumano.getCartaJugada())){
+                            System.out.println("4");
+                            if(JugadorHumano.getMazoDeApilar1().aniadirNuevaCarta() ){
+                                if(!this.primeraVez){
+                                    System.out.println("-------------");
+                                }
+                                this.yaJugada=true;
+                                //--------------------------------
+                                System.out.println("-------------");
+                                System.out.println(this.tocada);//
+                                System.out.println(this.primeraVez);
+                                System.out.println(this.meTienen);//
+                                System.out.println(this.yaJugada);//
+                                System.out.println(this.mouseIn);
+                                //--------------------------------
+                                MouseInput.tengoCarta=false;
 
-                MouseInput.tengoCarta=false;
-                this.meTienen=false;
-                super.posicion.setX(this.posicionInicialX);
-                super.posicion.setY(this.posicionInicialY);
-                this.hitBox.x=(int)this.posicionInicialX;
-                this.hitBox.y=(int)this.posicionInicialY;
+                            }
+                        }
+                    }
+                }
+                if(!this.yaJugada){
+                    MouseInput.tengoCarta=false;
+                    this.meTienen=false;
+                    super.posicion.setX(this.posicionInicialX);
+                    super.posicion.setY(this.posicionInicialY);
+                    this.hitBox.x=(int)this.posicionInicialX;
+                    this.hitBox.y=(int)this.posicionInicialY;
+                }else{
+                    this.hitBox.x=-1000;
+                    this.hitBox.y=-1000;
+                }
+
             }
         }
 

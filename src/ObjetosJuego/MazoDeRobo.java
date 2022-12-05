@@ -2,6 +2,7 @@ package ObjetosJuego;
 
 import Matematica.Vector2D;
 import graficos.Loader;
+import input.MouseInput;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,10 +10,15 @@ import java.awt.image.BufferedImage;
 public class MazoDeRobo extends ObjetoJuego{
     private Mazo mazo;
     private Rectangle hitBox;
-    public MazoDeRobo(Vector2D v2d,CartaSimple[] csv) {
+    private boolean desclico=true;
+    private JugadorHumano jugadorHumano;
+    public MazoDeRobo(Vector2D v2d,CartaSimple[] csv,JugadorHumano jh) {
         super(Loader.cargadorDeImagenes(Card.buscarRutaTextura(0,1),Card.getAnchuraCarta(),Card.getAlturaCarta()), v2d);
+        this.jugadorHumano=jh;
         this.mazo=new Mazo();
         this.mazo.insertarCartasSimples(csv);
+        System.out.println("===============");
+        this.mazo.showmazo();
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),Card.getAnchuraCarta(),Card.getAlturaCarta());
     }
     public CartaSimple robarCata(){
@@ -21,7 +27,21 @@ public class MazoDeRobo extends ObjetoJuego{
 
     @Override
     public void actualizar() {
+        if(!MouseInput.botonIzquierdo){
+            this.desclico=true;
+        }
+        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
+            if(MouseInput.botonIzquierdo ){
+                Card c=this.jugadorHumano.primeraCartaYaJugada();
+                if(c!=null){
+                    if( this.desclico){
+                        c.actualizarEstadoDeCarta(this.mazo.giveCard());
+                        this.desclico=false;
+                    }
+                }
 
+            }
+        }
     }
 
     @Override
