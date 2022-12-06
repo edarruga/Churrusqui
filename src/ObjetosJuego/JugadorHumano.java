@@ -46,8 +46,6 @@ public class JugadorHumano {
         this.carta4=new Card(this.mazo.robarCata(),this.posicionCarta4);
         JugadorHumano.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
         JugadorHumano.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
-        System.out.println("-----");
-        JugadorHumano.getMazoDeApilar1().getUltimaCarta().showCard();
     }
     public boolean getPuedoRobar(){
         return this.puedoRobar;

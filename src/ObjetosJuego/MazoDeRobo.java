@@ -16,8 +16,6 @@ public class MazoDeRobo extends ObjetoJuego{
         this.jugadorHumano=jh;
         this.mazo=new Mazo();
         this.mazo.insertarCartasSimples(csv);
-        System.out.println("===============");
-        this.mazo.showmazo();
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),Card.getAnchuraCarta(),Card.getAlturaCarta());
     }
     public CartaSimple robarCata(){

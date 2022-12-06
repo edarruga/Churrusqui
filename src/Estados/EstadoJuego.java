@@ -63,12 +63,12 @@ public class EstadoJuego {
         this.mazo=new Mazo();
         this.mazo.llenarMazo();
         //this.mazo.showmazo();
-        //this.mazo.shuffle();
+        this.mazo.shuffle();
         CartaSimple[] cs1=new CartaSimple[20];
         CartaSimple[] cs2=new CartaSimple[20];
         for(int i=0;i<20;i++){
             cs1[i]=this.mazo.giveCard();
-            cs1[i].showCard();
+            //cs1[i].showCard();
         }
         for(int i=0;i<20;i++){
             cs2[i]=this.mazo.giveCard();
