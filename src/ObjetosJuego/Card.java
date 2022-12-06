@@ -152,8 +152,8 @@ public class Card extends ObjetoJuego{
         this.setSuit(c.getSuit());
         super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(c.getValue(),c.getSuit()),anchuraCarta,alturaCarta);
     }
-    public CartaSimple CartaACartaSimple(Card c){
-        return new CartaSimple(c.getSuit(),c.getValue());
+    public CartaSimple CartaACartaSimple(){
+        return new CartaSimple(this.getSuit(),this.getValue());
     }
     public static void activarEstigma(){
         estigma=true;
@@ -186,94 +186,58 @@ public class Card extends ObjetoJuego{
 
     @Override
     public void actualizar() {
-        //System.out.println(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY));
-        if(!MouseInput.tengoCarta || (MouseInput.tengoCarta && meTienen)){
-            /*
-            System.out.println("-----------------------------------------------------");
-            System.out.println("La carta :"+this.value+" ,de: "+this.suit);
-            System.out.println("La hitbox se encuentra en X:"+this.hitBox.x+" ,Y: "+this.hitBox.y);
-             */
-            if(hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
-                mouseIn=true;
-                //System.out.println("Entro");
+        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY) && MouseInput.botonIzquierdo){
+            if( !MouseInput.tengoCarta && MouseInput.botonIzquierdo){
+                this.primeraVez=true;
+                MouseInput.tengoCarta=true;
+                JugadorHumano.setCartaJugada(this.getSuit(),this.getValue());
+            }
+            if( MouseInput.tengoCarta && this.primeraVez ){
+                this.meTienen=true;
+                this.primeraVez=false;
+                this.tocada=true;
+                this.posicionInicialX=this.posicion.getX();
+                this.posicionInicialY=this.posicion.getY();
+                this.diferenciaX=MouseInput.RatonX-(int) this.posicion.getX();
+                this.diferenciaY=MouseInput.RatonY-(int) this.posicion.getY();
+            }
+            if(this.meTienen && MouseInput.botonIzquierdo){
+                MouseInput.tengoCarta=true;
+                super.posicion.setX(MouseInput.RatonX-this.diferenciaX);
+                super.posicion.setY(MouseInput.RatonY-this.diferenciaY);
+                this.hitBox.x=MouseInput.RatonX-this.diferenciaX;
+                this.hitBox.y=MouseInput.RatonY-this.diferenciaY;
+            }
+
+        }else{
+            this.meTienen=false;
+        }
+        if(!MouseInput.botonIzquierdo && !this.meTienen && this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
+            if(JugadorHumano.getMazoDeApilar1().getPosibleJugada()){
+                if(JugadorHumano.getMazoDeApilar1().esJugable(this.CartaACartaSimple())){
+                    if(JugadorHumano.getMazoDeApilar1().aniadirNuevaCarta(this.CartaACartaSimple())){
+                        this.yaJugada=true;
+                    }
+                }
+            }else if(JugadorHumano.getMazoDeApilar2().getPosibleJugada()){
+                if(JugadorHumano.getMazoDeApilar2().esJugable(this.CartaACartaSimple())){
+                    if(JugadorHumano.getMazoDeApilar2().aniadirNuevaCarta(this.CartaACartaSimple())){
+                        this.yaJugada=true;
+                    }
+                }
             }else{
-                mouseIn=false;
-                primeraVez=false;
-
-
+                this.yaJugada=false;
             }
-            if(mouseIn && MouseInput.botonIzquierdo){
-                if(!primeraVez){
-                    if(!MouseInput.tengoCarta){
-                        this.meTienen=true;
-                        JugadorHumano.setCartaJugada(this.getSuit(),this.getValue());
-                        MouseInput.tengoCarta=true;
-                    }
-                    this.tocada=true;
-                    this.posicionInicialX=this.posicion.getX();
-                    this.posicionInicialY=this.posicion.getY();
-                    this.diferenciaX=MouseInput.RatonX-(int)this.posicion.getX();
-                    this.diferenciaY=MouseInput.RatonY-(int)this.posicion.getY();
-                /*
-                System.out.println("---------------------------------------------------------------------------------");
-                System.out.println("La posicion de raton es X:"+MouseInput.RatonX+" ,Y: "+MouseInput.RatonY);
-                System.out.println("La carta se encuentra en X:"+this.posicion.getX()+" ,Y: "+this.posicion.getY());
-                System.out.println("La hitbox se encuentra en X:"+this.hitBox.x+" ,Y: "+this.hitBox.y);
-                System.out.println("difernecia X: "+this.diferenciaX+" ,diferencia Y:"+this.diferenciaY);
-                System.out.println("---------------------------------------------------------------------------------");
-                */
-                    primeraVez=true;
-
-                }
-                if(meTienen){
-                    MouseInput.tengoCarta=true;
-                    super.posicion.setX(MouseInput.RatonX-this.diferenciaX);
-                    super.posicion.setY(MouseInput.RatonY-this.diferenciaY);
-                    this.hitBox.x=MouseInput.RatonX-this.diferenciaX;
-                    this.hitBox.y=MouseInput.RatonY-this.diferenciaY;
-                }
-
-            }else if(this.primeraVez ||(!this.primeraVez && this.tocada && !mouseIn )){//El raton habra soltado la carta (acordarse de mover la hitbox de una carta jugada a la posicion -1000, -1000)
-                System.out.println("-------------");
-                System.out.println("1");
-                if(JugadorHumano.getMazoDeApilar1().getPosibleJugada()){
-                    System.out.println("2");
-                    if(JugadorHumano.getCartaJugada().getSuit()!=0){
-                        System.out.println("3");
-                        if(JugadorHumano.getMazoDeApilar1().esJugable(JugadorHumano.getMazoDeApilar1().getUltimaCarta(),JugadorHumano.getCartaJugada())){
-                            System.out.println("4");
-                            if(JugadorHumano.getMazoDeApilar1().aniadirNuevaCarta() ){
-                                if(!this.primeraVez){
-                                    System.out.println("-------------");
-                                }
-                                this.yaJugada=true;
-                                //--------------------------------
-                                System.out.println("-------------");
-                                System.out.println(this.tocada);//
-                                System.out.println(this.primeraVez);
-                                System.out.println(this.meTienen);//
-                                System.out.println(this.yaJugada);//
-                                System.out.println(this.mouseIn);
-                                //--------------------------------
-                                MouseInput.tengoCarta=false;
-
-                            }
-                        }
-                    }
-                }
-                if(!this.yaJugada){
-                    MouseInput.tengoCarta=false;
-                    this.meTienen=false;
-                    super.posicion.setX(this.posicionInicialX);
-                    super.posicion.setY(this.posicionInicialY);
-                    this.hitBox.x=(int)this.posicionInicialX;
-                    this.hitBox.y=(int)this.posicionInicialY;
-                }else{
-                    this.hitBox.x=-1000;
-                    this.hitBox.y=-1000;
-                }
-
-            }
+        }
+        if(!this.meTienen && !this.yaJugada && this.tocada){
+            this.posicion.setX(this.posicionInicialX);
+            this.posicion.setY(this.posicionInicialY);
+            this.hitBox.x=(int)this.posicionInicialX;
+            this.hitBox.y=(int)this.posicionInicialY;
+        }
+        if(!this.meTienen && this.yaJugada){
+            this.hitBox.x=-1000;
+            this.hitBox.y=-1000;
         }
 
 
@@ -282,7 +246,11 @@ public class Card extends ObjetoJuego{
     @Override
     public void dibujar(Graphics g) {
         if(!this.getYaJugada()){
-            g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
+            if(!this.meTienen && this.tocada){
+                g.drawImage(super.textura,(int)this.posicionInicialX,(int)this.posicionInicialY,null);
+            }else{
+                g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
+            }
         }else{
             g.drawImage(super.textura,-1000,-1000,null);
         }

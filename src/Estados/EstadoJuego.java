@@ -3,6 +3,7 @@ package Estados;
 import Matematica.Vector2D;
 import ObjetosJuego.*;
 import graficos.Loader;
+import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
@@ -62,7 +63,7 @@ public class EstadoJuego {
         this.mazo=new Mazo();
         this.mazo.llenarMazo();
         //this.mazo.showmazo();
-        this.mazo.shuffle();
+        //this.mazo.shuffle();
         CartaSimple[] cs1=new CartaSimple[20];
         CartaSimple[] cs2=new CartaSimple[20];
         for(int i=0;i<20;i++){
@@ -73,8 +74,8 @@ public class EstadoJuego {
             cs2[i]=this.mazo.giveCard();
             //cs2[i].showCard();
         }
-        this.mazoDeApilar1=new MazoDeApilar(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5),Card.getAlturaCarta()*(1.4)));
-        this.mazoDeApilar2=new MazoDeApilar(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5),Card.getAlturaCarta()*(1.4)));
+        this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5),Card.getAlturaCarta()*(1.4)));
+        this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5),Card.getAlturaCarta()*(1.4)));
         this.jugadorHumano=new JugadorHumano(cs1);
     }
     public static MazoDeApilar getMazoDeApilar1(){
@@ -103,7 +104,7 @@ public class EstadoJuego {
         this.pos4Propio.actualizar();
          */
         this.mazoDeApilar1.actualizar();
-        //this.mazoDeApilar2.actualizar();
+        this.mazoDeApilar2.actualizar();
         this.jugadorHumano.actualizar();
     }
 

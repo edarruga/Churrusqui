@@ -17,7 +17,7 @@ public class JugadorHumano {
     private Vector2D posicionCarta4;
     private Vector2D posicionMazoDeRobo;
     private MazoDeRobo mazo;
-    private boolean puedoRobar;
+    private boolean puedoRobar=false;
     private static CartaSimple cartaJugada=new CartaSimple();
 
     public JugadorHumano(CartaSimple[] csv){
@@ -45,9 +45,12 @@ public class JugadorHumano {
         this.carta3=new Card(this.mazo.robarCata(),this.posicionCarta3);
         this.carta4=new Card(this.mazo.robarCata(),this.posicionCarta4);
         JugadorHumano.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
-        //JugadorHumano.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+        JugadorHumano.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
         System.out.println("-----");
         JugadorHumano.getMazoDeApilar1().getUltimaCarta().showCard();
+    }
+    public boolean getPuedoRobar(){
+        return this.puedoRobar;
     }
     public static CartaSimple getCartaJugada(){
         return JugadorHumano.cartaJugada;

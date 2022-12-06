@@ -7,7 +7,7 @@ import input.MouseInput;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class MazoDeApilar extends ObjetoJuego{
+public abstract class MazoDeApilar extends ObjetoJuego{
     private Mazo mazo;
     private Rectangle hitBox;
     private boolean posibleJugada=false;
@@ -19,29 +19,21 @@ public class MazoDeApilar extends ObjetoJuego{
         this.mazo=new Mazo();
     }
 
-    @Override
-    public void actualizar() {
-
-        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
-            MouseInput.dentroDePila=true;
-            if(MouseInput.colocarCarta){
-                this.posibleJugada=true;
-            }
-        }else{
-            this.posibleJugada=false;
-            MouseInput.dentroDePila=false;
-        }
-
-    }
     public CartaSimple getUltimaCarta(){
         return this.mazo.getUltimaCarta();
     }
     public boolean getPosibleJugada(){
         return this.posibleJugada;
     }
-    public synchronized boolean aniadirNuevaCarta(){
-        if(this.esJugable(this.mazo.getUltimaCarta(),JugadorHumano.getCartaJugada())){
-            this.mazo.insertarCartaSimple(JugadorHumano.getCartaJugada());
+    public void setPosibleJugada(boolean b){
+        this.posibleJugada=b;
+    }
+    public Rectangle getHitBox(){
+        return this.hitBox;
+    }
+    public synchronized boolean aniadirNuevaCarta(CartaSimple cs){
+        if(this.esJugable(cs)){
+            this.mazo.insertarCartaSimple(cs);
             this.seModifico=true;
             return true;
         }
@@ -51,8 +43,8 @@ public class MazoDeApilar extends ObjetoJuego{
         this.mazo.insertarCartaSimple(cs);
         this.seModifico=true;
     }
-    public boolean esJugable(CartaSimple cMesa,CartaSimple cNueva){
-        if(cMesa.ImmediatelyNext(cNueva)||cMesa.ImmediatelyPrevious(cNueva)){
+    public boolean esJugable(CartaSimple cNueva){
+        if(this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)){
             return true;
         }
         return false;

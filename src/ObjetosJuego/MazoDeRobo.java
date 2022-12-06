@@ -5,7 +5,6 @@ import graficos.Loader;
 import input.MouseInput;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class MazoDeRobo extends ObjetoJuego{
     private Mazo mazo;
@@ -27,20 +26,18 @@ public class MazoDeRobo extends ObjetoJuego{
 
     @Override
     public void actualizar() {
-        if(!MouseInput.botonIzquierdo){
-            this.desclico=true;
-        }
+
         if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
-            if(MouseInput.botonIzquierdo ){
+            if(MouseInput.clickEnMazoDeRobo){
                 Card c=this.jugadorHumano.primeraCartaYaJugada();
                 if(c!=null){
-                    if( this.desclico){
-                        c.actualizarEstadoDeCarta(this.mazo.giveCard());
-                        this.desclico=false;
-                    }
+                    c.actualizarEstadoDeCarta(this.mazo.giveCard());
+                    MouseInput.clickEnMazoDeRobo =false;
                 }
 
             }
+        }else{
+            MouseInput.clickEnMazoDeRobo =false;
         }
     }
 

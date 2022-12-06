@@ -1,7 +1,5 @@
 package input;
 
-import ObjetosJuego.MazoDeApilar;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,8 +10,11 @@ public class MouseInput extends MouseAdapter {
     public static int RatonY;//Posicion Y del raton
     public static boolean botonIzquierdo;//Para saber si el boton izquierdo del raton esta pulsado
     public static boolean tengoCarta=false;
-    public static boolean colocarCarta=false;
-    public static boolean dentroDePila=false;
+    public static boolean colocarCarta1=false;
+    public static boolean colocarCarta2=false;
+    public static boolean dentroDePila1=false;
+    public static boolean dentroDePila2=false;
+    public static boolean clickEnMazoDeRobo =false;
 
 
     @Override
@@ -24,12 +25,19 @@ public class MouseInput extends MouseAdapter {
         }
 
     }
+    public void mouseClicked(MouseEvent e){
+        MouseInput.clickEnMazoDeRobo =true;
+    }
     public void mouseReleased(MouseEvent e){
         if(e.getButton()==BUTTON1){
-            if(MouseInput.tengoCarta && MouseInput.dentroDePila){
-                MouseInput.colocarCarta=true;
+            if(MouseInput.tengoCarta && MouseInput.dentroDePila1){
+                MouseInput.colocarCarta1=true;
+            }
+            if(MouseInput.tengoCarta && MouseInput.dentroDePila2){
+                MouseInput.colocarCarta2=true;
             }
             botonIzquierdo=false;
+            MouseInput.tengoCarta=false;
 
             //System.out.println("Se ha desclicado el boton izquierdo en la posicion X: "+e.getX()+" ,Y: "+e.getY());
         }
