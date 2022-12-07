@@ -25,9 +25,11 @@ public class EstadoJuego {
     private Card pos4Propio;
 
     private JugadorHumano jugadorHumano;
+    private Thread hilo1;
     private static MazoDeApilar mazoDeApilar1;
     private static MazoDeApilar mazoDeApilar2;
     private Mazo mazo;
+    private static boolean actualiza=false;
 
     //--------------Posiciones de las Cartas en el juego---------------//
     private static double ordenadaRival=Card.getAlturaCarta()*(0.15);
@@ -44,22 +46,6 @@ public class EstadoJuego {
 
     //-----------------------------------------------------------------//
     public EstadoJuego(){
-        /*
-        this.pila1=new Card(4,7,new Vector2D(abcisaPila1, ordenadaPilas));
-        this.pila2=new Card(1,1,new Vector2D(abcisaPila2,ordenadaPilas));
-
-        this.mazoRival=new Card(0,1,new Vector2D(abcisaMazoRival,ordenadaRival));
-        this.pos1Rival=new Card(0,1,new Vector2D(abcisaPos1Jugadores,ordenadaRival));
-        this.pos2Rival=new Card(0,1,new Vector2D(abcisaPos2Jugadores,ordenadaRival));
-        this.pos3Rival=new Card(0,1,new Vector2D(abcisaPos3Jugadores,ordenadaRival));
-        this.pos4Rival=new Card(0,1,new Vector2D(abcisaPos4Jugadores,ordenadaRival));
-
-        this.mazoPropio=new Card(0,1,new Vector2D(abcisaMazoPropio,ordenadaPropia));
-        this.pos1Propio=new Card(1,2,new Vector2D(abcisaPos1Jugadores,ordenadaPropia));
-        this.pos2Propio=new Card(4,5,new Vector2D(abcisaPos2Jugadores,ordenadaPropia));
-        this.pos3Propio=new Card(1,10,new Vector2D(abcisaPos3Jugadores,ordenadaPropia));
-        this.pos4Propio=new Card(3,1,new Vector2D(abcisaPos4Jugadores,ordenadaPropia));
-         */
         this.mazo=new Mazo();
         this.mazo.llenarMazo();
         //this.mazo.showmazo();
@@ -77,6 +63,9 @@ public class EstadoJuego {
         this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5),Card.getAlturaCarta()*(1.4)));
         this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5),Card.getAlturaCarta()*(1.4)));
         this.jugadorHumano=new JugadorHumano(cs1);
+        hilo1=new Thread(jugadorHumano);
+        hilo1.start();
+
     }
     public static MazoDeApilar getMazoDeApilar1(){
         return mazoDeApilar1;
@@ -84,50 +73,24 @@ public class EstadoJuego {
     public static MazoDeApilar getMazoDeApilar2(){
         return mazoDeApilar2;
     }
+    public static boolean getActualizar(){
+        return EstadoJuego.actualiza;
+    }
 
     public void actualizar(){
-        /*
-        this.mazoPropio.actualizar();
-        this.mazoRival.actualizar();
-
-        this.pila1.actualizar();
-        this.pila2.actualizar();
-
-        this.pos1Rival.actualizar();
-        this.pos2Rival.actualizar();
-        this.pos3Rival.actualizar();
-        this.pos4Rival.actualizar();
-
-        this.pos1Propio.actualizar();
-        this.pos2Propio.actualizar();
-        this.pos3Propio.actualizar();
-        this.pos4Propio.actualizar();
-         */
+        this.actualiza=true;
         this.mazoDeApilar1.actualizar();
         this.mazoDeApilar2.actualizar();
-        this.jugadorHumano.actualizar();
+        this.actualiza=false;
+
+
     }
 
     public void dibujar(Graphics g){
-        /*
-        pila1.dibujar(g);
-        pila2.dibujar(g);
-
-        mazoRival.dibujar(g);
-        pos1Rival.dibujar(g);
-        pos2Rival.dibujar(g);
-        pos3Rival.dibujar(g);
-        pos4Rival.dibujar(g);
-
-        mazoPropio.dibujar(g);
-        pos1Propio.dibujar(g);
-        pos2Propio.dibujar(g);
-        pos3Propio.dibujar(g);
-        pos4Propio.dibujar(g);
-         */
         this.mazoDeApilar1.dibujar(g);
         this.mazoDeApilar2.dibujar(g);
         this.jugadorHumano.dibujar(g);
+
     }
 
 }

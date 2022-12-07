@@ -3,10 +3,11 @@ package ObjetosJuego;
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import input.MouseInput;
+import principal.Window;
 
 import java.awt.*;
 
-public class JugadorHumano {
+public class JugadorHumano implements Runnable{
     private Card carta1;
     private Card carta2;
     private Card carta3;
@@ -19,6 +20,7 @@ public class JugadorHumano {
     private MazoDeRobo mazo;
     private boolean puedoRobar=false;
     private static CartaSimple cartaJugada=new CartaSimple();
+    private boolean funcionando;
 
     public JugadorHumano(CartaSimple[] csv){
         //Posicion de carta 1
@@ -103,10 +105,31 @@ public class JugadorHumano {
 
 
     public void dibujar(Graphics g){
-        this.carta1.dibujar(g);
-        this.carta2.dibujar(g);
-        this.carta3.dibujar(g);
-        this.carta4.dibujar(g);
-        this.mazo.dibujar(g);
+        try{
+            this.carta1.dibujar(g);
+            this.carta2.dibujar(g);
+            this.carta3.dibujar(g);
+            this.carta4.dibujar(g);
+            this.mazo.dibujar(g);
+        }catch (NullPointerException e){
+            System.out.println("Pinga nula");
+        }
+
+
     }
+
+    @Override
+    public void run() {
+        funcionando=true;
+        while(funcionando){
+            //Intentar arreglar esta chapuza
+
+            if(EstadoJuego.getActualizar()){
+                this.actualizar();
+            }
+
+        }
+
+    }
+
 }

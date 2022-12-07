@@ -18,7 +18,7 @@ public class Window extends JFrame implements Runnable{
     private Thread hilo; //Hilo encargado de mostrar la ventana
     private boolean funcionando = false;//Controlar si el hilo tiene que estar funcionando o tine que parar
     private BufferStrategy bs;//Para organizar la memoria
-    private Graphics g;//permiten que una aplicación se dibuje en componentes que se realizan en varios dispositivos, así como en imágenes fuera de pantalla
+    private static Graphics g;//permiten que una aplicación se dibuje en componentes que se realizan en varios dispositivos, así como en imágenes fuera de pantalla
     private final int FPS=6000;//Numero maximo de fotogramas por segundo que mostrará la aplicación
     private double targettime=1000000000/FPS;//Objetivo para fijar los fotogramas, lo definimos en nanosegundos para ser lo más precisos posibles
     private double tiempoTranscurrido=0;//Almacenamos el tiempo que transcurra en el programa
@@ -52,6 +52,9 @@ public class Window extends JFrame implements Runnable{
     private void actualizar(){
         this.estadoJuego.actualizar();
 
+    }
+    public static Graphics getGraficos(){
+        return Window.g;
     }
 
     private void dibujar(){
@@ -117,7 +120,7 @@ public class Window extends JFrame implements Runnable{
 
     private void empezar(){
         hilo=new Thread(this);
-        hilo.start();
+        this.hilo.start();
         funcionando=true;//Permitimos que el hilo pueda funcionar
     }
 

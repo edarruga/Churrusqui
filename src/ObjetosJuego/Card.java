@@ -1,5 +1,6 @@
 package ObjetosJuego;
 
+import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import graficos.Loader;
 import ObjetosJuego.ObjetoJuego;
@@ -31,6 +32,7 @@ public class Card extends ObjetoJuego{
     private boolean tocada=false;
     private boolean meTienen=false;
     private boolean yaJugada=false;
+
 
 
 
@@ -138,10 +140,13 @@ public class Card extends ObjetoJuego{
     }
     public void actualizarEstadoDeCarta(CartaSimple cs){
         super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta);
+        super.posicion.setX(this.posicionInicialX);
+        super.posicion.setY(this.posicionInicialY);
         this.suit=cs.getSuit();
         this.value=cs.getValue();
         this.hitBox.x=(int)super.posicion.getX();
         this.hitBox.y=(int)super.posicion.getY();
+
     }
 
 
@@ -217,19 +222,23 @@ public class Card extends ObjetoJuego{
                 if(JugadorHumano.getMazoDeApilar1().esJugable(this.CartaACartaSimple())){
                     if(JugadorHumano.getMazoDeApilar1().aniadirNuevaCarta(this.CartaACartaSimple())){
                         this.yaJugada=true;
+                        this.posicion.setX(-1000);
+                        this.posicion.setY(-1000);
                     }
                 }
             }else if(JugadorHumano.getMazoDeApilar2().getPosibleJugada()){
                 if(JugadorHumano.getMazoDeApilar2().esJugable(this.CartaACartaSimple())){
                     if(JugadorHumano.getMazoDeApilar2().aniadirNuevaCarta(this.CartaACartaSimple())){
                         this.yaJugada=true;
+                        this.posicion.setX(-1000);
+                        this.posicion.setY(-1000);
                     }
                 }
             }else{
                 this.yaJugada=false;
             }
         }
-        if(!this.meTienen && !this.yaJugada && this.tocada){
+        if(!this.meTienen && !this.yaJugada && this.tocada ){
             this.posicion.setX(this.posicionInicialX);
             this.posicion.setY(this.posicionInicialY);
             this.hitBox.x=(int)this.posicionInicialX;
@@ -241,12 +250,13 @@ public class Card extends ObjetoJuego{
         }
 
 
+
     }
 
     @Override
     public void dibujar(Graphics g) {
-        if(!this.getYaJugada()){
-            if(!this.meTienen && this.tocada){
+        if(!this.getYaJugada() ){
+            if(!this.meTienen && this.tocada && EstadoJuego.getActualizar()){
                 g.drawImage(super.textura,(int)this.posicionInicialX,(int)this.posicionInicialY,null);
             }else{
                 g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
