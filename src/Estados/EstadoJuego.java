@@ -78,8 +78,18 @@ public class EstadoJuego {
     public static MazoDeApilar getMazoDeApilar2(){
         return mazoDeApilar2;
     }
-    public static boolean getActualizar(){
+
+    public static boolean getActualizar() {
         return EstadoJuego.actualiza;
+    }
+    public void wait(int s){
+        //PRECONDITION:
+        //POSTCONDITION: the execution will wait for 's' secs
+        try{
+            Thread.sleep(s*1000);
+        }catch (InterruptedException e){
+            System.out.println(e);
+        }
     }
 
     public void actualizar(){
@@ -87,7 +97,11 @@ public class EstadoJuego {
         this.mazoDeApilar1.actualizar();
         this.mazoDeApilar2.actualizar();
         this.actualiza=false;
-
+        //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
+        if(!this.jugadorBot.puedoJugar() && !this.jugadorHumano.puedoJugar()){
+            //System.out.println(this.jugadorBot.prueba());
+            System.out.println("Ce bloqueo");
+        }
 
     }
 

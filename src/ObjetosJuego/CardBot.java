@@ -21,6 +21,26 @@ public class CardBot extends ObjetoJuego{
         this.value=cs.getValue();
         this.posicionInicial=new Vector2D(v2d.getX(),v2d.getY());
     }
+    public int getValue(){
+        //PRECONDITION: the card must be initialized
+        //POSTCONDITION: returns the value of the card
+        return this.value;
+    }
+    public int getSuit(){
+        //PRECONDITION: the card must be initialized
+        //POSTCONDITION: returns the suit of the card
+        return this.suit;
+    }
+    public void setValue(int v){
+        //PRECONDITION: the card must be initialized
+        //POSTCONDITION: set the value of the card to 'v'
+        this.value=v;
+    }
+    public void setSuit(int s){
+        //PRECONDITION: the card must be initialized
+        //POSTCONDITION: set the suit of the card to 's'
+        this.suit=s;
+    }
     public boolean getYaJugada(){
         return this.yaJugada;
     }
@@ -29,10 +49,12 @@ public class CardBot extends ObjetoJuego{
     }
     public void actualizarEstadoDeCarta(CartaSimple cs){
         super.textura=Loader.rotateImage(Loader.cargadorDeImagenes(Card.buscarRutaTextura(cs.getSuit(),cs.getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta()));
-        super.posicion.setX(this.posicionInicial.getX());
-        super.posicion.setY(this.posicionInicial.getY());
         this.suit=cs.getSuit();
         this.value=cs.getValue();
+        this.setYaJugada(false);
+    }
+    public CartaSimple CartaACartaSimple(){
+        return new CartaSimple(this.getSuit(),this.getValue());
     }
 
     @Override

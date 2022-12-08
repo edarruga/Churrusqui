@@ -21,6 +21,13 @@ public class MazoDeRobo extends ObjetoJuego{
     public CartaSimple robarCata(){
        return this.mazo.giveCard();
     }
+    public boolean estaVacio(){
+        if(this.mazo.getNum()==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     @Override
     public void actualizar() {
@@ -28,7 +35,7 @@ public class MazoDeRobo extends ObjetoJuego{
         if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
             if(MouseInput.clickEnMazoDeRobo){
                 Card c=this.jugadorHumano.primeraCartaYaJugada();
-                if(c!=null){
+                if(c!=null && !this.estaVacio()){
                     c.actualizarEstadoDeCarta(this.mazo.giveCard());
                     MouseInput.clickEnMazoDeRobo =false;
                 }

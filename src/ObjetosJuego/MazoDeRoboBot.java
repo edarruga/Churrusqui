@@ -4,7 +4,6 @@ import Matematica.Vector2D;
 import graficos.Loader;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class MazoDeRoboBot extends ObjetoJuego{
 
@@ -20,11 +19,11 @@ public class MazoDeRoboBot extends ObjetoJuego{
     public CartaSimple robarCata(){
         return this.mazo.giveCard();
     }
-    public boolean quedanCartas(){
+    public boolean estaVacio(){
         if(this.mazo.getNum()==0){
-            return false;
-        }else{
             return true;
+        }else{
+            return false;
         }
     }
 

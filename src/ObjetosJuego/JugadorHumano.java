@@ -84,16 +84,32 @@ public class JugadorHumano implements Runnable{
     public static MazoDeApilar getMazoDeApilar2(){
         return EstadoJuego.getMazoDeApilar2();
     }
+    public boolean puedoJugar(){
+        if(!(EstadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+        && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     public void actualizar(){
         if(!MouseInput.tengoCarta){
             JugadorHumano.cartaJugada.setSuit(0);
             JugadorHumano.cartaJugada.setValue(0);
         }
-        if(this.puedoRobar){
-            if(this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()){
-                this.puedoRobar=true;
-            }
+        if(this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()){
+            this.puedoRobar=true;
+        }else{
+            this.puedoRobar=false;
         }
         this.carta1.actualizar();
         this.carta2.actualizar();
