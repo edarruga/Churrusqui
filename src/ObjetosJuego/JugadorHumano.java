@@ -124,9 +124,9 @@ public class JugadorHumano implements Runnable{
         while(funcionando){
             //Intentar arreglar esta chapuza
 
-            if(EstadoJuego.getActualizar()){
+            //if(EstadoJuego.getActualizar()){
                 this.actualizar();
-            }
+            //}
 
         }
 

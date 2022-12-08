@@ -1,14 +1,12 @@
 package principal;
 
-import javax.swing.*;
-
 import Estados.EstadoJuego;
 import graficos.Assets;
 import input.MouseInput;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.ImageObserver;
 
 public class Window extends JFrame implements Runnable{
 
