@@ -164,6 +164,9 @@ public class Card extends ObjetoJuego{
     public static void activarEstigma(){
         estigma=true;
     }
+    public boolean getMeTienen(){
+        return this.meTienen;
+    }
 
     public static String buscarRutaTextura(int s,int v){
         if(v==0 || s==0){

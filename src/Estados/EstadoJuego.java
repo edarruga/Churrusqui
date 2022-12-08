@@ -25,7 +25,9 @@ public class EstadoJuego {
     private Card pos4Propio;
 
     private JugadorHumano jugadorHumano;
+    private JugadorBot jugadorBot;
     private Thread hilo1;
+    private Thread hilo2;
     private static MazoDeApilar mazoDeApilar1;
     private static MazoDeApilar mazoDeApilar2;
     private Mazo mazo;
@@ -63,8 +65,11 @@ public class EstadoJuego {
         this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5),Card.getAlturaCarta()*(1.4)));
         this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5),Card.getAlturaCarta()*(1.4)));
         this.jugadorHumano=new JugadorHumano(cs1);
+        this.jugadorBot=new JugadorBot(cs2);
         hilo1=new Thread(jugadorHumano);
+        hilo2=new Thread(jugadorBot);
         hilo1.start();
+        hilo2.start();
 
     }
     public static MazoDeApilar getMazoDeApilar1(){
@@ -89,6 +94,7 @@ public class EstadoJuego {
     public void dibujar(Graphics g){
         this.mazoDeApilar1.dibujar(g);
         this.mazoDeApilar2.dibujar(g);
+        this.jugadorBot.dibujar(g);
         this.jugadorHumano.dibujar(g);
 
     }

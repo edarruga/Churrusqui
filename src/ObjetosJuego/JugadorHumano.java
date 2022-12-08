@@ -47,7 +47,6 @@ public class JugadorHumano implements Runnable{
         this.carta3=new Card(this.mazo.robarCata(),this.posicionCarta3);
         this.carta4=new Card(this.mazo.robarCata(),this.posicionCarta4);
         JugadorHumano.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
-        JugadorHumano.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
     }
     public boolean getPuedoRobar(){
         return this.puedoRobar;
@@ -105,16 +104,33 @@ public class JugadorHumano implements Runnable{
 
 
     public void dibujar(Graphics g){
-        try{
+        this.mazo.dibujar(g);
+        if(this.carta1.getMeTienen()){
+            this.carta2.dibujar(g);
+            this.carta3.dibujar(g);
+            this.carta4.dibujar(g);
+            this.carta1.dibujar(g);
+        }else if(this.carta2.getMeTienen()){
+            this.carta1.dibujar(g);
+            this.carta3.dibujar(g);
+            this.carta4.dibujar(g);
+            this.carta2.dibujar(g);
+        }else if(this.carta3.getMeTienen()){
+            this.carta1.dibujar(g);
+            this.carta2.dibujar(g);
+            this.carta4.dibujar(g);
+            this.carta3.dibujar(g);
+        }else if(this.carta4.getMeTienen()){
             this.carta1.dibujar(g);
             this.carta2.dibujar(g);
             this.carta3.dibujar(g);
             this.carta4.dibujar(g);
-            this.mazo.dibujar(g);
-        }catch (NullPointerException e){
-            System.out.println("Pinga nula");
+        }else{
+            this.carta1.dibujar(g);
+            this.carta2.dibujar(g);
+            this.carta3.dibujar(g);
+            this.carta4.dibujar(g);
         }
-
 
     }
 
