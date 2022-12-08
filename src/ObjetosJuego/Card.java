@@ -24,14 +24,13 @@ public class Card extends ObjetoJuego{
     private static boolean estigma=false;
     private boolean mouseIn;//Para saber si el mouse se encuentra dentro de la hitbox de la carta
     private Rectangle hitBox;
-    private double posicionInicialX;
-    private double posicionInicialY;
     private boolean primeraVez=false;
     private int diferenciaX;
     private int diferenciaY;
     private boolean tocada=false;
     private boolean meTienen=false;
     private boolean yaJugada=false;
+    private Vector2D posicionInicial;
 
 
 
@@ -52,12 +51,14 @@ public class Card extends ObjetoJuego{
         //System.out.println("Carta "+v+" de "+s+" el rectangulo empieza en X:"+(int) v2d.getX()+" ,Y: "+(int) v2d.getY()+", y la imagen mide "+anchuraCarta+" x "+alturaCarta);
         this.suit=s;
         this.value=v;
+        this.posicionInicial=new Vector2D(v2d.getX(),v2d.getY());
     }
     public Card(CartaSimple cs,Vector2D v2d){
         super(Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta),v2d);
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),anchuraCarta,alturaCarta);
         this.suit=cs.getSuit();
         this.value=cs.getValue();
+        this.posicionInicial=new Vector2D(v2d.getX(),v2d.getY());
     }
     public int getValue(){
         //PRECONDITION: the card must be initialized
@@ -140,12 +141,12 @@ public class Card extends ObjetoJuego{
     }
     public void actualizarEstadoDeCarta(CartaSimple cs){
         super.textura=Loader.cargadorDeImagenes(buscarRutaTextura(cs.getSuit(),cs.getValue()),anchuraCarta,alturaCarta);
-        super.posicion.setX(this.posicionInicialX);
-        super.posicion.setY(this.posicionInicialY);
+        super.posicion.setX(this.posicionInicial.getX());
+        super.posicion.setY(this.posicionInicial.getY());
         this.suit=cs.getSuit();
         this.value=cs.getValue();
-        this.hitBox.x=(int)super.posicion.getX();
-        this.hitBox.y=(int)super.posicion.getY();
+        this.hitBox.x=(int)this.posicionInicial.getX();
+        this.hitBox.y=(int)this.posicionInicial.getY();
 
     }
 
@@ -201,8 +202,6 @@ public class Card extends ObjetoJuego{
                 this.meTienen=true;
                 this.primeraVez=false;
                 this.tocada=true;
-                this.posicionInicialX=this.posicion.getX();
-                this.posicionInicialY=this.posicion.getY();
                 this.diferenciaX=MouseInput.RatonX-(int) this.posicion.getX();
                 this.diferenciaY=MouseInput.RatonY-(int) this.posicion.getY();
             }
@@ -217,6 +216,7 @@ public class Card extends ObjetoJuego{
         }else{
             this.meTienen=false;
         }
+
         if(!MouseInput.botonIzquierdo && !this.meTienen && this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
             if(JugadorHumano.getMazoDeApilar1().getPosibleJugada()){
                 if(JugadorHumano.getMazoDeApilar1().esJugable(this.CartaACartaSimple())){
@@ -239,10 +239,10 @@ public class Card extends ObjetoJuego{
             }
         }
         if(!this.meTienen && !this.yaJugada && this.tocada ){
-            this.posicion.setX(this.posicionInicialX);
-            this.posicion.setY(this.posicionInicialY);
-            this.hitBox.x=(int)this.posicionInicialX;
-            this.hitBox.y=(int)this.posicionInicialY;
+            this.posicion.setX(this.posicionInicial.getX());
+            this.posicion.setY(this.posicionInicial.getY());
+            this.hitBox.x=(int)this.posicionInicial.getX();
+            this.hitBox.y=(int)this.posicionInicial.getY();
         }
         if(!this.meTienen && this.yaJugada){
             this.hitBox.x=-1000;
@@ -257,7 +257,7 @@ public class Card extends ObjetoJuego{
     public void dibujar(Graphics g) {
         if(!this.getYaJugada() ){
             if(!this.meTienen && this.tocada && EstadoJuego.getActualizar()){
-                g.drawImage(super.textura,(int)this.posicionInicialX,(int)this.posicionInicialY,null);
+                g.drawImage(super.textura,(int)this.posicionInicial.getX(),(int)this.posicionInicial.getY(),null);
             }else{
                 g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
             }

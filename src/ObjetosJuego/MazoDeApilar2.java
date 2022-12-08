@@ -16,9 +16,9 @@ public class MazoDeApilar2 extends MazoDeApilar{
         if(super.getHitBox().contains(MouseInput.RatonX,MouseInput.RatonY)){
             //System.out.println("Entro en 2");
             MouseInput.dentroDePila2=true;
-            if(MouseInput.colocarCarta2){//Esto hay que cambiarlo
+            //if(MouseInput.colocarCarta2){//Esto hay que cambiarlo
                 super.setPosibleJugada(true);
-            }
+            //}
         }else{
             super.setPosibleJugada(false);
             MouseInput.dentroDePila2=false;
