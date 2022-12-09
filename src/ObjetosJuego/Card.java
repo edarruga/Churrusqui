@@ -195,7 +195,7 @@ public class Card extends ObjetoJuego{
 
     @Override
     public void actualizar() {
-        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY) && MouseInput.botonIzquierdo){
+        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY) && MouseInput.botonIzquierdo && !EstadoJuego.bloqueado){
             if( !MouseInput.tengoCarta && MouseInput.botonIzquierdo){
                 this.primeraVez=true;
                 MouseInput.tengoCarta=true;

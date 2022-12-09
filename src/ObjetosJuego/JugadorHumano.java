@@ -100,6 +100,27 @@ public class JugadorHumano implements Runnable{
             return true;
         }
     }
+    public CartaSimple solucionarBloqueo(){
+        if(!this.mazo.estaVacio()){
+            return this.mazo.robarCata();
+        }else{
+            if(!this.carta4.getYaJugada()){
+                this.carta4.setYaJugada(true);
+                return this.carta4.CartaACartaSimple();
+            }else if(!this.carta3.getYaJugada()){
+                this.carta3.setYaJugada(true);
+                return this.carta3.CartaACartaSimple();
+            }else if(!this.carta2.getYaJugada()){
+                this.carta2.setYaJugada(true);
+                return this.carta2.CartaACartaSimple();
+            }else if(!this.carta1.getYaJugada()){
+                this.carta1.setYaJugada(true);
+                return this.carta1.CartaACartaSimple();
+            }else{
+                return new CartaSimple();
+            }
+        }
+    }
 
     public void actualizar(){
         if(!MouseInput.tengoCarta){

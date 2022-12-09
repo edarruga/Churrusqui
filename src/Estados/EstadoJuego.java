@@ -7,6 +7,7 @@ import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class EstadoJuego {
     private Card pila1;
@@ -24,14 +25,18 @@ public class EstadoJuego {
     private Card pos3Propio;
     private Card pos4Propio;
 
-    private JugadorHumano jugadorHumano;
-    private JugadorBot jugadorBot;
+    private static JugadorHumano jugadorHumano;
+    private static JugadorBot jugadorBot;
     private Thread hilo1;
     private Thread hilo2;
+    private Thread hiloBloqueo;
     private static MazoDeApilar mazoDeApilar1;
     private static MazoDeApilar mazoDeApilar2;
     private Mazo mazo;
     private static boolean actualiza=false;
+    public static boolean bloqueado=false;
+    private static Graphics g;
+    protected BufferedImage texturaBloqueo;
 
     //--------------Posiciones de las Cartas en el juego---------------//
     private static double ordenadaRival=Card.getAlturaCarta()*(0.15);
@@ -66,8 +71,31 @@ public class EstadoJuego {
         this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png",Card.getAnchuraCarta(),Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5),Card.getAlturaCarta()*(1.4)));
         this.jugadorHumano=new JugadorHumano(cs1);
         this.jugadorBot=new JugadorBot(cs2);
+        this.texturaBloqueo=Loader.cargadorDeImagenes("recursos/Otros/Bloqueo.png",Card.getAnchuraCarta(),Card.getAnchuraCarta());
+        hiloBloqueo=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    if(EstadoJuego.bloqueado){
+                        this.wait(5);
+                        EstadoJuego.mazoDeApilar1.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorHumano.solucionarBloqueo());
+                        EstadoJuego.mazoDeApilar2.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorBot.solucionarBloqueo());
+                        EstadoJuego.bloqueado=false;
+                    }
+                }
+            }
+
+            public void wait(int s){
+                try{
+                    Thread.sleep(s*1000);
+                }catch (InterruptedException e){
+                    System.out.println(e);
+                }
+            }
+        });
         hilo1=new Thread(jugadorHumano);
         hilo2=new Thread(jugadorBot);
+        hiloBloqueo.start();
         hilo1.start();
         hilo2.start();
 
@@ -82,15 +110,7 @@ public class EstadoJuego {
     public static boolean getActualizar() {
         return EstadoJuego.actualiza;
     }
-    public void wait(int s){
-        //PRECONDITION:
-        //POSTCONDITION: the execution will wait for 's' secs
-        try{
-            Thread.sleep(s*1000);
-        }catch (InterruptedException e){
-            System.out.println(e);
-        }
-    }
+
 
     public void actualizar(){
         this.actualiza=true;
@@ -98,18 +118,29 @@ public class EstadoJuego {
         this.mazoDeApilar2.actualizar();
         this.actualiza=false;
         //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
-        if(!this.jugadorBot.puedoJugar() && !this.jugadorHumano.puedoJugar()){
+        //System.out.println(EstadoJuego.bloqueado);
+        if(!this.jugadorBot.puedoJugar() && !this.jugadorHumano.puedoJugar() && !EstadoJuego.bloqueado){
             //System.out.println(this.jugadorBot.prueba());
-            System.out.println("Ce bloqueo");
+            //this.dibujar(g);
+            EstadoJuego.bloqueado=true;
+            //System.out.println("Ce bloqueo");
+
         }
 
     }
 
     public void dibujar(Graphics g){
+
+        if(EstadoJuego.bloqueado){
+            g.drawImage(this.texturaBloqueo,((Window.getAnchuraVentana()/2)-(Card.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(Card.getAnchuraCarta()/2)),null);
+        }
+        this.g=g;
         this.mazoDeApilar1.dibujar(g);
         this.mazoDeApilar2.dibujar(g);
         this.jugadorBot.dibujar(g);
         this.jugadorHumano.dibujar(g);
+
+
 
     }
 

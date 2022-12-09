@@ -14,7 +14,7 @@ public class Loader {//No crearemos ningún objeto de esta clase solo proporcion
 		//return ImageIO.read(archivo);//Carga la imagen especificada en la ruta
 		Image image=(Image)ic2.getImage();
 
-		BufferedImage bi = new BufferedImage(anchura, altura,BufferedImage.SCALE_SMOOTH);
+		BufferedImage bi = new BufferedImage(anchura, altura,BufferedImage.TYPE_INT_ARGB);
 		bi.getGraphics().drawImage(image, 0, 0 , null);
 		return  bi;
 
