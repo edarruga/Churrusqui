@@ -54,7 +54,7 @@ public class CartaSimple {
         return false;
     }
 
-    public boolean sameCard(Card c){
+    public boolean sameCard(CardHumano c){
         //PRECONDITION:
         //POSTCONDITION: returns true if 2 cards have the same value and suit, false otherwise
         if(this.getSuit()==c.getSuit() && this.getValue()==c.getValue()){

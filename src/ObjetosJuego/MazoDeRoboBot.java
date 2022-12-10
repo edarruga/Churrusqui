@@ -5,26 +5,15 @@ import graficos.Loader;
 
 import java.awt.*;
 
-public class MazoDeRoboBot extends ObjetoJuego{
+public class MazoDeRoboBot extends MazoDeRobo{
 
-    private Mazo mazo;
     private JugadorBot jugadorBot;
 
     public MazoDeRoboBot(Vector2D v2d,CartaSimple[] csv,JugadorBot jb) {
-        super(Loader.cargadorDeImagenes(Card.buscarRutaTextura(0,1),Card.getAnchuraCarta(),Card.getAlturaCarta()), v2d);
+        super(v2d,csv);
         this.jugadorBot=jb;
         this.mazo=new Mazo();
         this.mazo.insertarCartasSimples(csv);
-    }
-    public CartaSimple robarCata(){
-        return this.mazo.giveCard();
-    }
-    public boolean estaVacio(){
-        if(this.mazo.getNum()==0){
-            return true;
-        }else{
-            return false;
-        }
     }
 
     @Override

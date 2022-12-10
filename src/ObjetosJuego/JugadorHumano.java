@@ -3,53 +3,50 @@ package ObjetosJuego;
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import input.MouseInput;
-import principal.Window;
 
 import java.awt.*;
 
 public class JugadorHumano implements Runnable{
-    private Card carta1;
-    private Card carta2;
-    private Card carta3;
-    private Card carta4;
-    private Vector2D posicionCarta1;
-    private Vector2D posicionCarta2;
-    private Vector2D posicionCarta3;
-    private Vector2D posicionCarta4;
-    private Vector2D posicionMazoDeRobo;
-    private MazoDeRobo mazo;
-    private boolean puedoRobar=false;
+    private CardHumano carta1;
+    private CardHumano carta2;
+    private CardHumano carta3;
+    private CardHumano carta4;
+    protected Vector2D posicionCarta1;
+    protected Vector2D posicionCarta2;
+    protected Vector2D posicionCarta3;
+    protected Vector2D posicionCarta4;
+    protected Vector2D posicionMazoDeRobo;
+    protected MazoDeRobo mazo;
+    protected boolean puedoRobar=false;
+
+    protected boolean funcionando;
     private static CartaSimple cartaJugada=new CartaSimple();
-    private boolean funcionando;
 
     public JugadorHumano(CartaSimple[] csv){
         //Posicion de carta 1
-        this.posicionCarta1=new Vector2D(Card.getAnchuraCarta()*(3.25),Card.getAlturaCarta()*(2.65));
+        this.posicionCarta1=new Vector2D(CardHumano.getAnchuraCarta()*(3.25), CardHumano.getAlturaCarta()*(2.65));
 
         //Posicion de carta 2
-        this.posicionCarta2=new Vector2D(Card.getAnchuraCarta()*(4.75),Card.getAlturaCarta()*(2.65));
+        this.posicionCarta2=new Vector2D(CardHumano.getAnchuraCarta()*(4.75), CardHumano.getAlturaCarta()*(2.65));
 
         //Posicion de carta 3
-        this.posicionCarta3=new Vector2D(Card.getAnchuraCarta()*(6.25),Card.getAlturaCarta()*(2.65));
+        this.posicionCarta3=new Vector2D(CardHumano.getAnchuraCarta()*(6.25), CardHumano.getAlturaCarta()*(2.65));
 
         //Posicion de carta 4
-        this.posicionCarta4=new Vector2D(Card.getAnchuraCarta()*(7.75),Card.getAlturaCarta()*(2.65));
+        this.posicionCarta4=new Vector2D(CardHumano.getAnchuraCarta()*(7.75), CardHumano.getAlturaCarta()*(2.65));
 
         //Posicion del mazo para robar
-        this.posicionMazoDeRobo=new Vector2D(Card.getAnchuraCarta()*(9.25),Card.getAlturaCarta()*(2.65));
+        this.posicionMazoDeRobo=new Vector2D(CardHumano.getAnchuraCarta()*(9.25), CardHumano.getAlturaCarta()*(2.65));
 
 
-        this.mazo=new MazoDeRobo(this.posicionMazoDeRobo,csv,this);
+        this.mazo=new MazoDeRoboHumano(this.posicionMazoDeRobo,csv,this);
         this.puedoRobar=false;
 
-        this.carta1=new Card(this.mazo.robarCata(),this.posicionCarta1);
-        this.carta2=new Card(this.mazo.robarCata(),this.posicionCarta2);
-        this.carta3=new Card(this.mazo.robarCata(),this.posicionCarta3);
-        this.carta4=new Card(this.mazo.robarCata(),this.posicionCarta4);
+        this.carta1=new CardHumano(this.mazo.robarCata(),this.posicionCarta1);
+        this.carta2=new CardHumano(this.mazo.robarCata(),this.posicionCarta2);
+        this.carta3=new CardHumano(this.mazo.robarCata(),this.posicionCarta3);
+        this.carta4=new CardHumano(this.mazo.robarCata(),this.posicionCarta4);
         JugadorHumano.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
-    }
-    public boolean getPuedoRobar(){
-        return this.puedoRobar;
     }
     public static CartaSimple getCartaJugada(){
         return JugadorHumano.cartaJugada;
@@ -57,25 +54,6 @@ public class JugadorHumano implements Runnable{
     public static void setCartaJugada(int s, int v){
         JugadorHumano.cartaJugada.setSuit(s);
         JugadorHumano.cartaJugada.setValue(v);
-    }
-    public Card primeraCartaYaJugada(){
-        if(carta1.getYaJugada()){
-            carta1.setYaJugada(false);
-            return carta1;
-        }
-        if(carta2.getYaJugada()){
-            carta2.setYaJugada(false);
-            return carta2;
-        }
-        if(carta3.getYaJugada()){
-            carta3.setYaJugada(false);
-            return carta3;
-        }
-        if(carta4.getYaJugada()){
-            carta4.setYaJugada(false);
-            return carta4;
-        }
-        return null;
     }
 
     public static MazoDeApilar getMazoDeApilar1() {
@@ -100,20 +78,43 @@ public class JugadorHumano implements Runnable{
             return true;
         }
     }
+    public CardHumano primeraCartaYaJugada(){
+        if(carta1.getYaJugada()){
+            carta1.setYaJugada(false);
+            return carta1;
+        }
+        if(carta2.getYaJugada()){
+            carta2.setYaJugada(false);
+            return carta2;
+        }
+        if(carta3.getYaJugada()){
+            carta3.setYaJugada(false);
+            return carta3;
+        }
+        if(carta4.getYaJugada()){
+            carta4.setYaJugada(false);
+            return carta4;
+        }
+        return null;
+    }
     public CartaSimple solucionarBloqueo(){
         if(!this.mazo.estaVacio()){
             return this.mazo.robarCata();
         }else{
             if(!this.carta4.getYaJugada()){
                 this.carta4.setYaJugada(true);
+                this.carta4.setMeTienen(false);
                 return this.carta4.CartaACartaSimple();
             }else if(!this.carta3.getYaJugada()){
                 this.carta3.setYaJugada(true);
+                this.carta3.setMeTienen(false);
                 return this.carta3.CartaACartaSimple();
             }else if(!this.carta2.getYaJugada()){
                 this.carta2.setYaJugada(true);
+                this.carta2.setMeTienen(false);
                 return this.carta2.CartaACartaSimple();
             }else if(!this.carta1.getYaJugada()){
+                this.carta1.setMeTienen(false);
                 this.carta1.setYaJugada(true);
                 return this.carta1.CartaACartaSimple();
             }else{

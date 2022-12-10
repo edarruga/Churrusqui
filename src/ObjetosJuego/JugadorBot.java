@@ -6,35 +6,36 @@ import Matematica.Vector2D;
 import java.awt.*;
 
 public class JugadorBot implements Runnable{
+
     private CardBot carta1;
     private CardBot carta2;
     private CardBot carta3;
     private CardBot carta4;
-    private Vector2D posicionCarta1;
-    private Vector2D posicionCarta2;
-    private Vector2D posicionCarta3;
-    private Vector2D posicionCarta4;
-    private Vector2D posicionMazoDeRobo;
-    private MazoDeRoboBot mazo;
-    private boolean puedoRobar=false;
+    protected Vector2D posicionCarta1;
+    protected Vector2D posicionCarta2;
+    protected Vector2D posicionCarta3;
+    protected Vector2D posicionCarta4;
+    protected Vector2D posicionMazoDeRobo;
+    protected MazoDeRobo mazo;
+    protected boolean puedoRobar=false;
+    protected boolean funcionando;
     private boolean puedoJugar=true;
-    private boolean funcionando;
 
     public JugadorBot(CartaSimple[] csv){
         //Posicion de carta 1
-        this.posicionCarta1=new Vector2D(Card.getAnchuraCarta()*(7.75),Card.getAlturaCarta()*(0.15));
+        this.posicionCarta1=new Vector2D(CardHumano.getAnchuraCarta()*(7.75), CardHumano.getAlturaCarta()*(0.15));
 
         //Posicion de carta 2
-        this.posicionCarta2=new Vector2D(Card.getAnchuraCarta()*(6.25),Card.getAlturaCarta()*(0.15));
+        this.posicionCarta2=new Vector2D(CardHumano.getAnchuraCarta()*(6.25), CardHumano.getAlturaCarta()*(0.15));
 
         //Posicion de carta 3
-        this.posicionCarta3=new Vector2D(Card.getAnchuraCarta()*(4.75),Card.getAlturaCarta()*(0.15));
+        this.posicionCarta3=new Vector2D(CardHumano.getAnchuraCarta()*(4.75), CardHumano.getAlturaCarta()*(0.15));
 
         //Posicion de carta 4
-        this.posicionCarta4=new Vector2D(Card.getAnchuraCarta()*(3.25),Card.getAlturaCarta()*(0.15));
+        this.posicionCarta4=new Vector2D(CardHumano.getAnchuraCarta()*(3.25), CardHumano.getAlturaCarta()*(0.15));
 
         //Posicion del mazo para robar
-        this.posicionMazoDeRobo=new Vector2D(Card.getAnchuraCarta()*(1.75),Card.getAlturaCarta()*(0.15));
+        this.posicionMazoDeRobo=new Vector2D(CardHumano.getAnchuraCarta()*(1.75), CardHumano.getAlturaCarta()*(0.15));
 
 
         this.mazo=new MazoDeRoboBot(this.posicionMazoDeRobo,csv,this);
@@ -45,6 +46,9 @@ public class JugadorBot implements Runnable{
         this.carta3=new CardBot(this.mazo.robarCata(),this.posicionCarta3);
         this.carta4=new CardBot(this.mazo.robarCata(),this.posicionCarta4);
         JugadorHumano.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+    }
+    public boolean getPuedoJugar(){
+        return this.puedoJugar;
     }
     public CardBot primeraCartaYaJugada(){
         if(carta1.getYaJugada()){
@@ -65,8 +69,42 @@ public class JugadorBot implements Runnable{
         }
         return null;
     }
-    public boolean getPuedoJugar(){
-        return this.puedoJugar;
+    public boolean puedoJugar(){
+        if(!(EstadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+                && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public CartaSimple solucionarBloqueo(){
+        if(!this.mazo.estaVacio()){
+            return this.mazo.robarCata();
+        }else{
+            if(!this.carta4.getYaJugada()){
+                this.carta4.setYaJugada(true);
+                return this.carta4.CartaACartaSimple();
+            }else if(!this.carta3.getYaJugada()){
+                this.carta3.setYaJugada(true);
+                return this.carta3.CartaACartaSimple();
+            }else if(!this.carta2.getYaJugada()){
+                this.carta2.setYaJugada(true);
+                return this.carta2.CartaACartaSimple();
+            }else if(!this.carta1.getYaJugada()){
+                this.carta1.setYaJugada(true);
+                return this.carta1.CartaACartaSimple();
+            }else{
+                return new CartaSimple();
+            }
+        }
     }
 
     public void actualizar(){
@@ -133,22 +171,7 @@ public class JugadorBot implements Runnable{
         }
 
     }
-    public boolean puedoJugar(){
-        if(!(EstadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
-                && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
-                && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
-        {
-            return false;
-        }else{
-            return true;
-        }
-    }
+
     public boolean prueba(){
         return (
                 !(this.puedoRobar || (!this.puedoRobar && this.mazo.estaVacio()))
@@ -161,27 +184,6 @@ public class JugadorBot implements Runnable{
         this.carta3.dibujar(g);
         this.carta4.dibujar(g);
         this.mazo.dibujar(g);
-    }
-    public CartaSimple solucionarBloqueo(){
-        if(!this.mazo.estaVacio()){
-            return this.mazo.robarCata();
-        }else{
-            if(!this.carta4.getYaJugada()){
-                this.carta4.setYaJugada(true);
-                return this.carta4.CartaACartaSimple();
-            }else if(!this.carta3.getYaJugada()){
-                this.carta3.setYaJugada(true);
-                return this.carta3.CartaACartaSimple();
-            }else if(!this.carta2.getYaJugada()){
-                this.carta2.setYaJugada(true);
-                return this.carta2.CartaACartaSimple();
-            }else if(!this.carta1.getYaJugada()){
-                this.carta1.setYaJugada(true);
-                return this.carta1.CartaACartaSimple();
-            }else{
-                return new CartaSimple();
-            }
-        }
     }
 
     @Override
