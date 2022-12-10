@@ -35,7 +35,10 @@ public class EstadoJuego {
     private static boolean actualiza=false;
     public static boolean bloqueado=false;
     private static Graphics g;
-    protected BufferedImage texturaBloqueo;
+    private BufferedImage texturaBloqueo;
+    private BufferedImage victoria;
+    private BufferedImage derrota;
+    private static boolean finDePartida=false;
 
     //--------------Posiciones de las Cartas en el juego---------------//
     private static double ordenadaRival= CardHumano.getAlturaCarta()*(0.15);
@@ -71,12 +74,14 @@ public class EstadoJuego {
         this.jugadorHumano=new JugadorHumano(cs1);
         this.jugadorBot=new JugadorBot(cs2);
         this.texturaBloqueo=Loader.cargadorDeImagenes("recursos/Otros/Bloqueo.png", Card.getAnchuraCarta(), Card.getAnchuraCarta());
+        this.victoria=Loader.cargadorDeImagenes("recursos/Otros/Victoria.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
+        this.derrota=Loader.cargadorDeImagenes("recursos/Otros/Derrota.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
         hiloBloqueo=new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true){
                     //System.out.println("Que paso");
-                    System.out.println("Desde el run: "+EstadoJuego.bloqueado);
+                    //System.out.println("Desde el run: "+EstadoJuego.bloqueado);
                     if(EstadoJuego.bloqueado){
                         this.wait(5);
                         EstadoJuego.mazoDeApilar1.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorHumano.solucionarBloqueo());
@@ -101,6 +106,9 @@ public class EstadoJuego {
         hilo2.start();
 
     }
+    public static boolean getFinDePartida(){
+        return EstadoJuego.finDePartida;
+    }
     public static MazoDeApilar getMazoDeApilar1(){
         return mazoDeApilar1;
     }
@@ -114,33 +122,46 @@ public class EstadoJuego {
 
 
     public void actualizar(){
-        this.actualiza=true;
-        this.mazoDeApilar1.actualizar();
-        this.mazoDeApilar2.actualizar();
-        //System.out.println("ggggggggggggggggg");
-        this.actualiza=false;
-        //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
-        //System.out.println(EstadoJuego.bloqueado);
-        if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !EstadoJuego.bloqueado){
-            //System.out.println(this.jugadorBot.prueba());
-            //this.dibujar(g);
-            EstadoJuego.bloqueado=true;
-            System.out.println("Ce bloqueo");
+        if(EstadoJuego.jugadorHumano.getTerminado() || EstadoJuego.jugadorBot.getTerminado()){
+            this.finDePartida=true;
+        }else{
+            this.actualiza=true;
+            this.mazoDeApilar1.actualizar();
+            this.mazoDeApilar2.actualizar();
+            //System.out.println("ggggggggggggggggg");
+            this.actualiza=false;
+            //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
+            //System.out.println(EstadoJuego.bloqueado);
+            if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !EstadoJuego.bloqueado){
+                //System.out.println(this.jugadorBot.prueba());
+                //this.dibujar(g);
+                EstadoJuego.bloqueado=true;
+                System.out.println("Ce bloqueo");
 
+            }
         }
 
     }
 
     public void dibujar(Graphics g){
-        System.out.println("Desde el dibujar: "+EstadoJuego.bloqueado);
-        if(EstadoJuego.bloqueado){
-            g.drawImage(this.texturaBloqueo,((Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
+        if(!EstadoJuego.finDePartida){
+            //System.out.println("Desde el dibujar: "+EstadoJuego.bloqueado);
+            if(EstadoJuego.bloqueado){
+                g.drawImage(this.texturaBloqueo,((Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
+            }
+            this.g=g;
+            this.mazoDeApilar1.dibujar(g);
+            this.mazoDeApilar2.dibujar(g);
+            this.jugadorBot.dibujar(g);
+            this.jugadorHumano.dibujar(g);
+        }else{
+            if(EstadoJuego.jugadorHumano.getTerminado()){
+                g.drawImage(this.victoria,0,0,null);
+            }else{
+                g.drawImage(this.derrota,0,0,null);
+            }
         }
-        this.g=g;
-        this.mazoDeApilar1.dibujar(g);
-        this.mazoDeApilar2.dibujar(g);
-        this.jugadorBot.dibujar(g);
-        this.jugadorHumano.dibujar(g);
+
 
 
 

@@ -20,6 +20,7 @@ public class JugadorBot implements Runnable{
     protected boolean puedoRobar=false;
     protected boolean funcionando;
     private boolean puedoJugar=true;
+    private boolean terminado=false;
 
     public JugadorBot(CartaSimple[] csv){
         //Posicion de carta 1
@@ -168,8 +169,15 @@ public class JugadorBot implements Runnable{
             this.carta3.actualizar();
             this.carta4.actualizar();
             this.mazo.actualizar();
+            if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
+                this.terminado=true;
+            }
         }
 
+    }
+
+    public boolean getTerminado(){
+        return this.terminado;
     }
 
     public boolean prueba(){

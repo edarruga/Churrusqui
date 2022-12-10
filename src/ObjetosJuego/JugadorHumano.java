@@ -21,6 +21,7 @@ public class JugadorHumano implements Runnable{
 
     protected boolean funcionando;
     private static CartaSimple cartaJugada=new CartaSimple();
+    private boolean terminado=false;
 
     public JugadorHumano(CartaSimple[] csv){
         //Posicion de carta 1
@@ -138,6 +139,12 @@ public class JugadorHumano implements Runnable{
         this.carta3.actualizar();
         this.carta4.actualizar();
         this.mazo.actualizar();
+        if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
+            this.terminado=true;
+        }
+    }
+    public boolean getTerminado(){
+        return this.terminado;
     }
 
 
