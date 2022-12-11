@@ -22,6 +22,7 @@ public class JugadorHumano implements Runnable{
     protected boolean funcionando;
     private static CartaSimple cartaJugada=new CartaSimple();
     private boolean terminado=false;
+    private boolean churrusqui=false;
 
     public JugadorHumano(CartaSimple[] csv){
         //Posicion de carta 1
@@ -62,6 +63,12 @@ public class JugadorHumano implements Runnable{
     }
     public static MazoDeApilar getMazoDeApilar2(){
         return EstadoJuego.getMazoDeApilar2();
+    }
+    public void solicitarCurrusqui(){
+        this.churrusqui=EstadoJuego.solicitarChurrusqui();
+    }
+    public boolean getChurrusqui(){
+        return this.churrusqui;
     }
     public boolean puedoJugar(){
         if(!(EstadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
@@ -122,6 +129,12 @@ public class JugadorHumano implements Runnable{
                 return new CartaSimple();
             }
         }
+    }
+    public MazoDeRobo getMazo(){
+        return this.mazo;
+    }
+    public void setChurrusqui(boolean b){
+        this.churrusqui=b;
     }
 
     public void actualizar(){

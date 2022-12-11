@@ -32,6 +32,9 @@ public class Mazo {
         this.cards[n2]=this.cards[n];
         this.cards[n]=aux;
     }
+    public void setNum(int num){
+        this.num=num;
+    }
 
     public void shuffle(){
         //PRECONDITION: the deck must be initialized

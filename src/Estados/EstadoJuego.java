@@ -34,10 +34,12 @@ public class EstadoJuego {
     private Mazo mazo;
     private static boolean actualiza=false;
     public static boolean bloqueado=false;
+    private static boolean churrusqui=false;
     private static Graphics g;
     private BufferedImage texturaBloqueo;
     private BufferedImage victoria;
     private BufferedImage derrota;
+    private BufferedImage churrusquiImagen;
     private static boolean finDePartida=false;
 
     //--------------Posiciones de las Cartas en el juego---------------//
@@ -76,17 +78,45 @@ public class EstadoJuego {
         this.texturaBloqueo=Loader.cargadorDeImagenes("recursos/Otros/Bloqueo.png", Card.getAnchuraCarta(), Card.getAnchuraCarta());
         this.victoria=Loader.cargadorDeImagenes("recursos/Otros/Victoria.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
         this.derrota=Loader.cargadorDeImagenes("recursos/Otros/Derrota.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
+        this.churrusquiImagen=Loader.cargadorDeImagenes("recursos/Otros/Churrusqui.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
         hiloBloqueo=new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true){
                     //System.out.println("Que paso");
                     //System.out.println("Desde el run: "+EstadoJuego.bloqueado);
+                    System.out.print("");
                     if(EstadoJuego.bloqueado){
-                        this.wait(5);
+                        this.wait(4);
                         EstadoJuego.mazoDeApilar1.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorHumano.solucionarBloqueo());
                         EstadoJuego.mazoDeApilar2.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorBot.solucionarBloqueo());
                         EstadoJuego.bloqueado=false;
+                    }
+                    if(EstadoJuego.getChurrusqui()){
+                        this.wait(4);
+                        if(EstadoJuego.jugadorHumano.getChurrusqui()){
+                            if(EstadoJuego.esCorrectoElChurrusqui()){
+                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
+                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
+                            }else{
+                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
+                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
+                            }
+                        }else{
+                            if(EstadoJuego.esCorrectoElChurrusqui()){
+                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
+                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
+                            }else{
+                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
+                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
+                            }
+                        }
+                        EstadoJuego.mazoDeApilar1.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorHumano.solucionarBloqueo());
+                        EstadoJuego.mazoDeApilar2.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorBot.solucionarBloqueo());
+                        EstadoJuego.jugadorBot.setChurrusqui(false);
+                        EstadoJuego.jugadorHumano.setChurrusqui(false);
+                        EstadoJuego.churrusqui=false;
+
                     }
                 }
             }
@@ -119,6 +149,23 @@ public class EstadoJuego {
     public static boolean getActualizar() {
         return EstadoJuego.actualiza;
     }
+    public static boolean getChurrusqui(){
+        return EstadoJuego.churrusqui;
+    }
+    public synchronized static boolean solicitarChurrusqui(){
+        if(!EstadoJuego.jugadorBot.getChurrusqui() && !EstadoJuego.jugadorHumano.getChurrusqui()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static boolean esCorrectoElChurrusqui(){
+        if(EstadoJuego.mazoDeApilar1.getUltimaCarta().getValue()==EstadoJuego.mazoDeApilar2.getUltimaCarta().getValue()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     public void actualizar(){
@@ -128,17 +175,23 @@ public class EstadoJuego {
             this.actualiza=true;
             this.mazoDeApilar1.actualizar();
             this.mazoDeApilar2.actualizar();
-            //System.out.println("ggggggggggggggggg");
+            if(EstadoJuego.jugadorHumano.getChurrusqui() || EstadoJuego.jugadorBot.getChurrusqui()){
+                EstadoJuego.churrusqui=true;
+            }
             this.actualiza=false;
             //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
             //System.out.println(EstadoJuego.bloqueado);
-            if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !EstadoJuego.bloqueado){
-                //System.out.println(this.jugadorBot.prueba());
-                //this.dibujar(g);
-                EstadoJuego.bloqueado=true;
-                System.out.println("Ce bloqueo");
+            if(!EstadoJuego.churrusqui){
+                if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !EstadoJuego.bloqueado){
+                    //System.out.println(this.jugadorBot.prueba());
+                    //this.dibujar(g);
+                    EstadoJuego.bloqueado=true;
+                    //System.out.println("Ce bloqueo");
 
+                }
             }
+
+
         }
 
     }
@@ -146,12 +199,15 @@ public class EstadoJuego {
     public void dibujar(Graphics g){
         if(!EstadoJuego.finDePartida){
             //System.out.println("Desde el dibujar: "+EstadoJuego.bloqueado);
-            if(EstadoJuego.bloqueado){
+            if(EstadoJuego.bloqueado && !EstadoJuego.getChurrusqui()){
                 g.drawImage(this.texturaBloqueo,((Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
             }
             this.g=g;
             this.mazoDeApilar1.dibujar(g);
             this.mazoDeApilar2.dibujar(g);
+            if(EstadoJuego.getChurrusqui()){
+                g.drawImage(this.churrusquiImagen,0,0,null);
+            }
             this.jugadorBot.dibujar(g);
             this.jugadorHumano.dibujar(g);
         }else{
@@ -161,9 +217,6 @@ public class EstadoJuego {
                 g.drawImage(this.derrota,0,0,null);
             }
         }
-
-
-
 
     }
 

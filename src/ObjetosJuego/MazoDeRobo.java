@@ -17,6 +17,9 @@ public abstract class MazoDeRobo extends ObjetoJuego{
     public CartaSimple robarCata(){
         return this.mazo.giveCard();
     }
+    public void aniadirCartas(CartaSimple[] csv){
+        this.mazo.insertarCartasSimples(csv);
+    }
     public boolean estaVacio(){
         if(this.mazo.getNum()==0){
             return true;

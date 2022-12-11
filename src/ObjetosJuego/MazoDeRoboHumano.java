@@ -1,5 +1,6 @@
 package ObjetosJuego;
 
+import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import graficos.Loader;
 import input.MouseInput;
@@ -19,7 +20,7 @@ public class MazoDeRoboHumano extends MazoDeRobo{
     @Override
     public void actualizar() {
 
-        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
+        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY) && !EstadoJuego.getChurrusqui()){
             if(MouseInput.clickEnMazoDeRobo){
                 CardHumano c=this.jugadorHumano.primeraCartaYaJugada();
                 if(c!=null && !this.estaVacio()){

@@ -1,5 +1,6 @@
 package ObjetosJuego;
 
+import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import graficos.Loader;
 
@@ -38,12 +39,21 @@ public abstract class MazoDeApilar extends ObjetoJuego{
         }
         return false;
     }
+    public CartaSimple[] darCartas(){
+        CartaSimple[] cartasSimples=new CartaSimple[this.mazo.getNum()];
+        int i=0;
+        while (this.mazo.getNum()!=0){
+            cartasSimples[i]=this.mazo.giveCard();
+            i++;
+        }
+        return cartasSimples;
+    }
     public void aniadirNuevaCartaAlaFuerza(CartaSimple cs){
         this.mazo.insertarCartaSimple(cs);
         this.seModifico=true;
     }
     public synchronized boolean esJugable(CartaSimple cNueva){
-        if(this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)){
+        if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !EstadoJuego.getChurrusqui()){
             return true;
         }
         return false;
