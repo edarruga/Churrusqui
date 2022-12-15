@@ -19,7 +19,7 @@ public class EstadoFinDePartida extends Estado{
         }else{
             this.resultado=Assets.Derrota;
         }
-        this.volver=new Boton(Assets.BotonCremaOut,
+        this.volver=new Boton(Assets.BotonGrisOut,
                 Assets.BotonGrisIn,
                 Window.getAnchuraVentana() / 2 - Assets.BotonBlancoIn.getWidth() / 2,
                 Window.getAlturaVentana() / 2 + Assets.BotonBlancoIn.getHeight() * (6/2) + Assets.BotonBlancoIn.getHeight()/2,
