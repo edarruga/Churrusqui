@@ -15,6 +15,7 @@ public class MouseInput extends MouseAdapter {
     public static boolean dentroDePila1=false;
     public static boolean dentroDePila2=false;
     public static boolean clickEnMazoDeRobo =false;
+    public static boolean arrastrando=false;
 
 
     @Override
@@ -38,7 +39,7 @@ public class MouseInput extends MouseAdapter {
             }
             botonIzquierdo=false;
             MouseInput.tengoCarta=false;
-
+            arrastrando=false;
             //System.out.println("Se ha desclicado el boton izquierdo en la posicion X: "+e.getX()+" ,Y: "+e.getY());
         }
     }
@@ -47,6 +48,7 @@ public class MouseInput extends MouseAdapter {
     public void mouseDragged(MouseEvent e) {
         RatonX=e.getX();
         RatonY=e.getY();
+        arrastrando=true;
         //System.out.println("mouseDraggrd");
     }
 

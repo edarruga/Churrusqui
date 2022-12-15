@@ -2,6 +2,9 @@ package graficos;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.*;
 
@@ -32,5 +35,20 @@ public class Loader {//No crearemos ningún objeto de esta clase solo proporcion
 		graphics2D.drawImage(imageToRotate, null, 0, 0);
 
 		return newImageFromBuffer;
+	}
+	public static Font loadFont(String ruta,double tamaño){
+		try {
+			//return new Font(ruta,Font.PLAIN,tamaño);
+			InputStream is = new FileInputStream(ruta);
+			Font fuente = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(Font.PLAIN, (float) tamaño);
+			return fuente;
+			//return Font.createFont(Font.TRUETYPE_FONT,Loader.class.getResourceAsStream(ruta)).deriveFont(Font.PLAIN,tamaño);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

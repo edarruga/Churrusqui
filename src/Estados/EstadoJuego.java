@@ -2,13 +2,14 @@ package Estados;
 
 import Matematica.Vector2D;
 import ObjetosJuego.*;
+import graficos.Assets;
 import graficos.Loader;
 import principal.Window;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class EstadoJuego {
+public class EstadoJuego extends Estado{
     private CardHumano pila1;
     private CardHumano pila2;
 
@@ -35,12 +36,6 @@ public class EstadoJuego {
     private static boolean actualiza=false;
     public static boolean bloqueado=false;
     private static boolean churrusqui=false;
-    private static Graphics g;
-    private BufferedImage texturaBloqueo;
-    private BufferedImage victoria;
-    private BufferedImage derrota;
-    private BufferedImage churrusquiImagen;
-    private static boolean finDePartida=false;
 
     //--------------Posiciones de las Cartas en el juego---------------//
     private static double ordenadaRival= CardHumano.getAlturaCarta()*(0.15);
@@ -75,10 +70,6 @@ public class EstadoJuego {
         this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)));
         this.jugadorHumano=new JugadorHumano(cs1);
         this.jugadorBot=new JugadorBot(cs2);
-        this.texturaBloqueo=Loader.cargadorDeImagenes("recursos/Otros/Bloqueo.png", Card.getAnchuraCarta(), Card.getAnchuraCarta());
-        this.victoria=Loader.cargadorDeImagenes("recursos/Otros/Victoria.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
-        this.derrota=Loader.cargadorDeImagenes("recursos/Otros/Derrota.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
-        this.churrusquiImagen=Loader.cargadorDeImagenes("recursos/Otros/Churrusqui.png",Window.getAnchuraVentana(),Window.getAlturaVentana());
         hiloBloqueo=new Thread(new Runnable() {
             @Override
             public void run() {
@@ -136,9 +127,6 @@ public class EstadoJuego {
         hilo2.start();
 
     }
-    public static boolean getFinDePartida(){
-        return EstadoJuego.finDePartida;
-    }
     public static MazoDeApilar getMazoDeApilar1(){
         return mazoDeApilar1;
     }
@@ -170,7 +158,7 @@ public class EstadoJuego {
 
     public void actualizar(){
         if(EstadoJuego.jugadorHumano.getTerminado() || EstadoJuego.jugadorBot.getTerminado()){
-            this.finDePartida=true;
+            Estado.cambiarEstado(new EstadoFinDePartida(EstadoJuego.jugadorHumano.getTerminado()));//Termina la partida
         }else{
             this.actualiza=true;
             this.mazoDeApilar1.actualizar();
@@ -197,26 +185,16 @@ public class EstadoJuego {
     }
 
     public void dibujar(Graphics g){
-        if(!EstadoJuego.finDePartida){
-            //System.out.println("Desde el dibujar: "+EstadoJuego.bloqueado);
-            if(EstadoJuego.bloqueado && !EstadoJuego.getChurrusqui()){
-                g.drawImage(this.texturaBloqueo,((Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
-            }
-            this.g=g;
-            this.mazoDeApilar1.dibujar(g);
-            this.mazoDeApilar2.dibujar(g);
-            if(EstadoJuego.getChurrusqui()){
-                g.drawImage(this.churrusquiImagen,0,0,null);
-            }
-            this.jugadorBot.dibujar(g);
-            this.jugadorHumano.dibujar(g);
-        }else{
-            if(EstadoJuego.jugadorHumano.getTerminado()){
-                g.drawImage(this.victoria,0,0,null);
-            }else{
-                g.drawImage(this.derrota,0,0,null);
-            }
+        if(EstadoJuego.bloqueado && !EstadoJuego.getChurrusqui()){
+            g.drawImage(Assets.Bloqueo,((Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
         }
+        this.mazoDeApilar1.dibujar(g);
+        this.mazoDeApilar2.dibujar(g);
+        if(EstadoJuego.getChurrusqui()){
+            g.drawImage(Assets.Churrusqui,0,0,null);
+        }
+        this.jugadorBot.dibujar(g);
+        this.jugadorHumano.dibujar(g);
 
     }
 

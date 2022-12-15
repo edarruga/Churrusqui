@@ -1,8 +1,12 @@
 package ObjetosJuego;
 
+import Componentes.Accion;
+import Componentes.Boton;
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
+import graficos.Assets;
 import input.MouseInput;
+import principal.Window;
 
 import java.awt.*;
 
@@ -22,7 +26,8 @@ public class JugadorHumano implements Runnable{
     protected boolean funcionando;
     private static CartaSimple cartaJugada=new CartaSimple();
     private boolean terminado=false;
-    private boolean churrusqui=false;
+    private static boolean churrusqui=false;
+    private Boton boton;
 
     public JugadorHumano(CartaSimple[] csv){
         //Posicion de carta 1
@@ -49,6 +54,20 @@ public class JugadorHumano implements Runnable{
         this.carta3=new CardHumano(this.mazo.robarCata(),this.posicionCarta3);
         this.carta4=new CardHumano(this.mazo.robarCata(),this.posicionCarta4);
         JugadorHumano.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+        this.boton=new Boton(Assets.BotonBlancoOut,
+                Assets.BotonBlancoIn,
+                (int)(CardHumano.getAnchuraCarta()*(0.75)),
+                Window.getAlturaVentana() / 2 + Assets.BotonBlancoIn.getHeight() * (6/2) + Assets.BotonBlancoIn.getHeight(),
+                "CHURRUSQUI",
+                new Accion() {
+                    @Override
+                    public void hacerAccion() {
+                        if(!EstadoJuego.bloqueado){
+                            JugadorHumano.solicitarCurrusqui();
+                        }
+                    }
+                }
+        );
     }
     public static CartaSimple getCartaJugada(){
         return JugadorHumano.cartaJugada;
@@ -64,8 +83,8 @@ public class JugadorHumano implements Runnable{
     public static MazoDeApilar getMazoDeApilar2(){
         return EstadoJuego.getMazoDeApilar2();
     }
-    public void solicitarCurrusqui(){
-        this.churrusqui=EstadoJuego.solicitarChurrusqui();
+    public static void solicitarCurrusqui(){
+        churrusqui=EstadoJuego.solicitarChurrusqui();
     }
     public boolean getChurrusqui(){
         return this.churrusqui;
@@ -152,6 +171,7 @@ public class JugadorHumano implements Runnable{
         this.carta3.actualizar();
         this.carta4.actualizar();
         this.mazo.actualizar();
+        this.boton.actualizar();
         if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
             this.terminado=true;
         }
@@ -163,6 +183,7 @@ public class JugadorHumano implements Runnable{
 
     public void dibujar(Graphics g){
         this.mazo.dibujar(g);
+        this.boton.dibujar(g);
         if(this.carta1.getMeTienen()){
             this.carta2.dibujar(g);
             this.carta3.dibujar(g);

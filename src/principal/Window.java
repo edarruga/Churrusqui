@@ -1,6 +1,8 @@
 package principal;
 
+import Estados.Estado;
 import Estados.EstadoJuego;
+import Estados.EstadoMenu;
 import graficos.Assets;
 import input.MouseInput;
 
@@ -22,7 +24,6 @@ public class Window extends JFrame implements Runnable{
     private double tiempoTranscurrido=0;//Almacenamos el tiempo que transcurra en el programa
     private int promedioFPS=FPS;//Nos permitirá conocer a cuantos FPS esta funcionado la aplicación
 
-    private EstadoJuego estadoJuego;
     private MouseInput mouseinput;
     public Window(){
         setTitle("Churrusqui");//Titulo de la ventana
@@ -48,7 +49,7 @@ public class Window extends JFrame implements Runnable{
     }
 
     private void actualizar(){
-        this.estadoJuego.actualizar();
+        Estado.getEstadoActual().actualizar();
 
     }
     public static Graphics getGraficos(){
@@ -66,13 +67,13 @@ public class Window extends JFrame implements Runnable{
         g.setColor(Color.white);
         g.fillRect(0,0,anchuraVentana,alturaVentana);
 
-
         g.drawImage(Assets.fondo,0,0,null);
-        this.estadoJuego.dibujar(g);
-        
-        g.drawString("FPS: "+promedioFPS,10,10); //Dibuja el contador de fotogramas
-        g.drawString("Anchura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().width,10,20);
-        g.drawString("Altura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().height,10,30);
+        Estado.getEstadoActual().dibujar(g);
+        g.setColor(Color.white);
+        g.setFont(Assets.propiedades);
+        g.drawString("FPS: "+promedioFPS,10,15); //Dibuja el contador de fotogramas
+        g.drawString("Anchura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().width,10,27);
+        g.drawString("Altura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().height,10,42);
         //----Termina de dibujar----
         g.dispose();
         bs.show();
@@ -80,7 +81,7 @@ public class Window extends JFrame implements Runnable{
     
     public void iniciar() {
     	Assets.iniciar();
-        this.estadoJuego=new EstadoJuego();
+        Estado.cambiarEstado(new EstadoMenu());
     }
 
     @Override
