@@ -37,7 +37,7 @@ public class Buscador extends Thread{
 	public void run(){
 		try{
 			this.servidor=new ServerSocket(9999);
-
+			System.out.println("1");
 			File file=new File("prueba.txt");
 			String ruta = null;
 			ruta = file.getAbsolutePath();
@@ -45,6 +45,7 @@ public class Buscador extends Thread{
 			DataInputStream dis=null;
 			byte buff[]=this.mensaje.getBytes();
 			String broadcast="255.255.255.255";
+			System.out.println("2");
 			try {
 				Runtime.getRuntime().exec("cmd /c start cmd.exe /C \" ipconfig > "+ruta);
 				Thread.sleep(1000);//Tiene que esperar hasta que se cree el fichero
@@ -53,12 +54,14 @@ public class Buscador extends Thread{
 				while(!linea.contains("IPv4")) {
 					linea=dis.readLine();
 				}
+				System.out.println("3");
 				String ip=linea.split(": ")[1];
 				this.ip=ip;
 				linea=dis.readLine();
 				String mascara=linea.split(": ")[1];
 				String red=Buscador.calculadorRed(ip, mascara);
 				this.broadcast=Buscador.calculadorBroadcast(red, mascara);
+				System.out.println("4");
 				//System.out.println(ip);
 				//System.out.println(mascara);
 				//System.out.println(red);
@@ -78,17 +81,22 @@ public class Buscador extends Thread{
 					e.printStackTrace();
 				}
 			}
+			System.out.println("5");
 			Enlazador enlazador=new Enlazador(this);
 			enlazador.start();
+			System.out.println("6");
 			Trazador trazador=new Trazador(this);
 			trazador.start();
+			System.out.println("7");
 			this.mandarBroadcast();
+			System.out.println("8");
 			try {
 				trazador.join();
 				enlazador.join();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			System.out.println("9");
 			System.out.println("finalizado= "+this.finalizado+" | rival= "+this.rival+" | cliente= "+this.cliente);
 			if(!this.finalizado && this.rival!=null && this.cliente!=null){
 				System.out.println("Entro");
