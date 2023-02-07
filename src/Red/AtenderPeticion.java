@@ -26,13 +26,13 @@ public class AtenderPeticion implements Runnable{
 				System.out.println("Continua:"+respuesta);
 				if(respuesta.equals("BuscoRival")) {
 					if(!this.b.getEnlazado()) {
-						this.b.setEnlazado(true);
 						ps.print("OK\r\n");
 						ps.print("BuscoRival\r\n");
 						respuesta=dis.readLine();
 						System.out.println("Continua 2:"+respuesta);
 						if(respuesta.equals("OK") && !this.b.getEnlazado()) {
 							this.b.cliente=new Socket(this.socket.getInetAddress(),9999);
+							this.b.setEnlazado(true);
 							this.b.rival=this.socket.getInetAddress().getHostAddress();
 							System.out.println("Atender: "+this.b.rival);
 							//=========================================
