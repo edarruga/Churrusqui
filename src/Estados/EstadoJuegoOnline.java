@@ -27,11 +27,13 @@ public class EstadoJuegoOnline extends EstadoJuego{
                 cs1[i]=mazo.giveCard();
                 //cs1[i].showCard();
             }
+            this.mazodeApilar1Simple=new Mazo();
             this.mazodeApilar1Simple.insertarCartaSimple(mazo.giveCard());
             for(int i=0;i<19;i++){
                 cs2[i]=mazo.giveCard();
                 //cs2[i].showCard();
             }
+            this.mazodeApilar2Simple=new Mazo();
             this.mazodeApilar2Simple.insertarCartaSimple(mazo.giveCard());
 
             this.yoSimple=new JugadorSimple(cs1);
