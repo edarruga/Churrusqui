@@ -1,9 +1,11 @@
 package principal;
 
 import Estados.Estado;
+import Estados.EstadoBuscandoPartida;
 import Estados.EstadoJuego;
 import Estados.EstadoMenu;
 import graficos.Assets;
+import input.KeyBoardInput;
 import input.MouseInput;
 
 import javax.swing.*;
@@ -16,6 +18,7 @@ public class Window extends JFrame implements Runnable{
     private static final int alturaVentana = Toolkit.getDefaultToolkit().getScreenSize().height; //altura de la ventana
     private Canvas canvas;//Lienzo de dibujado
     private Thread hilo; //Hilo encargado de mostrar la ventana
+    private Thread contador;
     private boolean funcionando = false;//Controlar si el hilo tiene que estar funcionando o tine que parar
     private BufferStrategy bs;//Para organizar la memoria
     private static Graphics g;//permiten que una aplicación se dibuje en componentes que se realizan en varios dispositivos, así como en imágenes fuera de pantalla
@@ -25,6 +28,7 @@ public class Window extends JFrame implements Runnable{
     private int promedioFPS=FPS;//Nos permitirá conocer a cuantos FPS esta funcionado la aplicación
 
     private MouseInput mouseinput;
+    private KeyBoardInput keyBoardInput;
     public Window(){
         setTitle("Churrusqui");//Titulo de la ventana
         setSize(anchuraVentana,alturaVentana);//Definimos las dimensiones de la ventana
@@ -35,6 +39,7 @@ public class Window extends JFrame implements Runnable{
 
         canvas=new Canvas();//Creamos el lienzo
         mouseinput=new MouseInput();
+        keyBoardInput=new KeyBoardInput();
         canvas.setPreferredSize(new Dimension(anchuraVentana,alturaVentana));
         canvas.setMaximumSize(new Dimension(anchuraVentana,alturaVentana));
         canvas.setMinimumSize(new Dimension(anchuraVentana,alturaVentana));
@@ -43,6 +48,7 @@ public class Window extends JFrame implements Runnable{
         add(canvas);//añadimos el canvas
         canvas.addMouseListener(mouseinput);
         canvas.addMouseMotionListener(mouseinput);
+        canvas.addKeyListener(keyBoardInput);
     }
     public static void main(String[] args){
         new Window().empezar();
@@ -120,7 +126,25 @@ public class Window extends JFrame implements Runnable{
     private void empezar(){
         hilo=new Thread(this);
         this.hilo.start();
+
         funcionando=true;//Permitimos que el hilo pueda funcionar
+
+        this.contador= new Thread() {
+
+            @Override
+            public void run() {
+                while(true){
+                    EstadoJuego.wait(1);
+                    if(EstadoBuscandoPartida.contador ==3){
+                        EstadoBuscandoPartida.contador =0;
+                    }else{
+                        EstadoBuscandoPartida.contador++;
+                    }
+
+                }
+            }
+        };
+        this.contador.start();
     }
 
     private void terminar() {

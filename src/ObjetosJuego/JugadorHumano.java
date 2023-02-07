@@ -1,6 +1,7 @@
 package ObjetosJuego;
 
 import Componentes.Accion;
+import Componentes.Accion2;
 import Componentes.Boton;
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
@@ -21,6 +22,7 @@ public class JugadorHumano implements Runnable{
     protected Vector2D posicionCarta4;
     protected Vector2D posicionMazoDeRobo;
     protected MazoDeRobo mazo;
+    private EstadoJuego estadoJuego;
     protected boolean puedoRobar=false;
 
     protected boolean funcionando;
@@ -29,7 +31,7 @@ public class JugadorHumano implements Runnable{
     private static boolean churrusqui=false;
     private Boton boton;
 
-    public JugadorHumano(CartaSimple[] csv){
+    public JugadorHumano(CartaSimple[] csv,EstadoJuego es){
         //Posicion de carta 1
         this.posicionCarta1=new Vector2D(CardHumano.getAnchuraCarta()*(3.25), CardHumano.getAlturaCarta()*(2.65));
 
@@ -49,24 +51,20 @@ public class JugadorHumano implements Runnable{
         this.mazo=new MazoDeRoboHumano(this.posicionMazoDeRobo,csv,this);
         this.puedoRobar=false;
 
-        this.carta1=new CardHumano(this.mazo.robarCata(),this.posicionCarta1);
-        this.carta2=new CardHumano(this.mazo.robarCata(),this.posicionCarta2);
-        this.carta3=new CardHumano(this.mazo.robarCata(),this.posicionCarta3);
-        this.carta4=new CardHumano(this.mazo.robarCata(),this.posicionCarta4);
-        JugadorHumano.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+        this.carta1=new CardHumano(this.mazo.robarCata(),this.posicionCarta1,this);
+        this.carta2=new CardHumano(this.mazo.robarCata(),this.posicionCarta2,this);
+        this.carta3=new CardHumano(this.mazo.robarCata(),this.posicionCarta3,this);
+        this.carta4=new CardHumano(this.mazo.robarCata(),this.posicionCarta4,this);
+
+        this.estadoJuego=es;
+
+        this.estadoJuego.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
         this.boton=new Boton(Assets.BotonBlancoOut,
                 Assets.BotonBlancoIn,
                 (int)(CardHumano.getAnchuraCarta()*(0.75)),
                 Window.getAlturaVentana() / 2 + Assets.BotonBlancoIn.getHeight() * (6/2) + Assets.BotonBlancoIn.getHeight(),
                 "CHURRUSQUI",
-                new Accion() {
-                    @Override
-                    public void hacerAccion() {
-                        if(!EstadoJuego.bloqueado){
-                            JugadorHumano.solicitarCurrusqui();
-                        }
-                    }
-                }
+                new Accion2(this.estadoJuego)
         );
     }
     public static CartaSimple getCartaJugada(){
@@ -77,27 +75,25 @@ public class JugadorHumano implements Runnable{
         JugadorHumano.cartaJugada.setValue(v);
     }
 
-    public static MazoDeApilar getMazoDeApilar1() {
-        return EstadoJuego.getMazoDeApilar1();
-    }
-    public static MazoDeApilar getMazoDeApilar2(){
-        return EstadoJuego.getMazoDeApilar2();
-    }
-    public static void solicitarCurrusqui(){
-        churrusqui=EstadoJuego.solicitarChurrusqui();
+    public synchronized void solicitarCurrusqui(){
+        if(!this.estadoJuego.churrusqui){
+            if(this.estadoJuego.solicitarChurrusqui()){
+                JugadorHumano.churrusqui=true;
+            }
+        }
     }
     public boolean getChurrusqui(){
-        return this.churrusqui;
+        return JugadorHumano.churrusqui;
     }
     public boolean puedoJugar(){
-        if(!(EstadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
-        && !(EstadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+        if(!(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+        && !(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
         && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
         {
             return false;
@@ -155,8 +151,20 @@ public class JugadorHumano implements Runnable{
     public void setChurrusqui(boolean b){
         this.churrusqui=b;
     }
+    public MazoDeApilar getMazoDeApilar1(){
+        return this.estadoJuego.getMazoDeApilar1();
+    }
+    public MazoDeApilar getMazoDeApilar2(){
+        return this.estadoJuego.getMazoDeApilar2();
+    }
+    public EstadoJuego getEstadoJuego(){
+        return this.estadoJuego;
+    }
 
     public void actualizar(){
+        if(this.estadoJuego.finDeJuego){
+            EstadoJuego.wait(5);
+        }
         if(!MouseInput.tengoCarta){
             JugadorHumano.cartaJugada.setSuit(0);
             JugadorHumano.cartaJugada.setValue(0);
@@ -171,7 +179,7 @@ public class JugadorHumano implements Runnable{
         this.carta3.actualizar();
         this.carta4.actualizar();
         this.mazo.actualizar();
-        this.boton.actualizar();
+        this.boton.actualizarV2();
         if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
             this.terminado=true;
         }

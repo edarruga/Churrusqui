@@ -25,17 +25,19 @@ public class EstadoJuego extends Estado{
     private CardHumano pos3Propio;
     private CardHumano pos4Propio;
 
-    private static JugadorHumano jugadorHumano;
-    private static JugadorBot jugadorBot;
+    private JugadorHumano jugadorHumano;
+    private JugadorBot jugadorBot;
+    private Bloqueo bloqueo;
     private Thread hilo1;
     private Thread hilo2;
     private Thread hiloBloqueo;
-    private static MazoDeApilar mazoDeApilar1;
-    private static MazoDeApilar mazoDeApilar2;
+    private MazoDeApilar mazoDeApilar1;
+    private MazoDeApilar mazoDeApilar2;
     private Mazo mazo;
-    private static boolean actualiza=false;
-    public static boolean bloqueado=false;
-    private static boolean churrusqui=false;
+    private boolean actualiza=false;
+    public boolean bloqueado=false;
+    public boolean churrusqui=false;
+    public boolean finDeJuego=false;
 
     //--------------Posiciones de las Cartas en el juego---------------//
     private static double ordenadaRival= CardHumano.getAlturaCarta()*(0.15);
@@ -52,6 +54,7 @@ public class EstadoJuego extends Estado{
 
     //-----------------------------------------------------------------//
     public EstadoJuego(){
+        this.finDeJuego=false;
         this.mazo=new Mazo();
         this.mazo.llenarMazo();
         //this.mazo.showmazo();
@@ -66,60 +69,12 @@ public class EstadoJuego extends Estado{
             cs2[i]=this.mazo.giveCard();
             //cs2[i].showCard();
         }
-        this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5), Card.getAlturaCarta()*(1.4)));
-        this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)));
-        this.jugadorHumano=new JugadorHumano(cs1);
-        this.jugadorBot=new JugadorBot(cs2);
-        hiloBloqueo=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    //System.out.println("Que paso");
-                    //System.out.println("Desde el run: "+EstadoJuego.bloqueado);
-                    System.out.print("");
-                    if(EstadoJuego.bloqueado){
-                        this.wait(4);
-                        EstadoJuego.mazoDeApilar1.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorHumano.solucionarBloqueo());
-                        EstadoJuego.mazoDeApilar2.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorBot.solucionarBloqueo());
-                        EstadoJuego.bloqueado=false;
-                    }
-                    if(EstadoJuego.getChurrusqui()){
-                        this.wait(4);
-                        if(EstadoJuego.jugadorHumano.getChurrusqui()){
-                            if(EstadoJuego.esCorrectoElChurrusqui()){
-                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
-                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
-                            }else{
-                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
-                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
-                            }
-                        }else{
-                            if(EstadoJuego.esCorrectoElChurrusqui()){
-                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
-                                EstadoJuego.jugadorHumano.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
-                            }else{
-                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar1().darCartas());
-                                EstadoJuego.jugadorBot.getMazo().aniadirCartas(EstadoJuego.getMazoDeApilar2().darCartas());
-                            }
-                        }
-                        EstadoJuego.mazoDeApilar1.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorHumano.solucionarBloqueo());
-                        EstadoJuego.mazoDeApilar2.aniadirNuevaCartaAlaFuerza(EstadoJuego.jugadorBot.solucionarBloqueo());
-                        EstadoJuego.jugadorBot.setChurrusqui(false);
-                        EstadoJuego.jugadorHumano.setChurrusqui(false);
-                        EstadoJuego.churrusqui=false;
-
-                    }
-                }
-            }
-
-            public void wait(int s){
-                try{
-                    Thread.sleep(s*1000);
-                }catch (InterruptedException e){
-                    System.out.println(e);
-                }
-            }
-        });
+        this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5), Card.getAlturaCarta()*(1.4)),this);
+        this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)),this);
+        this.jugadorHumano=new JugadorHumano(cs1,this);
+        this.jugadorBot=new JugadorBot(cs2,this);
+        this.bloqueo=new Bloqueo(this);
+        hiloBloqueo=new Thread(bloqueo);
         hilo1=new Thread(jugadorHumano);
         hilo2=new Thread(jugadorBot);
         hiloBloqueo.start();
@@ -127,53 +82,72 @@ public class EstadoJuego extends Estado{
         hilo2.start();
 
     }
-    public static MazoDeApilar getMazoDeApilar1(){
-        return mazoDeApilar1;
+    public MazoDeApilar getMazoDeApilar1(){
+        return this.mazoDeApilar1;
     }
-    public static MazoDeApilar getMazoDeApilar2(){
-        return mazoDeApilar2;
+    public MazoDeApilar getMazoDeApilar2(){
+        return this.mazoDeApilar2;
+    }
+    public JugadorHumano getJugadorHumano(){
+        return this.jugadorHumano;
+    }
+    public JugadorBot getJugadorBot(){
+        return this.jugadorBot;
     }
 
-    public static boolean getActualizar() {
-        return EstadoJuego.actualiza;
+    public boolean getActualizar() {
+        return this.actualiza;
     }
-    public static boolean getChurrusqui(){
-        return EstadoJuego.churrusqui;
+    public boolean getChurrusqui(){
+        return this.churrusqui;
     }
-    public synchronized static boolean solicitarChurrusqui(){
-        if(!EstadoJuego.jugadorBot.getChurrusqui() && !EstadoJuego.jugadorHumano.getChurrusqui()){
+    public synchronized boolean solicitarChurrusqui(){
+        if(!this.jugadorBot.getChurrusqui() && !this.jugadorHumano.getChurrusqui()){
             return true;
         }else{
             return false;
         }
     }
-    public static boolean esCorrectoElChurrusqui(){
-        if(EstadoJuego.mazoDeApilar1.getUltimaCarta().getValue()==EstadoJuego.mazoDeApilar2.getUltimaCarta().getValue()){
+    public boolean esCorrectoElChurrusqui(){
+        if(this.mazoDeApilar1.getUltimaCarta().getValue()==this.mazoDeApilar2.getUltimaCarta().getValue()){
             return true;
         }else{
             return false;
+        }
+    }
+    public static void wait(int s){
+        try{
+            Thread.sleep(s*1000);
+        }catch (InterruptedException e){
+            System.out.println(e);
         }
     }
 
 
     public void actualizar(){
-        if(EstadoJuego.jugadorHumano.getTerminado() || EstadoJuego.jugadorBot.getTerminado()){
-            Estado.cambiarEstado(new EstadoFinDePartida(EstadoJuego.jugadorHumano.getTerminado()));//Termina la partida
+        if(this.jugadorHumano.getTerminado() || this.jugadorBot.getTerminado()){
+            this.finDeJuego=true;
+            EstadoJuego.wait(1);
+            hilo1.interrupt();
+            hilo2.interrupt();
+            hiloBloqueo.interrupt();
+            Estado.cambiarEstado(new EstadoFinDePartida(this.jugadorHumano.getTerminado()));//Termina la partida
+
         }else{
             this.actualiza=true;
             this.mazoDeApilar1.actualizar();
             this.mazoDeApilar2.actualizar();
-            if(EstadoJuego.jugadorHumano.getChurrusqui() || EstadoJuego.jugadorBot.getChurrusqui()){
-                EstadoJuego.churrusqui=true;
+            if(this.jugadorHumano.getChurrusqui() || this.jugadorBot.getChurrusqui()){
+                this.churrusqui=true;
             }
             this.actualiza=false;
             //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
             //System.out.println(EstadoJuego.bloqueado);
-            if(!EstadoJuego.churrusqui){
-                if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !EstadoJuego.bloqueado){
+            if(!this.churrusqui){
+                if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !this.bloqueado){
                     //System.out.println(this.jugadorBot.prueba());
                     //this.dibujar(g);
-                    EstadoJuego.bloqueado=true;
+                    this.bloqueado=true;
                     //System.out.println("Ce bloqueo");
 
                 }
@@ -185,12 +159,12 @@ public class EstadoJuego extends Estado{
     }
 
     public void dibujar(Graphics g){
-        if(EstadoJuego.bloqueado && !EstadoJuego.getChurrusqui()){
+        if(this.bloqueado && !this.getChurrusqui()){
             g.drawImage(Assets.Bloqueo,((Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
         }
         this.mazoDeApilar1.dibujar(g);
         this.mazoDeApilar2.dibujar(g);
-        if(EstadoJuego.getChurrusqui()){
+        if(this.getChurrusqui()){
             g.drawImage(Assets.Churrusqui,0,0,null);
         }
         this.jugadorBot.dibujar(g);

@@ -12,6 +12,7 @@ import java.awt.*;
 public class CardHumano extends Card{
     private boolean mouseIn;//Para saber si el mouse se encuentra dentro de la hitbox de la carta
     private Rectangle hitBox;
+    private JugadorHumano jugadorHumano;
     private boolean primeraVez=false;
     private int diferenciaX;
     private int diferenciaY;
@@ -34,9 +35,10 @@ public class CardHumano extends Card{
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),Card.getAnchuraCarta(),Card.getAlturaCarta());
         //System.out.println("Carta "+v+" de "+s+" el rectangulo empieza en X:"+(int) v2d.getX()+" ,Y: "+(int) v2d.getY()+", y la imagen mide "+anchuraCarta+" x "+alturaCarta);
     }
-    public CardHumano(CartaSimple cs, Vector2D v2d){
+    public CardHumano(CartaSimple cs, Vector2D v2d,JugadorHumano jh){
         super(Loader.cargadorDeImagenes(Card.buscarRutaTextura(cs.getSuit(),cs.getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta()),v2d,cs);
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(),Card.getAnchuraCarta(),Card.getAlturaCarta());
+        this.jugadorHumano=jh;
     }
     public void actualizarEstadoDeCarta(CartaSimple cs){
         super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(cs.getSuit(),cs.getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -84,17 +86,17 @@ public class CardHumano extends Card{
         }
 
         if(!MouseInput.botonIzquierdo && !this.meTienen && this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY)){
-            if(JugadorHumano.getMazoDeApilar1().getPosibleJugada()){
-                if(JugadorHumano.getMazoDeApilar1().esJugable(this.CartaACartaSimple())){
-                    if(JugadorHumano.getMazoDeApilar1().aniadirNuevaCarta(this.CartaACartaSimple())){
+            if(this.jugadorHumano.getMazoDeApilar1().getPosibleJugada()){
+                if(this.jugadorHumano.getMazoDeApilar1().esJugable(this.CartaACartaSimple())){
+                    if(this.jugadorHumano.getMazoDeApilar1().aniadirNuevaCarta(this.CartaACartaSimple())){
                         this.setYaJugada(true);
                         this.posicion.setX(-1000);
                         this.posicion.setY(-1000);
                     }
                 }
-            }else if(JugadorHumano.getMazoDeApilar2().getPosibleJugada()){
-                if(JugadorHumano.getMazoDeApilar2().esJugable(this.CartaACartaSimple())){
-                    if(JugadorHumano.getMazoDeApilar2().aniadirNuevaCarta(this.CartaACartaSimple())){
+            }else if(this.jugadorHumano.getMazoDeApilar2().getPosibleJugada()){
+                if(this.jugadorHumano.getMazoDeApilar2().esJugable(this.CartaACartaSimple())){
+                    if(this.jugadorHumano.getMazoDeApilar2().aniadirNuevaCarta(this.CartaACartaSimple())){
                         this.setYaJugada(true);
                         this.posicion.setX(-1000);
                         this.posicion.setY(-1000);
@@ -122,7 +124,7 @@ public class CardHumano extends Card{
     @Override
     public void dibujar(Graphics g) {
         if(!this.getYaJugada() ){
-            if(!this.meTienen && this.tocada && EstadoJuego.getActualizar()){
+            if(!this.meTienen && this.tocada && this.jugadorHumano.getEstadoJuego().getActualizar()){
                 g.drawImage(super.textura,(int)this.getPosicionInicial().getX(),(int)this.getPosicionInicial().getY(),null);
             }else{
                 g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);

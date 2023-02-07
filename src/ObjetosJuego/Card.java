@@ -46,6 +46,9 @@ public abstract class Card extends ObjetoJuego{
     public void setYaJugada(boolean b){
         this.yaJugada=b;
     }
+    public static boolean getEstigma(){
+        return Card.estigma;
+    }
     public Vector2D getPosicionInicial(){
         return this.posicionInicial;
     }

@@ -6,12 +6,15 @@ import java.awt.image.BufferedImage;
 import ObjetosJuego.Card;
 import principal.Window;
 
+import javax.swing.*;
+
 
 public class Assets {
 
 	public static BufferedImage fondo;
 	public static Font fuenteTitulo;
 	public static Font fuente;
+	public static Font fuenteMediana;
 	public static Font propiedades;
 	public static BufferedImage BotonGrisIn;
 	public static BufferedImage BotonGrisOut;
@@ -30,6 +33,7 @@ public class Assets {
 		fondo=Loader.cargadorDeImagenes("recursos/Fondos/Fondo3.png", Window.getAnchuraVentana(),Window.getAlturaVentana());//Carga el fondo
 		fuenteTitulo=Loader.loadFont("recursos/Fuentes/Puzzle-SolvedFilled.ttf",Window.getAnchuraVentana()*(0.078125));
 		fuente=Loader.loadFont("recursos/Fuentes/coolvetica rg.otf",Window.getAnchuraVentana()*(0.016276));
+		fuenteMediana=Loader.loadFont("recursos/Fuentes/coolvetica rg.otf",Window.getAnchuraVentana()*(0.0390625));
 		propiedades=Loader.loadFont("recursos/Fuentes/coolvetica rg.otf",Window.getAnchuraVentana()*(0.0097656));
 		BotonBlancoIn=Loader.cargadorDeImagenes("recursos/Botones/BlancoIn.png",(int)(Window.getAnchuraVentana()/7.5),(int)(Window.getAlturaVentana()/17));
 		BotonBlancoOut=Loader.cargadorDeImagenes("recursos/Botones/BlancoOut.png",(int)(Window.getAnchuraVentana()/7.5),(int)(Window.getAlturaVentana()/17));

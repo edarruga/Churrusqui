@@ -1,13 +1,14 @@
 package ObjetosJuego;
 
+import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import input.MouseInput;
 
 import java.awt.image.BufferedImage;
 
 public class MazoDeApilar2 extends MazoDeApilar{
-    public MazoDeApilar2(BufferedImage t, Vector2D v2d) {
-        super(t, v2d);
+    public MazoDeApilar2(BufferedImage t, Vector2D v2d, EstadoJuego es) {
+        super(t, v2d,es);
     }
 
     @Override

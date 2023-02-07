@@ -18,7 +18,12 @@ public class MazoDeRoboBot extends MazoDeRobo{
 
     @Override
     public void actualizar() {
-
+        if(Card.getEstigma()){
+            if(super.estigma==false){
+                super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(0,1),Card.getAnchuraCarta(),Card.getAlturaCarta());
+                super.estigma=true;
+            }
+        }
     }
 
     @Override

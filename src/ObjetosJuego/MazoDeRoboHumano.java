@@ -19,8 +19,13 @@ public class MazoDeRoboHumano extends MazoDeRobo{
 
     @Override
     public void actualizar() {
-
-        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY) && !EstadoJuego.getChurrusqui()){
+        if(Card.getEstigma()){
+            if(super.estigma==false){
+                super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(0,1),Card.getAnchuraCarta(),Card.getAlturaCarta());
+                super.estigma=true;
+            }
+        }
+        if(this.hitBox.contains(MouseInput.RatonX,MouseInput.RatonY) && !this.jugadorHumano.getEstadoJuego().getChurrusqui()){
             if(MouseInput.clickEnMazoDeRobo){
                 CardHumano c=this.jugadorHumano.primeraCartaYaJugada();
                 if(c!=null && !this.estaVacio()){

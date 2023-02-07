@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.print.DocFlavor;
 import javax.swing.*;
+import java.net.*;
 
 
 public class Loader {//No crearemos ningún objeto de esta clase solo proporcionará algunos metodos

@@ -49,7 +49,10 @@ public class Mazo {
         //POSTCONDITION: returns the last card in the deck,
         // and the number of cards is decreased by one
         this.num--;
-        return this.cards[this.num];
+        CartaSimple cs=new CartaSimple(this.cards[this.num].getSuit(),this.cards[this.num].getValue());
+        this.cards[this.num].setValue(0);
+        this.cards[this.num].setSuit(0);
+        return cs;
     }
     public void insertarCartaSimple(CartaSimple cs){
         this.cards[this.num].setSuit(cs.getSuit());

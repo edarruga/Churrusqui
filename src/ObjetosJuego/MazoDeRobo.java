@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class MazoDeRobo extends ObjetoJuego{
     protected Mazo mazo;
+    protected boolean estigma=false;
 
 
     public MazoDeRobo(Vector2D v2d,CartaSimple[] csv) {

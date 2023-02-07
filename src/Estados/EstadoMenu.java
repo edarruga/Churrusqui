@@ -24,7 +24,7 @@ public class EstadoMenu extends Estado{
                 new Accion() {
                     @Override
                     public void hacerAccion() {
-
+                        Estado.cambiarEstado(new EstadoBuscandoPartida());
                     }
                 }
         );
