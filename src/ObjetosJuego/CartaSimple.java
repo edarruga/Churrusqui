@@ -3,6 +3,7 @@ package ObjetosJuego;
 import java.io.Serializable;
 
 public class CartaSimple implements Serializable {
+    private static final long serialVersionUID=333L;
     private int suit;   //Oro=1,Copa=2,Espada=3,Basto=4
     private int value;  //The value is between 1-10, but our methods show the 8, 9 and 10 as 10, 11 and 12, respectically
     public CartaSimple(){

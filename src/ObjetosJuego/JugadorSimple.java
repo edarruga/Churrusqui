@@ -3,6 +3,7 @@ package ObjetosJuego;
 import java.io.Serializable;
 
 public class JugadorSimple implements Serializable {
+    private static final long serialVersionUID=111L;
     private Mazo mazo;
     private CartaSimple carta1;
     private CartaSimple carta2;

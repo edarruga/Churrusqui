@@ -8,10 +8,10 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class Mazo implements Serializable {
-
+    private static final long serialVersionUID=222L;
     private CartaSimple [] cards;
     private int num;
-    private Random r = new Random();
+    private transient Random r = new Random();
 
     public Mazo(){
         this.cards = new CartaSimple [40];
