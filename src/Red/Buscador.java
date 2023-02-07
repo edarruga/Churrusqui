@@ -89,7 +89,7 @@ public class Buscador extends Thread{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("Preparado");
+			System.out.println("finalizado= "+this.finalizado+" | rival= "+this.rival+" | cliente= "+this.cliente);
 			if(!this.finalizado && this.rival!=null && this.cliente!=null){
 				System.out.println("Entro");
 				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente,this.servidor.accept())));

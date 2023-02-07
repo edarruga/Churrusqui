@@ -32,7 +32,7 @@ public class AtenderPeticion implements Runnable{
 						if(respuesta.equals("OK") && !this.b.getEnlazado()) {
 							this.b.cliente=new Socket(this.socket.getInetAddress(),9999);
 							this.b.rival=this.socket.getInetAddress().getHostAddress();
-							System.out.println(this.b.rival);
+							System.out.println("Atender: "+this.b.rival);
 							//=========================================
 							this.b.mensajeAEnlazador();
 							this.b.mensajeATrazador();

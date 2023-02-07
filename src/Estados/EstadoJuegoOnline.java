@@ -64,6 +64,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         hilo2.start();
 
     }
+    /*
     @Override
     public void actualizar() {
 
@@ -72,5 +73,5 @@ public class EstadoJuegoOnline extends EstadoJuego{
     @Override
     public void dibujar(Graphics g) {
 
-    }
+    }*/
 }

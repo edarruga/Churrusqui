@@ -35,7 +35,7 @@ public class RealizarPeticion implements Runnable{
 						this.b.setEnlazado(true);
 						ps.print("OK\r\n");
 						this.b.rival=socket.getInetAddress().getHostAddress();
-						System.out.println(this.b.rival);
+						System.out.println("Realizar: "+this.b.rival);
 						//=========================================
 						this.b.mensajeAEnlazador();
 						this.b.mensajeATrazador();
