@@ -1,8 +1,10 @@
 package Estados;
 
 import Componentes.Accion;
+import Componentes.Accion3;
 import Componentes.Boton;
 import Matematica.Vector2D;
+import Red.Buscador;
 import graficos.Assets;
 import graficos.Texto;
 import principal.Window;
@@ -13,27 +15,24 @@ import java.awt.*;
 public class EstadoBuscandoPartida extends Estado{
 
     private Boton volver;
+    private Buscador buscador;
     public static int contador =0;
 
     public EstadoBuscandoPartida(){
-
+        this.buscador=new Buscador();
+        this.buscador.start();
         this.volver=new Boton(Assets.BotonGrisOut,
                 Assets.BotonGrisIn,
                 principal.Window.getAnchuraVentana() / 2 - Assets.BotonBlancoIn.getWidth() / 2,
                 Window.getAlturaVentana() / 2 + Assets.BotonBlancoIn.getHeight() * (6/2) + Assets.BotonBlancoIn.getHeight()/2,
                 "      Volver",
-                new Accion() {
-                    @Override
-                    public void hacerAccion() {
-                        Estado.cambiarEstado(new EstadoMenu());
-                    }
-                }
+                new Accion3(this.buscador)
         );
     }
 
     @Override
     public void actualizar() {
-        this.volver.actualizar();
+        this.volver.actualizarV3();
     }
 
     @Override

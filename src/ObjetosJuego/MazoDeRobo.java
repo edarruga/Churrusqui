@@ -15,6 +15,10 @@ public abstract class MazoDeRobo extends ObjetoJuego{
         this.mazo=new Mazo();
         this.mazo.insertarCartasSimples(csv);
     }
+    public MazoDeRobo(Vector2D v2d,Mazo m) {
+        super(Loader.cargadorDeImagenes(CardHumano.buscarRutaTextura(0,1), Card.getAnchuraCarta(), Card.getAlturaCarta()), v2d);
+        this.mazo=m;
+    }
     public CartaSimple robarCata(){
         return this.mazo.giveCard();
     }

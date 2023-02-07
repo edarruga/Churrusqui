@@ -10,49 +10,62 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class EstadoJuego extends Estado{
-    private CardHumano pila1;
-    private CardHumano pila2;
+    protected CardHumano pila1;
+    protected CardHumano pila2;
 
-    private CardHumano mazoRival;
-    private CardHumano pos1Rival;
-    private CardHumano pos2Rival;
-    private CardHumano pos3Rival;
-    private CardHumano pos4Rival;
+    protected CardHumano mazoRival;
+    protected CardHumano pos1Rival;
+    protected CardHumano pos2Rival;
+    protected CardHumano pos3Rival;
+    protected CardHumano pos4Rival;
 
-    private CardHumano mazoPropio;
-    private CardHumano pos1Propio;
-    private CardHumano pos2Propio;
-    private CardHumano pos3Propio;
-    private CardHumano pos4Propio;
+    protected CardHumano mazoPropio;
+    protected CardHumano pos1Propio;
+    protected CardHumano pos2Propio;
+    protected CardHumano pos3Propio;
+    protected CardHumano pos4Propio;
 
-    private JugadorHumano jugadorHumano;
-    private JugadorBot jugadorBot;
-    private Bloqueo bloqueo;
-    private Thread hilo1;
-    private Thread hilo2;
-    private Thread hiloBloqueo;
-    private MazoDeApilar mazoDeApilar1;
-    private MazoDeApilar mazoDeApilar2;
-    private Mazo mazo;
-    private boolean actualiza=false;
+    protected JugadorHumano jugadorHumano;
+    protected JugadorBot jugadorBot;
+    protected Bloqueo bloqueo;
+    protected Thread hilo1;
+    protected Thread hilo2;
+    protected Thread hiloBloqueo;
+    protected MazoDeApilar mazoDeApilar1;
+    protected MazoDeApilar mazoDeApilar2;
+    protected Mazo mazo;
+    protected boolean actualiza=false;
     public boolean bloqueado=false;
     public boolean churrusqui=false;
     public boolean finDeJuego=false;
 
     //--------------Posiciones de las Cartas en el juego---------------//
-    private static double ordenadaRival= CardHumano.getAlturaCarta()*(0.15);
-    private static double ordenadaPropia= CardHumano.getAlturaCarta()*(2.65);
-    private static double abcisaMazoRival= CardHumano.getAnchuraCarta()*(1.75);
-    private static double abcisaMazoPropio= CardHumano.getAnchuraCarta()*(9.25);
-    private static double abcisaPos1Jugadores= CardHumano.getAnchuraCarta()*(3.25);
-    private static double abcisaPos2Jugadores= CardHumano.getAnchuraCarta()*(4.75);
-    private static double abcisaPos3Jugadores= CardHumano.getAnchuraCarta()*(6.25);
-    private static double abcisaPos4Jugadores= CardHumano.getAnchuraCarta()*(7.75);
-    private static double ordenadaPilas= CardHumano.getAlturaCarta()*(1.4);
-    private static double abcisaPila1= CardHumano.getAnchuraCarta()*(4.5);
-    private static double abcisaPila2= CardHumano.getAnchuraCarta()*(6.5);
+    protected static double ordenadaRival= CardHumano.getAlturaCarta()*(0.15);
+    protected static double ordenadaPropia= CardHumano.getAlturaCarta()*(2.65);
+    protected static double abcisaMazoRival= CardHumano.getAnchuraCarta()*(1.75);
+    protected static double abcisaMazoPropio= CardHumano.getAnchuraCarta()*(9.25);
+    protected static double abcisaPos1Jugadores= CardHumano.getAnchuraCarta()*(3.25);
+    protected static double abcisaPos2Jugadores= CardHumano.getAnchuraCarta()*(4.75);
+    protected static double abcisaPos3Jugadores= CardHumano.getAnchuraCarta()*(6.25);
+    protected static double abcisaPos4Jugadores= CardHumano.getAnchuraCarta()*(7.75);
+    protected static double ordenadaPilas= CardHumano.getAlturaCarta()*(1.4);
+    protected static double abcisaPila1= CardHumano.getAnchuraCarta()*(4.5);
+    protected static double abcisaPila2= CardHumano.getAnchuraCarta()*(6.5);
 
     //-----------------------------------------------------------------//
+    public EstadoJuego(JugadorSimple yo, JugadorSimple rival,Mazo mazo1,Mazo mazo2){
+        this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5), Card.getAlturaCarta()*(1.4)),this,mazo1);
+        this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)),this,mazo2);
+        this.jugadorHumano=new JugadorHumano(yo,this);
+        this.jugadorBot=new JugadorBot(rival,this);
+        this.bloqueo=new Bloqueo(this);
+        hiloBloqueo=new Thread(bloqueo);
+        hilo1=new Thread(jugadorHumano);
+        hilo2=new Thread(jugadorBot);
+        hiloBloqueo.start();
+        hilo1.start();
+        hilo2.start();
+    }
     public EstadoJuego(){
         this.finDeJuego=false;
         this.mazo=new Mazo();

@@ -16,6 +16,11 @@ public class MazoDeRoboHumano extends MazoDeRobo{
         this.jugadorHumano=jh;
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
     }
+    public MazoDeRoboHumano(Vector2D v2d, Mazo m, JugadorHumano jh) {
+        super(v2d,m);
+        this.jugadorHumano=jh;
+        this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
+    }
 
     @Override
     public void actualizar() {

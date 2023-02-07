@@ -20,6 +20,12 @@ public abstract class MazoDeApilar extends ObjetoJuego{
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
         this.mazo=new Mazo();
     }
+    public MazoDeApilar(BufferedImage t, Vector2D v2d,EstadoJuego es,Mazo m) {
+        super(t, v2d);
+        this.estadoJuego=es;
+        this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
+        this.mazo=m;
+    }
 
     public synchronized CartaSimple getUltimaCarta(){
         return this.mazo.getUltimaCarta();

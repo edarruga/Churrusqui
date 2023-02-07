@@ -4,9 +4,10 @@ import Matematica.Vector2D;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Mazo {
+public class Mazo implements Serializable {
 
     private CartaSimple [] cards;
     private int num;

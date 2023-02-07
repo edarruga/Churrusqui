@@ -17,6 +17,7 @@ public class Boton {
     private String texto;
     private Accion accion;
     private Accion2 accion2;
+    private Accion3 accion3;
 
     public Boton(BufferedImage out,BufferedImage in, int x,int y,String texto,Accion a){
         this.mouseInImg=in;
@@ -31,6 +32,13 @@ public class Boton {
         this.texto=texto;
         this.hitbox=new Rectangle(x,y,in.getWidth(),out.getHeight());
         this.accion2=a;
+    }
+    public Boton(BufferedImage out,BufferedImage in, int x,int y,String texto,Accion3 a){
+        this.mouseInImg=in;
+        this.mouseOutImg=out;
+        this.texto=texto;
+        this.hitbox=new Rectangle(x,y,in.getWidth(),out.getHeight());
+        this.accion3=a;
     }
 
     public void actualizar(){
@@ -51,6 +59,17 @@ public class Boton {
         }
         if(mouseIn && MouseInput.botonIzquierdo && !MouseInput.arrastrando){
             this.accion2.hacerAccion();
+        }
+    }
+
+    public void actualizarV3(){
+        if(this.hitbox.contains(MouseInput.RatonX,MouseInput.RatonY)){
+            mouseIn=true;
+        }else{
+            mouseIn=false;
+        }
+        if(mouseIn && MouseInput.botonIzquierdo && !MouseInput.arrastrando){
+            this.accion3.hacerAccion();
         }
     }
     public void dibujar(Graphics g){

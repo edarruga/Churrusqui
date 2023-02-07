@@ -10,6 +10,9 @@ public class MazoDeApilar1 extends MazoDeApilar{
     public MazoDeApilar1(BufferedImage t, Vector2D v2d, EstadoJuego es) {
         super(t, v2d,es);
     }
+    public MazoDeApilar1(BufferedImage t, Vector2D v2d, EstadoJuego es,Mazo m) {
+        super(t, v2d,es,m);
+    }
 
     @Override
     public void actualizar() {

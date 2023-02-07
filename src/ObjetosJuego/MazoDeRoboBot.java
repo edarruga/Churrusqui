@@ -12,8 +12,11 @@ public class MazoDeRoboBot extends MazoDeRobo{
     public MazoDeRoboBot(Vector2D v2d,CartaSimple[] csv,JugadorBot jb) {
         super(v2d,csv);
         this.jugadorBot=jb;
-        this.mazo=new Mazo();
-        this.mazo.insertarCartasSimples(csv);
+    }
+    public MazoDeRoboBot(Vector2D v2d,Mazo m,JugadorBot jb) {
+        super(v2d,m);
+        this.jugadorBot=jb;
+
     }
 
     @Override

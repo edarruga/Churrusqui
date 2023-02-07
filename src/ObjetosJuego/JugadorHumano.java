@@ -4,6 +4,7 @@ import Componentes.Accion;
 import Componentes.Accion2;
 import Componentes.Boton;
 import Estados.EstadoJuego;
+import Estados.EstadoJuegoOnline;
 import Matematica.Vector2D;
 import graficos.Assets;
 import input.MouseInput;
@@ -31,6 +32,40 @@ public class JugadorHumano implements Runnable{
     private static boolean churrusqui=false;
     private Boton boton;
 
+    public JugadorHumano(JugadorSimple j, EstadoJuego es){
+        this.posicionCarta1=new Vector2D(CardHumano.getAnchuraCarta()*(3.25), CardHumano.getAlturaCarta()*(2.65));
+
+        //Posicion de carta 2
+        this.posicionCarta2=new Vector2D(CardHumano.getAnchuraCarta()*(4.75), CardHumano.getAlturaCarta()*(2.65));
+
+        //Posicion de carta 3
+        this.posicionCarta3=new Vector2D(CardHumano.getAnchuraCarta()*(6.25), CardHumano.getAlturaCarta()*(2.65));
+
+        //Posicion de carta 4
+        this.posicionCarta4=new Vector2D(CardHumano.getAnchuraCarta()*(7.75), CardHumano.getAlturaCarta()*(2.65));
+
+        //Posicion del mazo para robar
+        this.posicionMazoDeRobo=new Vector2D(CardHumano.getAnchuraCarta()*(9.25), CardHumano.getAlturaCarta()*(2.65));
+
+        this.mazo=new MazoDeRoboHumano(this.posicionMazoDeRobo,j.getMazo(),this);
+        this.puedoRobar=false;
+
+        this.carta1=new CardHumano(j.getCarta1(),this.posicionCarta1,this);
+        this.carta2=new CardHumano(j.getCarta2(),this.posicionCarta2,this);
+        this.carta3=new CardHumano(j.getCarta3(),this.posicionCarta3,this);
+        this.carta4=new CardHumano(j.getCarta4(),this.posicionCarta4,this);
+
+        this.estadoJuego=es;
+
+        this.estadoJuego.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+        this.boton=new Boton(Assets.BotonBlancoOut,
+                Assets.BotonBlancoIn,
+                (int)(CardHumano.getAnchuraCarta()*(0.75)),
+                Window.getAlturaVentana() / 2 + Assets.BotonBlancoIn.getHeight() * (6/2) + Assets.BotonBlancoIn.getHeight(),
+                "CHURRUSQUI",
+                new Accion2(this.estadoJuego)
+        );
+    }
     public JugadorHumano(CartaSimple[] csv,EstadoJuego es){
         //Posicion de carta 1
         this.posicionCarta1=new Vector2D(CardHumano.getAnchuraCarta()*(3.25), CardHumano.getAlturaCarta()*(2.65));
