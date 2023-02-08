@@ -71,7 +71,7 @@ public class Comunicador {
         }
     }
     public void enviarPrueba(int i){
-        try (ObjectOutputStream oos=new ObjectOutputStream(this.cliente.getOutputStream())){
+        try (MiObjectOutputStream oos=new MiObjectOutputStream(this.cliente.getOutputStream())){
             oos.writeObject(i);
         } catch (IOException e) {
             throw new RuntimeException(e);
