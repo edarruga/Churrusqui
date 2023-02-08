@@ -60,7 +60,8 @@ public class Comunicador {
     }
 
     public JugadorSimple recivirJugador(){
-        try (Socket socket=new Socket(this.rival,9999);
+        try (ServerSocket serverSocket=new ServerSocket(9999);
+             Socket socket=serverSocket.accept();
              ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
             return (JugadorSimple)ois.readObject();
         } catch (IOException e) {
@@ -106,7 +107,8 @@ public class Comunicador {
         }
     }
     public Mazo recivirMazo(){
-        try (Socket socket=new Socket(this.rival,9999);
+        try (ServerSocket serverSocket=new ServerSocket(9999);
+             Socket socket=serverSocket.accept();
              ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
             return (Mazo)ois.readObject();
         } catch (IOException e) {

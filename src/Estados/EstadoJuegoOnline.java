@@ -25,7 +25,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         this.comunicador=comunicador;
         System.out.println("Comunicador asignado");
         if(this.comunicador.decidirInicio()){
-            System.out.println("Lo hago yo");
+            System.out.println("Lo mando yo");
             Mazo mazo=new Mazo();
             mazo.llenarMazo();
             //this.mazo.showmazo();
@@ -57,13 +57,13 @@ public class EstadoJuegoOnline extends EstadoJuego{
                 throw new RuntimeException(e);
             }
             */
-            this.comunicador.enviarPrueba(777);
-            //this.comunicador.enviarJugador(this.rivalSimple);
-            //this.comunicador.enviarJugador(this.yoSimple);
-            //this.comunicador.enviarMazo(this.mazodeApilar1Simple);
-            //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
+            //this.comunicador.enviarPrueba(777);
+            this.comunicador.enviarJugador(this.rivalSimple);
+            this.comunicador.enviarJugador(this.yoSimple);
+            this.comunicador.enviarMazo(this.mazodeApilar1Simple);
+            this.comunicador.enviarMazo(this.mazodeApilar2Simple);
         }else{
-            System.out.println("Me lo hacen");
+            System.out.println("Me lo mandan");
             /*
             try {
                 Thread.sleep(10000);
@@ -82,14 +82,14 @@ public class EstadoJuegoOnline extends EstadoJuego{
                 throw new RuntimeException(e);
             }*/
 
-            System.out.println(this.comunicador.recivirPrueba());
-            //this.yoSimple=this.comunicador.recivirJugador();
-            //this.rivalSimple=this.comunicador.recivirJugador();
-            //this.mazodeApilar1Simple=this.comunicador.recivirMazo();
-            //this.mazodeApilar2Simple=this.comunicador.recivirMazo();
+            //System.out.println(this.comunicador.recivirPrueba());
+            this.yoSimple=this.comunicador.recivirJugador();
+            this.rivalSimple=this.comunicador.recivirJugador();
+            this.mazodeApilar1Simple=this.comunicador.recivirMazo();
+            this.mazodeApilar2Simple=this.comunicador.recivirMazo();
         }
 
-        /*
+
         super.finDeJuego=false;
         super.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5), Card.getAlturaCarta()*(1.4)),this,this.mazodeApilar1Simple);
         super.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)),this,this.mazodeApilar2Simple);
@@ -103,7 +103,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         hiloBloqueo.start();
         hilo1.start();
         hilo2.start();
-        */
+
     }
     /*
     @Override
