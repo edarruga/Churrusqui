@@ -100,6 +100,10 @@ public class Buscador extends Thread{
 			System.out.println("finalizado= "+this.finalizado+" | rival= "+this.rival+" | cliente= "+this.cliente);
 			if(!this.finalizado && this.rival!=null && this.cliente!=null){
 				System.out.println("Entro");
+				//System.out.println(this.cliente.getInetAddress()+", "+this.cliente.getPort());
+				//Socket s=this.servidor.accept();
+				//System.out.println(s.getInetAddress()+", "+this.cliente.getPort());
+
 				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente.getInetAddress(),this.servidor.accept().getInetAddress())));
 			}else{
 				System.out.println("No entro");
@@ -118,6 +122,13 @@ public class Buscador extends Thread{
 			if(this.servidor!=null){
 				try {
 					this.servidor.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			if(this.cliente!=null){
+				try {
+					this.cliente.close();
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}

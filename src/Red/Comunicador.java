@@ -5,6 +5,7 @@ import ObjetosJuego.Mazo;
 
 import java.io.*;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Comunicador {
@@ -24,9 +25,10 @@ public class Comunicador {
 
     public boolean decidirInicio(){
         try (Socket socket1=new Socket(inetCliente,9999);
-             Socket socket2=new Socket(inetServidor,9999);
-                PrintStream psCliente =new PrintStream(socket1.getOutputStream());
-        DataInputStream disServidor=new DataInputStream(socket2.getInputStream())){
+             ServerSocket serverSocket=new ServerSocket(9999);
+             Socket socket2=serverSocket.accept();
+             PrintStream psCliente =new PrintStream(socket1.getOutputStream());
+             DataInputStream disServidor=new DataInputStream(socket2.getInputStream())){
             int numero=(int) (Math.random()*1000);
             psCliente.println(numero+"\r\n");
             String s=disServidor.readLine();
@@ -58,7 +60,8 @@ public class Comunicador {
         }
     }
     public int recivirPrueba(){
-        try (Socket socket=new Socket(this.inetServidor,9999);
+        try (ServerSocket serverSocket=new ServerSocket(9999);
+                Socket socket=serverSocket.accept();
                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
             return (int)ois.readObject();
         } catch (IOException e) {
