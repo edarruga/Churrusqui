@@ -61,6 +61,22 @@ public class Comunicador {
             throw new RuntimeException(e);
         }
     }
+    public int recivirPrueba(){
+        try {
+            return (int)this.oisServidor.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void enviarPrueba(int i){
+        try {
+            this.oosCliente.writeObject(i);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public Mazo recivirMazo(){
         try {
             return (Mazo)this.oisServidor.readObject();
