@@ -21,14 +21,20 @@ public class Comunicador {
 
 
     public Comunicador(Socket cliente,Socket servidor){
-        this.cliente=cliente;
-        this.servidor=servidor;
-        this.inetCliente=this.cliente.getInetAddress();
-        this.inetServidor=this.servidor.getInetAddress();
-        //this.psCliente=new PrintStream(this.cliente.getOutputStream());
-        //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
-        //this.disServidor=new DataInputStream(this.servidor.getInputStream());
-        //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
+
+        try {
+            this.cliente=cliente;
+            this.servidor=servidor;
+            this.inetCliente=this.cliente.getInetAddress();
+            this.inetServidor=this.servidor.getInetAddress();
+            this.psCliente=new PrintStream(this.cliente.getOutputStream());
+            //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
+            this.disServidor=new DataInputStream(this.servidor.getInputStream());
+            //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public boolean decidirInicio(){
