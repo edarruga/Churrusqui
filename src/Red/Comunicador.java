@@ -69,7 +69,11 @@ public class Comunicador {
     public int recivirPrueba(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
                 Socket socket=serverSocket.accept();
-                ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
+                ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
+             PrintStream psCliente =new PrintStream(socket.getOutputStream());
+             DataInputStream disServidor=new DataInputStream(socket.getInputStream())){
+            psCliente.println("bbb\r\n");
+            System.out.println(disServidor.readLine());
             Object o= ois.readObject();
             System.out.println(o);
             return (int)o;
@@ -81,7 +85,11 @@ public class Comunicador {
     }
     public void enviarPrueba(int i){
         try (Socket socket=new Socket(this.rival,9999);
-                MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
+                MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream());
+             PrintStream psCliente =new PrintStream(socket.getOutputStream());
+             DataInputStream disServidor=new DataInputStream(socket.getInputStream())){
+            psCliente.println("aaa\r\n");
+            System.out.println(disServidor.readLine());
             oos.writeObject(i);
             oos.flush();
         } catch (IOException e) {
