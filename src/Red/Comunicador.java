@@ -70,7 +70,9 @@ public class Comunicador {
         try (ServerSocket serverSocket=new ServerSocket(9999);
                 Socket socket=serverSocket.accept();
                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
-            return (int)ois.readObject();
+            Object o= ois.readObject();
+            System.out.println(o);
+            return (int)o;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
