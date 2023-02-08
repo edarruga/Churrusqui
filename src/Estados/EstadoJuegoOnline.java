@@ -59,7 +59,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
             //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
         }else{
             try {
-                Thread.sleep(3);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
