@@ -22,9 +22,9 @@ public class Comunicador {
             this.cliente=cliente;
             this.servidor=servidor;
             this.psCliente=new PrintStream(this.cliente.getOutputStream());
-            this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
+            //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
             this.disServidor=new DataInputStream(this.servidor.getInputStream());
-            this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
+            //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,8 +62,8 @@ public class Comunicador {
         }
     }
     public int recivirPrueba(){
-        try {
-            return (int)this.oisServidor.readObject();
+        try (ObjectInputStream ois=new ObjectInputStream(this.disServidor)){
+            return (int)ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -71,8 +71,8 @@ public class Comunicador {
         }
     }
     public void enviarPrueba(int i){
-        try {
-            this.oosCliente.writeObject(i);
+        try (ObjectOutputStream oos=new ObjectOutputStream(this.oosCliente)){
+            oos.writeObject(i);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
