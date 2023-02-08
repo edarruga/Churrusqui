@@ -121,6 +121,7 @@ public class Comunicador {
         try (Socket socket=new Socket(this.rival,9999);
              MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             oos.writeObject(js);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -129,6 +130,7 @@ public class Comunicador {
         try (Socket socket=new Socket(this.rival,9999);
              MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             oos.writeObject(m);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

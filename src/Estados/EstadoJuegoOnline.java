@@ -105,6 +105,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         hilo2.start();
 
     }
+
     /*
     @Override
     public void actualizar() {
