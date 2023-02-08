@@ -58,6 +58,11 @@ public class EstadoJuegoOnline extends EstadoJuego{
             //this.comunicador.enviarMazo(this.mazodeApilar1Simple);
             //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
         }else{
+            try {
+                Thread.sleep(3);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             try (ServerSocket serverSocket=new ServerSocket(9998);
                  Socket socket=serverSocket.accept();
                  ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
