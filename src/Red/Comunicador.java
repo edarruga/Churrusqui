@@ -10,25 +10,26 @@ import java.net.Socket;
 
 public class Comunicador {
 
-    private InetAddress inetCliente;
+    //Solo usar para el decidirInicio
+    private Socket cliente;
+    //Solo usar para el decidirInicio
+    private Socket servidor;
+    private InetAddress rival;
 
-    private InetAddress inetServidor;
 
 
 
-    public Comunicador(InetAddress cliente,InetAddress servidor){
+    public Comunicador(Socket cliente,Socket servidor){
 
-        this.inetCliente=cliente;
-        this.inetServidor=servidor;
+        this.cliente=cliente;
+        this.servidor=servidor;
+        this.rival=cliente.getInetAddress();
 
     }
 
     public boolean decidirInicio(){
-        try (Socket socket1=new Socket(inetCliente,9999);
-             ServerSocket serverSocket=new ServerSocket(9999);
-             Socket socket2=serverSocket.accept();
-             PrintStream psCliente =new PrintStream(socket1.getOutputStream());
-             DataInputStream disServidor=new DataInputStream(socket2.getInputStream())){
+        try (PrintStream psCliente =new PrintStream(this.cliente.getOutputStream());
+             DataInputStream disServidor=new DataInputStream(this.servidor.getInputStream())){
             int numero=(int) (Math.random()*1000);
             psCliente.println(numero+"\r\n");
             String s=disServidor.readLine();
@@ -50,7 +51,7 @@ public class Comunicador {
     }
 
     public JugadorSimple recivirJugador(){
-        try (Socket socket=new Socket(this.inetServidor,9999);
+        try (Socket socket=new Socket(this.rival,9999);
              ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
             return (JugadorSimple)ois.readObject();
         } catch (IOException e) {
@@ -71,7 +72,7 @@ public class Comunicador {
         }
     }
     public void enviarPrueba(int i){
-        try (Socket socket=new Socket(this.inetCliente,9999);
+        try (Socket socket=new Socket(this.rival,9999);
                 MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             oos.writeObject(i);
         } catch (IOException e) {
@@ -79,7 +80,7 @@ public class Comunicador {
         }
     }
     public Mazo recivirMazo(){
-        try (Socket socket=new Socket(this.inetServidor,9999);
+        try (Socket socket=new Socket(this.rival,9999);
              ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
             return (Mazo)ois.readObject();
         } catch (IOException e) {
@@ -89,7 +90,7 @@ public class Comunicador {
         }
     }
     public void enviarJugador(JugadorSimple js){
-        try (Socket socket=new Socket(this.inetCliente,9999);
+        try (Socket socket=new Socket(this.rival,9999);
              MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             oos.writeObject(js);
         } catch (IOException e) {
@@ -97,7 +98,7 @@ public class Comunicador {
         }
     }
     public void enviarMazo(Mazo m){
-        try (Socket socket=new Socket(this.inetCliente,9999);
+        try (Socket socket=new Socket(this.rival,9999);
              MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             oos.writeObject(m);
         } catch (IOException e) {

@@ -104,7 +104,7 @@ public class Buscador extends Thread{
 				//Socket s=this.servidor.accept();
 				//System.out.println(s.getInetAddress()+", "+this.cliente.getPort());
 
-				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente.getInetAddress(),this.servidor.accept().getInetAddress())));
+				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente,this.servidor.accept())));
 			}else{
 				System.out.println("No entro");
 				if(this.cliente!=null){
@@ -118,21 +118,6 @@ public class Buscador extends Thread{
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		}finally {
-			if(this.servidor!=null){
-				try {
-					this.servidor.close();
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			}
-			if(this.cliente!=null){
-				try {
-					this.cliente.close();
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			}
 		}
 
 	
