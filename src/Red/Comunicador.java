@@ -46,6 +46,9 @@ public class Comunicador {
                 otro=Integer.parseInt(s);
                 System.out.println("--Su numero es: "+otro);
             }
+            System.out.println(this.cliente);
+            System.out.println(this.servidor);
+            System.out.println(this.rival);
             if(otro>numero){
                 return false;
             }else{
