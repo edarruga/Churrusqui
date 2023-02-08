@@ -36,7 +36,7 @@ public class Buscador extends Thread{
 	
 	public void run(){
 		try{
-			this.servidor=new ServerSocket(9999);
+			this.servidor=new ServerSocket(9988);
 			System.out.println("1");
 			File file=new File("prueba.txt");
 			String ruta = null;

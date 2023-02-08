@@ -31,7 +31,7 @@ public class RealizarPeticion implements Runnable{
 				if(respuesta.equals("OK")) {
 					respuesta=dis.readLine();
 					if(respuesta.equals("BuscoRival")) {
-						this.b.cliente=new Socket(socket.getInetAddress(),9999);
+						this.b.cliente=new Socket(socket.getInetAddress(),9988);
 						this.b.setEnlazado(true);
 						ps.print("OK\r\n");
 						this.b.rival=socket.getInetAddress().getHostAddress();
