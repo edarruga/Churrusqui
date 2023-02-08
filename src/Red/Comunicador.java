@@ -4,15 +4,18 @@ import ObjetosJuego.JugadorSimple;
 import ObjetosJuego.Mazo;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class Comunicador {
 
     private Socket cliente;
+    private InetAddress inetCliente;
     private PrintStream psCliente;
     private ObjectOutputStream oosCliente;
 
     private Socket servidor;
+    private InetAddress inetServidor;
     private DataInputStream disServidor;
     private ObjectInputStream oisServidor;
 
@@ -20,6 +23,8 @@ public class Comunicador {
     public Comunicador(Socket cliente,Socket servidor){
         this.cliente=cliente;
         this.servidor=servidor;
+        this.inetCliente=this.cliente.getInetAddress();
+        this.inetServidor=this.servidor.getInetAddress();
         //this.psCliente=new PrintStream(this.cliente.getOutputStream());
         //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
         //this.disServidor=new DataInputStream(this.servidor.getInputStream());
@@ -59,7 +64,8 @@ public class Comunicador {
         }
     }
     public int recivirPrueba(){
-        try (ObjectInputStream ois=new ObjectInputStream(this.servidor.getInputStream())){
+        try (Socket socket=new Socket(this.inetServidor,9999);
+                ObjectInputStream ois=new ObjectInputStream(this.servidor.getInputStream())){
             return (int)ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -68,7 +74,8 @@ public class Comunicador {
         }
     }
     public void enviarPrueba(int i){
-        try (MiObjectOutputStream oos=new MiObjectOutputStream(this.cliente.getOutputStream())){
+        try (Socket socket=new Socket(this.inetCliente,9999);
+                MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             oos.writeObject(i);
         } catch (IOException e) {
             throw new RuntimeException(e);
