@@ -3,9 +3,15 @@ package Estados;
 import Matematica.Vector2D;
 import ObjetosJuego.*;
 import Red.Comunicador;
+import Red.MiObjectOutputStream;
 import graficos.Loader;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class EstadoJuegoOnline extends EstadoJuego{
     private Comunicador comunicador;
@@ -38,14 +44,33 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
             this.yoSimple=new JugadorSimple(cs1);
             this.rivalSimple=new JugadorSimple(cs2);
+            try(Socket socket=new Socket(this.comunicador.cliente.getInetAddress(),9998);
+            MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
+                int num=777;
+                oos.writeObject(num);
 
-            this.comunicador.enviarPrueba(777);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            //this.comunicador.enviarPrueba(777);
             //this.comunicador.enviarJugador(this.rivalSimple);
             //this.comunicador.enviarJugador(this.yoSimple);
             //this.comunicador.enviarMazo(this.mazodeApilar1Simple);
             //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
         }else{
-            System.out.println(this.comunicador.recivirPrueba());
+            try (ServerSocket serverSocket=new ServerSocket(9998);
+                 Socket socket=serverSocket.accept();
+                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
+                Object o=ois.readObject();
+                int num=(int)o;
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            //System.out.println(this.comunicador.recivirPrueba());
             //this.yoSimple=this.comunicador.recivirJugador();
             //this.rivalSimple=this.comunicador.recivirJugador();
             //this.mazodeApilar1Simple=this.comunicador.recivirMazo();

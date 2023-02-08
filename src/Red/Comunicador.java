@@ -8,11 +8,11 @@ import java.net.Socket;
 
 public class Comunicador {
 
-    private Socket cliente;
+    public Socket cliente;
     private PrintStream psCliente;
     private ObjectOutputStream oosCliente;
 
-    private Socket servidor;
+    public Socket servidor;
     private DataInputStream disServidor;
     private ObjectInputStream oisServidor;
 
