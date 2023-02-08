@@ -37,14 +37,14 @@ public class Comunicador {
             psCliente.println(numero+"\r\n");
             String s=disServidor.readLine();
             int otro=Integer.parseInt(s);
-            System.out.println("Su numero es: "+numero);
+            System.out.println("Su numero es: "+otro);
             while(otro==numero){
                 numero=(int) (Math.random()*1000);
                 System.out.println("--Mi numero es: "+numero);
                 psCliente.println(numero+"\r\n");
                 s=disServidor.readLine();
                 otro=Integer.parseInt(s);
-                System.out.println("--Su numero es: "+numero);
+                System.out.println("--Su numero es: "+otro);
             }
             if(otro>numero){
                 return false;
