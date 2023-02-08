@@ -62,7 +62,7 @@ public class Comunicador {
         }
     }
     public int recivirPrueba(){
-        try (ObjectInputStream ois=new ObjectInputStream(this.disServidor)){
+        try (ObjectInputStream ois=new ObjectInputStream(this.servidor.getInputStream())){
             return (int)ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -71,7 +71,7 @@ public class Comunicador {
         }
     }
     public void enviarPrueba(int i){
-        try (ObjectOutputStream oos=new ObjectOutputStream(this.oosCliente)){
+        try (ObjectOutputStream oos=new ObjectOutputStream(this.cliente.getOutputStream())){
             oos.writeObject(i);
         } catch (IOException e) {
             throw new RuntimeException(e);
