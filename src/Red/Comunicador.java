@@ -68,14 +68,17 @@ public class Comunicador {
     }
     public int recivirPrueba(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
-                Socket socket=serverSocket.accept();
+                Socket socket=serverSocket.accept()){
+            try{
                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
-             DataInputStream disServidor=new DataInputStream(socket.getInputStream())){
-            System.out.println(disServidor.readLine());
-            System.out.println("recivirPrueba");
-            Object o= ois.readObject();
-            System.out.println(o);
-            return (int)o;
+                System.out.println("recivirPrueba");
+                Object o= ois.readObject();
+                System.out.println(o);
+                return (int)o;
+            }catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -84,9 +87,7 @@ public class Comunicador {
     }
     public void enviarPrueba(int i){
         try (Socket socket=new Socket(this.rival,9999);
-                MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream());
-             PrintStream psCliente =new PrintStream(socket.getOutputStream())){
-            psCliente.println("aaa\r\n");
+                MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
             System.out.println("enviarPrueba");
             oos.writeObject(i);
             oos.flush();
