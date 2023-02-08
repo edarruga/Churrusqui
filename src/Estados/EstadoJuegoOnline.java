@@ -23,6 +23,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
     public EstadoJuegoOnline(Comunicador comunicador){
         this.comunicador=comunicador;
         if(this.comunicador.decidirInicio()){
+            System.out.println("Lo hago yo");
             Mazo mazo=new Mazo();
             mazo.llenarMazo();
             //this.mazo.showmazo();
@@ -60,6 +61,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
             //this.comunicador.enviarMazo(this.mazodeApilar1Simple);
             //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
         }else{
+            System.out.println("Me lo hacen");
             /*
             try {
                 Thread.sleep(10000);
