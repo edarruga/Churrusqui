@@ -24,21 +24,27 @@ public class Comunicador {
         this.cliente=cliente;
         this.servidor=servidor;
         this.rival=cliente.getInetAddress();
+        System.out.println("Constructor finalizado");
 
     }
 
     public boolean decidirInicio(){
         try (PrintStream psCliente =new PrintStream(this.cliente.getOutputStream());
              DataInputStream disServidor=new DataInputStream(this.servidor.getInputStream())){
+            System.out.println("Decidiendo el inicio");
             int numero=(int) (Math.random()*1000);
+            System.out.println("Mi numero es: "+numero);
             psCliente.println(numero+"\r\n");
             String s=disServidor.readLine();
             int otro=Integer.parseInt(s);
+            System.out.println("Su numero es: "+numero);
             while(otro==numero){
                 numero=(int) (Math.random()*1000);
+                System.out.println("--Mi numero es: "+numero);
                 psCliente.println(numero+"\r\n");
                 s=disServidor.readLine();
                 otro=Integer.parseInt(s);
+                System.out.println("--Su numero es: "+numero);
             }
             if(otro>numero){
                 return false;

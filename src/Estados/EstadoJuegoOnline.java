@@ -21,7 +21,9 @@ public class EstadoJuegoOnline extends EstadoJuego{
     private Mazo mazodeApilar2Simple;
 
     public EstadoJuegoOnline(Comunicador comunicador){
+        System.out.println("Empiza el estado online");
         this.comunicador=comunicador;
+        System.out.println("Comunicador asignado");
         if(this.comunicador.decidirInicio()){
             System.out.println("Lo hago yo");
             Mazo mazo=new Mazo();
