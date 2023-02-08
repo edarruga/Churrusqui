@@ -100,7 +100,7 @@ public class Buscador extends Thread{
 			System.out.println("finalizado= "+this.finalizado+" | rival= "+this.rival+" | cliente= "+this.cliente);
 			if(!this.finalizado && this.rival!=null && this.cliente!=null){
 				System.out.println("Entro");
-				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente,this.servidor.accept())));
+				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente.getInetAddress(),this.servidor.accept().getInetAddress())));
 			}else{
 				System.out.println("No entro");
 				if(this.cliente!=null){

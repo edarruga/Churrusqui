@@ -9,37 +9,24 @@ import java.net.Socket;
 
 public class Comunicador {
 
-    private Socket cliente;
     private InetAddress inetCliente;
-    private PrintStream psCliente;
-    private ObjectOutputStream oosCliente;
 
-    private Socket servidor;
     private InetAddress inetServidor;
-    private DataInputStream disServidor;
-    private ObjectInputStream oisServidor;
 
 
-    public Comunicador(Socket cliente,Socket servidor){
 
-        try {
-            this.cliente=cliente;
-            this.servidor=servidor;
-            this.inetCliente=this.cliente.getInetAddress();
-            this.inetServidor=this.servidor.getInetAddress();
-            this.psCliente=new PrintStream(this.cliente.getOutputStream());
-            //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
-            this.disServidor=new DataInputStream(this.servidor.getInputStream());
-            //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public Comunicador(InetAddress cliente,InetAddress servidor){
+
+        this.inetCliente=cliente;
+        this.inetServidor=servidor;
 
     }
 
     public boolean decidirInicio(){
-        try (PrintStream psCliente =new PrintStream(this.cliente.getOutputStream());
-        DataInputStream disServidor=new DataInputStream(this.servidor.getInputStream())){
+        try (Socket socket1=new Socket(inetCliente,9999);
+             Socket socket2=new Socket(inetServidor,9999);
+                PrintStream psCliente =new PrintStream(socket1.getOutputStream());
+        DataInputStream disServidor=new DataInputStream(socket2.getInputStream())){
             int numero=(int) (Math.random()*1000);
             psCliente.println(numero+"\r\n");
             String s=disServidor.readLine();
@@ -61,8 +48,9 @@ public class Comunicador {
     }
 
     public JugadorSimple recivirJugador(){
-        try {
-            return (JugadorSimple)this.oisServidor.readObject();
+        try (Socket socket=new Socket(this.inetServidor,9999);
+             ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
+            return (JugadorSimple)ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -71,7 +59,7 @@ public class Comunicador {
     }
     public int recivirPrueba(){
         try (Socket socket=new Socket(this.inetServidor,9999);
-                ObjectInputStream ois=new ObjectInputStream(this.servidor.getInputStream())){
+                ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
             return (int)ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -88,8 +76,9 @@ public class Comunicador {
         }
     }
     public Mazo recivirMazo(){
-        try {
-            return (Mazo)this.oisServidor.readObject();
+        try (Socket socket=new Socket(this.inetServidor,9999);
+             ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
+            return (Mazo)ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -97,15 +86,17 @@ public class Comunicador {
         }
     }
     public void enviarJugador(JugadorSimple js){
-        try {
-            this.oosCliente.writeObject(js);
+        try (Socket socket=new Socket(this.inetCliente,9999);
+             MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
+            oos.writeObject(js);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public void enviarMazo(Mazo m){
-        try {
-            this.oosCliente.writeObject(m);
+        try (Socket socket=new Socket(this.inetCliente,9999);
+             MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
+            oos.writeObject(m);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
