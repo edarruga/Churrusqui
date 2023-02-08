@@ -18,28 +18,25 @@ public class Comunicador {
 
 
     public Comunicador(Socket cliente,Socket servidor){
-        try {
-            this.cliente=cliente;
-            this.servidor=servidor;
-            this.psCliente=new PrintStream(this.cliente.getOutputStream());
-            //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
-            this.disServidor=new DataInputStream(this.servidor.getInputStream());
-            //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.cliente=cliente;
+        this.servidor=servidor;
+        //this.psCliente=new PrintStream(this.cliente.getOutputStream());
+        //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
+        //this.disServidor=new DataInputStream(this.servidor.getInputStream());
+        //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
     }
 
     public boolean decidirInicio(){
-        try {
+        try (PrintStream psCliente =new PrintStream(this.cliente.getOutputStream());
+        DataInputStream disServidor=new DataInputStream(this.servidor.getInputStream())){
             int numero=(int) (Math.random()*1000);
-            this.psCliente.println(numero+"\r\n");
-            String s=this.disServidor.readLine();
+            psCliente.println(numero+"\r\n");
+            String s=disServidor.readLine();
             int otro=Integer.parseInt(s);
             while(otro==numero){
                 numero=(int) (Math.random()*1000);
-                this.psCliente.println(numero+"\r\n");
-                s=this.disServidor.readLine();
+                psCliente.println(numero+"\r\n");
+                s=disServidor.readLine();
                 otro=Integer.parseInt(s);
             }
             if(otro>numero){
