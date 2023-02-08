@@ -44,6 +44,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
             this.yoSimple=new JugadorSimple(cs1);
             this.rivalSimple=new JugadorSimple(cs2);
+            /*
             try(Socket socket=new Socket(this.comunicador.cliente.getInetAddress(),9998);
             MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
                 int num=777;
@@ -52,12 +53,14 @@ public class EstadoJuegoOnline extends EstadoJuego{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            //this.comunicador.enviarPrueba(777);
+            */
+            this.comunicador.enviarPrueba(777);
             //this.comunicador.enviarJugador(this.rivalSimple);
             //this.comunicador.enviarJugador(this.yoSimple);
             //this.comunicador.enviarMazo(this.mazodeApilar1Simple);
             //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
         }else{
+            /*
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -73,9 +76,9 @@ public class EstadoJuegoOnline extends EstadoJuego{
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
 
-            //System.out.println(this.comunicador.recivirPrueba());
+            System.out.println(this.comunicador.recivirPrueba());
             //this.yoSimple=this.comunicador.recivirJugador();
             //this.rivalSimple=this.comunicador.recivirJugador();
             //this.mazodeApilar1Simple=this.comunicador.recivirMazo();

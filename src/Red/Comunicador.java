@@ -8,11 +8,11 @@ import java.net.Socket;
 
 public class Comunicador {
 
-    public Socket cliente;
+    private Socket cliente;
     private PrintStream psCliente;
     private ObjectOutputStream oosCliente;
 
-    public Socket servidor;
+    private Socket servidor;
     private DataInputStream disServidor;
     private ObjectInputStream oisServidor;
 
@@ -22,8 +22,8 @@ public class Comunicador {
             this.cliente=cliente;
             this.servidor=servidor;
             this.psCliente=new PrintStream(this.cliente.getOutputStream());
-            //this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
-            this.disServidor=new DataInputStream(this.servidor.getInputStream());
+            this.oosCliente=new ObjectOutputStream(this.cliente.getOutputStream());
+            //this.disServidor=new DataInputStream(this.servidor.getInputStream());
             //this.oisServidor=new ObjectInputStream(this.servidor.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
