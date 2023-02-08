@@ -72,6 +72,7 @@ public class Comunicador {
     public int recivirPrueba(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
                 Socket socket=serverSocket.accept()){
+            System.out.println(socket);
             try{
                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
                 System.out.println("recivirPrueba");
@@ -91,6 +92,7 @@ public class Comunicador {
     public void enviarPrueba(int i){
         try (Socket socket=new Socket(this.rival,9999);
                 MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
+            System.out.println(socket);
             System.out.println("enviarPrueba");
             oos.writeObject(i);
             oos.flush();
