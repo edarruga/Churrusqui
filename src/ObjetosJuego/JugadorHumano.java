@@ -102,6 +102,23 @@ public class JugadorHumano implements Runnable{
                 new Accion2(this.estadoJuego)
         );
     }
+
+    public void modificarEstado(JugadorSimple j){
+        this.carta1.actualizarEstadoDeCarta(j.getCarta1());
+        this.carta2.actualizarEstadoDeCarta(j.getCarta2());
+        this.carta3.actualizarEstadoDeCarta(j.getCarta3());
+        this.carta4.actualizarEstadoDeCarta(j.getCarta4());
+        this.mazo.modificarEstado(j.getMazo());
+    }
+
+    public JugadorSimple pasarAJugadorSimple(){
+        Mazo m=this.mazo.mazo;
+        CartaSimple c1=this.carta1.CartaACartaSimple();
+        CartaSimple c2=this.carta2.CartaACartaSimple();
+        CartaSimple c3=this.carta3.CartaACartaSimple();
+        CartaSimple c4=this.carta4.CartaACartaSimple();
+        return new JugadorSimple(m,c1,c2,c3,c4);
+    }
     public static CartaSimple getCartaJugada(){
         return JugadorHumano.cartaJugada;
     }
@@ -113,6 +130,9 @@ public class JugadorHumano implements Runnable{
     public synchronized void solicitarCurrusqui(){
         if(!this.estadoJuego.churrusqui){
             if(this.estadoJuego.solicitarChurrusqui()){
+                if(!this.getEstadoJuego().getJugadorBot().getActivado()){
+                    this.estadoJuego.hiceCurrusquiOnline=true;
+                }
                 JugadorHumano.churrusqui=true;
             }
         }
@@ -186,10 +206,10 @@ public class JugadorHumano implements Runnable{
     public void setChurrusqui(boolean b){
         this.churrusqui=b;
     }
-    public MazoDeApilar getMazoDeApilar1(){
+    public MazoDeApilar1 getMazoDeApilar1(){
         return this.estadoJuego.getMazoDeApilar1();
     }
-    public MazoDeApilar getMazoDeApilar2(){
+    public MazoDeApilar2 getMazoDeApilar2(){
         return this.estadoJuego.getMazoDeApilar2();
     }
     public EstadoJuego getEstadoJuego(){

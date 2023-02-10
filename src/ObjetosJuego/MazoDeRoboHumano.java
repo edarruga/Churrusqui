@@ -2,6 +2,7 @@ package ObjetosJuego;
 
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
+import Red.RealizarPeticionPartida;
 import graficos.Loader;
 import input.MouseInput;
 
@@ -35,6 +36,10 @@ public class MazoDeRoboHumano extends MazoDeRobo{
                 CardHumano c=this.jugadorHumano.primeraCartaYaJugada();
                 if(c!=null && !this.estaVacio()){
                     c.actualizarEstadoDeCarta(this.mazo.giveCard());
+                    if(!this.jugadorHumano.getEstadoJuego().getJugadorBot().getActivado()) {//Caso de juego online
+                        RealizarPeticionPartida info=new RealizarPeticionPartida(this.jugadorHumano.getEstadoJuego(),this.jugadorHumano.getEstadoJuego().getComunicador().getRival(),0);
+                        info.start();
+                    }
                     MouseInput.clickEnMazoDeRobo =false;
                 }
 

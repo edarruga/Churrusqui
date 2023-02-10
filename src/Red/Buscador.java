@@ -104,7 +104,7 @@ public class Buscador extends Thread{
 				//Socket s=this.servidor.accept();
 				//System.out.println(s.getInetAddress()+", "+this.cliente.getPort());
 
-				Estado.cambiarEstado(new EstadoJuegoOnline(new Comunicador(this.cliente,this.servidor.accept())));
+				Estado.cambiarEstado(new EstadoJuegoOnline(this.cliente,this.servidor.accept()));
 			}else{
 				System.out.println("No entro");
 				if(this.cliente!=null){

@@ -20,11 +20,20 @@ public class Mazo implements Serializable {
             this.cards[i] = new CartaSimple(0, 0);
         }
     }
+    public Mazo(Mazo mazo){
+        this.cards = new CartaSimple [40];
+        for(int i=0;i<40;i++){
+            this.cards[i] = new CartaSimple(mazo.getCarta(i).getSuit(), mazo.getCarta(i).getValue());
+        }
+    }
     public void llenarMazo(){
         num=40;
         for(int i=0;i<40;i++){
             this.cards[i] = new CartaSimple(i/10+1, (i%10)+1);
         }
+    }
+    public CartaSimple getCarta(int i){
+        return this.cards[i];
     }
     public void swap(int n, int n2){
         //PRECONDITION: the deck must be initialized, 0 <= n and n2 < 40
@@ -63,6 +72,27 @@ public class Mazo implements Serializable {
     public void insertarCartasSimples(CartaSimple[] csv){
         for(int i=0;i<csv.length;i++){
             this.insertarCartaSimple(csv[i]);
+        }
+    }
+
+    public boolean equals(Mazo m){
+        if(m.getNum()==this.getNum()){
+            int num=this.getNum();
+            for(int i=0;i<num;i++){
+                if(!m.getCarta(i).equals(this.getCarta(i))){
+                    return false;
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public void modificarEstado(Mazo mazo){
+        this.num= mazo.num;
+        for(int i=0;i<mazo.num;i++){
+            this.getCarta(i).setSuit(mazo.getCarta(i).getSuit());
+            this.getCarta(i).setValue(mazo.getCarta(i).getValue());
         }
     }
 

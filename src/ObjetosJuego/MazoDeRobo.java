@@ -19,6 +19,9 @@ public abstract class MazoDeRobo extends ObjetoJuego{
         super(Loader.cargadorDeImagenes(CardHumano.buscarRutaTextura(0,1), Card.getAnchuraCarta(), Card.getAlturaCarta()), v2d);
         this.mazo=m;
     }
+    public void modificarEstado(Mazo m){
+        this.mazo.modificarEstado(m);
+    }
     public CartaSimple robarCata(){
         return this.mazo.giveCard();
     }

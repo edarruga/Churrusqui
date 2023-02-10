@@ -2,6 +2,7 @@ package Estados;
 
 import Matematica.Vector2D;
 import ObjetosJuego.*;
+import Red.Comunicador;
 import graficos.Assets;
 import graficos.Loader;
 import principal.Window;
@@ -31,13 +32,21 @@ public class EstadoJuego extends Estado{
     protected Thread hilo1;
     protected Thread hilo2;
     protected Thread hiloBloqueo;
-    protected MazoDeApilar mazoDeApilar1;
-    protected MazoDeApilar mazoDeApilar2;
+    protected MazoDeApilar1 mazoDeApilar1;
+    protected MazoDeApilar2 mazoDeApilar2;
     protected Mazo mazo;
     protected boolean actualiza=false;
     public boolean bloqueado=false;
     public boolean churrusqui=false;
     public boolean finDeJuego=false;
+    public boolean prioridad=true;
+    protected Comunicador comunicador;//Solo es necesario para el estado de juego online pero lo necesito poner aqui para el getChurrrusqui de jugadorBot
+    protected boolean mazodeApilar1SimpleModificado;
+    protected Mazo mazodeApilar1Simple;
+
+    protected boolean mazodeApilar2SimpleModificado;
+    protected Mazo mazodeApilar2Simple;
+    public boolean hiceCurrusquiOnline;
 
     //--------------Posiciones de las Cartas en el juego---------------//
     protected static double ordenadaRival= CardHumano.getAlturaCarta()*(0.15);
@@ -95,10 +104,61 @@ public class EstadoJuego extends Estado{
         hilo2.start();
 
     }
-    public MazoDeApilar getMazoDeApilar1(){
+
+
+
+
+
+    public Comunicador getComunicador() {
+        return comunicador;
+    }
+
+    public void setComunicador(Comunicador comunicador) {
+        this.comunicador = comunicador;
+    }
+
+    public boolean isMazodeApilar1SimpleModificado() {
+        return mazodeApilar1SimpleModificado;
+    }
+
+    public void setMazodeApilar1SimpleModificado(boolean mazodeApilar1SimpleModificado) {
+        this.mazodeApilar1SimpleModificado = mazodeApilar1SimpleModificado;
+    }
+
+    public Mazo getMazodeApilar1Simple() {
+        return mazodeApilar1Simple;
+    }
+
+    public void setMazodeApilar1Simple(Mazo mazodeApilar1Simple) {
+        this.mazodeApilar1Simple = mazodeApilar1Simple;
+    }
+
+    public boolean isMazodeApilar2SimpleModificado() {
+        return mazodeApilar2SimpleModificado;
+    }
+
+    public void setMazodeApilar2SimpleModificado(boolean mazodeApilar2SimpleModificado) {
+        this.mazodeApilar2SimpleModificado = mazodeApilar2SimpleModificado;
+    }
+
+    public Mazo getMazodeApilar2Simple() {
+        return mazodeApilar2Simple;
+    }
+
+    public void setMazodeApilar2Simple(Mazo mazodeApilar2Simple) {
+        this.mazodeApilar2Simple = mazodeApilar2Simple;
+    }
+
+
+
+
+
+
+
+    public MazoDeApilar1 getMazoDeApilar1(){
         return this.mazoDeApilar1;
     }
-    public MazoDeApilar getMazoDeApilar2(){
+    public MazoDeApilar2 getMazoDeApilar2(){
         return this.mazoDeApilar2;
     }
     public JugadorHumano getJugadorHumano(){

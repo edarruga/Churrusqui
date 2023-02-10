@@ -1,5 +1,6 @@
 package Red;
 
+import Estados.EstadoJuegoOnline;
 import ObjetosJuego.JugadorSimple;
 import ObjetosJuego.Mazo;
 
@@ -7,6 +8,8 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class Comunicador {
 
@@ -15,16 +18,24 @@ public class Comunicador {
     //Solo usar para el decidirInicio
     private Socket servidor;
     private InetAddress rival;
+    public boolean finDeComunicacion;
+    private Servidor servidorDeComunicacion;
+    private EstadoJuegoOnline estadoJuegoOnline;
 
 
 
 
-    public Comunicador(Socket cliente,Socket servidor){
+
+    public Comunicador(Socket cliente, Socket servidor, EstadoJuegoOnline estadoJuegoOnline){
 
         this.cliente=cliente;
         this.servidor=servidor;
         this.rival=cliente.getInetAddress();
+        this.finDeComunicacion=false;
         System.out.println("Constructor finalizado");
+        this.estadoJuegoOnline=estadoJuegoOnline;
+        this.servidorDeComunicacion=new Servidor(this.estadoJuegoOnline);
+        this.servidorDeComunicacion.start();
 
     }
 
@@ -69,6 +80,8 @@ public class Comunicador {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+
     }
     public int recivirPrueba(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
@@ -93,6 +106,11 @@ public class Comunicador {
             throw new RuntimeException(e);
         }
     }
+
+    public InetAddress getRival() {
+        return rival;
+    }
+
     public void enviarPrueba(int i){
         try (Socket socket=new Socket(this.rival,9999);
                 MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream());

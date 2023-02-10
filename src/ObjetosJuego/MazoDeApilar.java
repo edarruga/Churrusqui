@@ -8,11 +8,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class MazoDeApilar extends ObjetoJuego{
-    private Mazo mazo;
-    private Rectangle hitBox;
+    protected Mazo mazo;
+    protected Rectangle hitBox;
     protected EstadoJuego estadoJuego;
-    private boolean posibleJugada=false;
-    private boolean seModifico=false;
+    protected boolean posibleJugada=false;
+    protected boolean seModifico=false;
 
     public MazoDeApilar(BufferedImage t, Vector2D v2d,EstadoJuego es) {
         super(t, v2d);
@@ -25,6 +25,9 @@ public abstract class MazoDeApilar extends ObjetoJuego{
         this.estadoJuego=es;
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
         this.mazo=m;
+    }
+    public void modificarEstado(Mazo mazo){
+        this.mazo.modificarEstado(mazo);
     }
 
     public synchronized CartaSimple getUltimaCarta(){
@@ -39,13 +42,9 @@ public abstract class MazoDeApilar extends ObjetoJuego{
     public Rectangle getHitBox(){
         return this.hitBox;
     }
-    public synchronized boolean aniadirNuevaCarta(CartaSimple cs){
-        if(this.esJugable(cs)){
-            this.mazo.insertarCartaSimple(cs);
-            this.seModifico=true;
-            return true;
-        }
-        return false;
+
+    public Mazo getMazo(){
+        return this.mazo;
     }
     public CartaSimple[] darCartas(){
         CartaSimple[] cartasSimples=new CartaSimple[this.mazo.getNum()];

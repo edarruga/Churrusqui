@@ -57,7 +57,7 @@ public class CartaSimple implements Serializable {
         return false;
     }
 
-    public boolean sameCard(CardHumano c){
+    public boolean equals(CartaSimple c){
         //PRECONDITION:
         //POSTCONDITION: returns true if 2 cards have the same value and suit, false otherwise
         if(this.getSuit()==c.getSuit() && this.getValue()==c.getValue()){

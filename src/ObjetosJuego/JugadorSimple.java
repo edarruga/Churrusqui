@@ -17,6 +17,13 @@ public class JugadorSimple implements Serializable {
         this.carta3=j.carta3;
         this.carta4=j.carta4;
     }
+    public JugadorSimple(Mazo mazo,CartaSimple c1,CartaSimple c2,CartaSimple c3,CartaSimple c4){
+        this.mazo=mazo;
+        this.carta1=c1;
+        this.carta2=c2;
+        this.carta3=c3;
+        this.carta4=c4;
+    }
     public JugadorSimple(CartaSimple[] csv){
         this.mazo=new Mazo();
         this.mazo.insertarCartasSimples(csv);

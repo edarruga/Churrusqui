@@ -4,6 +4,10 @@ import Estados.EstadoJuego;
 import Matematica.Vector2D;
 
 import java.awt.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 
 public class JugadorBot implements Runnable{
 
@@ -77,6 +81,23 @@ public class JugadorBot implements Runnable{
         this.carta4=new CardBot(this.mazo.robarCata(),this.posicionCarta4);
         this.estadoJuego.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
     }
+
+    public void modificarEstado(JugadorSimple j){
+        this.carta1.actualizarEstadoDeCarta(j.getCarta1());
+        this.carta2.actualizarEstadoDeCarta(j.getCarta2());
+        this.carta3.actualizarEstadoDeCarta(j.getCarta3());
+        this.carta4.actualizarEstadoDeCarta(j.getCarta4());
+        this.mazo.modificarEstado(j.getMazo());
+    }
+
+    public JugadorSimple pasarAJugadorSimple(){
+        Mazo m=this.mazo.mazo;
+        CartaSimple c1=this.carta1.CartaACartaSimple();
+        CartaSimple c2=this.carta2.CartaACartaSimple();
+        CartaSimple c3=this.carta3.CartaACartaSimple();
+        CartaSimple c4=this.carta4.CartaACartaSimple();
+        return new JugadorSimple(m,c1,c2,c3,c4);
+    }
     public boolean getPuedoJugar(){
         return this.puedoJugar;
     }
@@ -98,7 +119,24 @@ public class JugadorBot implements Runnable{
         return this.activado;
     }
     public boolean getChurrusqui(){
-        return this.churrusqui;
+        if(this.activado){
+            return this.churrusqui;
+        }else{//En caso que este desactivado, es decir, que sea modo online
+            try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
+                DataInputStream dis=new DataInputStream(socket.getInputStream());
+                PrintStream ps=new PrintStream(socket.getOutputStream())){
+                ps.println("SolicitoGetChurrusqui");
+                String s=dis.readLine();
+                if(s.equals("True")){
+                    return true;
+                }else{
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
     public void setChurrusqui(boolean b){
         this.churrusqui=b;
