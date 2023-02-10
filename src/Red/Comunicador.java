@@ -128,6 +128,7 @@ public class Comunicador {
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
+            System.out.println(s);
             return new Mazo(s);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -138,6 +139,7 @@ public class Comunicador {
              PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.println(js.toString());
             ps.flush();
+            System.out.println(js.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -147,6 +149,7 @@ public class Comunicador {
              PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.println(m.toString());
             ps.flush();
+            System.out.println(m.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
