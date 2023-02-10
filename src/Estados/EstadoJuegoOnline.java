@@ -113,6 +113,14 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
     }
 
+    public Comunicador getComunicador() {
+        return this.comunicador;
+    }
+
+    public void setComunicador(Comunicador comunicador) {
+        this.comunicador = comunicador;
+    }
+
 
     public boolean isYoSimpleModificado() {
         return yoSimpleModificado;

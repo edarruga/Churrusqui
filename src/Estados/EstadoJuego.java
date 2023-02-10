@@ -110,7 +110,7 @@ public class EstadoJuego extends Estado{
 
 
     public Comunicador getComunicador() {
-        return comunicador;
+        return this.comunicador;
     }
 
     public void setComunicador(Comunicador comunicador) {
