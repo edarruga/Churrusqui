@@ -49,6 +49,9 @@ public class MazoDeApilar2 extends MazoDeApilar{
                 }
                 return false;
             }
+            if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
+                return true;
+            }
             return false;
         }
 
