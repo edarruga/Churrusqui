@@ -64,12 +64,12 @@ public class EstadoJuegoOnline extends EstadoJuego{
             }
             */
             //this.comunicador.enviarPrueba(777);
-            //this.comunicador.enviarJugador(this.rivalSimple);
-            //this.comunicador.enviarJugador(this.yoSimple);
-            //this.comunicador.enviarMazo(this.mazodeApilar1Simple);
-            //this.comunicador.enviarMazo(this.mazodeApilar2Simple);
-            RealizarPeticionPartida info=new RealizarPeticionPartida(this,this.getComunicador().getRival(),5);
-            info.start();
+            this.comunicador.enviarJugador(this.rivalSimple);
+            this.comunicador.enviarJugador(this.yoSimple);
+            this.comunicador.enviarMazo(this.mazodeApilar1Simple);
+            this.comunicador.enviarMazo(this.mazodeApilar2Simple);
+            //RealizarPeticionPartida info=new RealizarPeticionPartida(this,this.getComunicador().getRival(),5);
+            //info.start();
         }else{
             System.out.println("Me lo mandan");
             /*
@@ -91,10 +91,10 @@ public class EstadoJuegoOnline extends EstadoJuego{
             }*/
 
             //System.out.println(this.comunicador.recivirPrueba());
-            //this.yoSimple=this.comunicador.recivirJugador();
-            //this.rivalSimple=this.comunicador.recivirJugador();
-            //this.mazodeApilar1Simple=this.comunicador.recivirMazo();
-            //this.mazodeApilar2Simple=this.comunicador.recivirMazo();
+            this.yoSimple=this.comunicador.recivirJugador();
+            this.rivalSimple=this.comunicador.recivirJugador();
+            this.mazodeApilar1Simple=this.comunicador.recivirMazo();
+            this.mazodeApilar2Simple=this.comunicador.recivirMazo();
 
             this.prioridad=false;
         }

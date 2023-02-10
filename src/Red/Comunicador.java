@@ -73,11 +73,10 @@ public class Comunicador {
     public JugadorSimple recivirJugador(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
              Socket socket=serverSocket.accept();
-             ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
-            return (JugadorSimple)ois.readObject();
+             DataInputStream dis=new DataInputStream(socket.getInputStream())){
+            String s=dis.readLine();
+            return new JugadorSimple(s);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -127,28 +126,27 @@ public class Comunicador {
     public Mazo recivirMazo(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
              Socket socket=serverSocket.accept();
-             ObjectInputStream ois=new ObjectInputStream(socket.getInputStream())){
-            return (Mazo)ois.readObject();
+             DataInputStream dis=new DataInputStream(socket.getInputStream())){
+            String s=dis.readLine();
+            return new Mazo(s);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
     public void enviarJugador(JugadorSimple js){
         try (Socket socket=new Socket(this.rival,9999);
-             MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
-            oos.writeObject(js);
-            oos.flush();
+             PrintStream ps=new PrintStream(socket.getOutputStream())){
+            ps.println(js.toString());
+            ps.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public void enviarMazo(Mazo m){
         try (Socket socket=new Socket(this.rival,9999);
-             MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
-            oos.writeObject(m);
-            oos.flush();
+             PrintStream ps=new PrintStream(socket.getOutputStream())){
+            ps.println(m.toString());
+            ps.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

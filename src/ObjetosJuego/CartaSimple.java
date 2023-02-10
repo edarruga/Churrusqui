@@ -12,6 +12,11 @@ public class CartaSimple implements Serializable {
         this.suit=0;
         this.value=0;
     }
+    public CartaSimple(String s){
+        String c[]=s.split(",");
+        this.value=Integer.parseInt(c[0]);
+        this.suit=Integer.parseInt(c[1]);
+    }
     public CartaSimple(int s,int v){
         //PRECONDITION: the card must be initialized
         //POSTCONDITION: creates the card with its own value and suit
@@ -64,6 +69,9 @@ public class CartaSimple implements Serializable {
             return true;
         }
         return false;
+    }
+    public String toString(){
+        return this.value+","+this.suit;
     }
     public void showCard(){
         //PRECONDITION: the card must be initialized

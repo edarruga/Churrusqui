@@ -24,6 +24,14 @@ public class JugadorSimple implements Serializable {
         this.carta3=c3;
         this.carta4=c4;
     }
+    public JugadorSimple(String s){
+        String js[]=s.split("a");
+        this.carta1=new CartaSimple(js[0]);
+        this.carta2=new CartaSimple(js[1]);
+        this.carta3=new CartaSimple(js[2]);
+        this.carta4=new CartaSimple(js[3]);
+        this.mazo=new Mazo(js[4]);
+    }
     public JugadorSimple(CartaSimple[] csv){
         this.mazo=new Mazo();
         this.mazo.insertarCartasSimples(csv);
@@ -55,5 +63,9 @@ public class JugadorSimple implements Serializable {
 
     public CartaSimple getCarta4() {
         return this.carta4;
+    }
+
+    public String toString(){
+        return this.carta1.toString()+"a"+this.carta2.toString()+"a"+this.carta3.toString()+"a"+this.carta4.toString()+"a"+this.mazo.toString();
     }
 }

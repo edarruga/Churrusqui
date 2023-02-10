@@ -20,6 +20,14 @@ public class Mazo implements Serializable {
             this.cards[i] = new CartaSimple(0, 0);
         }
     }
+    public Mazo(String s){
+        String m[]=s.split(".");
+        this.cards = new CartaSimple [40];
+        this.num= Integer.parseInt(m[0]);
+        for(int i=0;i<40;i++){
+            this.cards[i] = new CartaSimple(m[1+i]);
+        }
+    }
     public Mazo(Mazo mazo){
         this.cards = new CartaSimple [40];
         for(int i=0;i<40;i++){
@@ -105,6 +113,13 @@ public class Mazo implements Serializable {
         for(int i=0;i<num;i++){
             this.cards[i].showCard();
         }
+    }
+    public String toString(){
+        String s= String.valueOf(this.num);
+        for(int i=0;i<40;i++){
+            s=s+"."+this.cards[i].toString();
+        }
+        return s;
     }
     public CartaSimple getUltimaCarta(){
         return this.cards[this.num-1];
