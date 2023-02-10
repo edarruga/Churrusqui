@@ -17,7 +17,90 @@ public class AtenderPeticionPartida implements Runnable{
         this.estadoJuegoOnline=ejo;
         this.socket=s;
     }
+
     @Override
+    public void run() {
+        try(DataInputStream dis=new DataInputStream(this.socket.getInputStream());
+            PrintStream ps=new PrintStream(this.socket.getOutputStream())){
+            String tipoPeticion=dis.readLine();
+            if(tipoPeticion.equals("ActualizoMiJugador")){
+                this.estadoJuegoOnline.setRivalSimple(new JugadorSimple(dis.readLine()));
+                this.estadoJuegoOnline.setRivalSimpleModificado(true);
+            }
+            if(tipoPeticion.equals("ActualizoTuJugador")){
+                this.estadoJuegoOnline.setYoSimple(new JugadorSimple(dis.readLine()));
+                this.estadoJuegoOnline.setYoSimpleModificado(true);
+            }
+            if(tipoPeticion.equals("ActualizoMazo1")){
+                this.estadoJuegoOnline.setMazodeApilar1Simple(new Mazo(dis.readLine()));
+                this.estadoJuegoOnline.setMazodeApilar1SimpleModificado(true);
+            }
+            if(tipoPeticion.equals("ActualizoMazo2")){
+                this.estadoJuegoOnline.setMazodeApilar2Simple(new Mazo(dis.readLine()));
+                this.estadoJuegoOnline.setMazodeApilar2SimpleModificado(true);
+            }
+            if(tipoPeticion.equals("IntroduzcoCartaEnMazo1")){
+                Mazo mazo=new Mazo(dis.readLine());
+                Mazo mazoMi=new Mazo(this.estadoJuegoOnline.getMazoDeApilar1().getMazo());
+                if(mazoMi.equals(mazo)){
+                    ps.println("OK");
+                }else{
+                    ps.println("NoPudoSer");
+                }
+            }
+            if(tipoPeticion.equals("IntroduzcoCartaEnMazo2")){
+                Mazo mazo=new Mazo(dis.readLine());
+                Mazo mazoMi=new Mazo(this.estadoJuegoOnline.getMazoDeApilar2().getMazo());
+                if(mazoMi.equals(mazo)){
+                    ps.println("OK");
+                }else{
+                    ps.println("NoPudoSer");
+                }
+            }
+            if(tipoPeticion.equals("SolicitoGetChurrusqui")){
+                if(!this.estadoJuegoOnline.getJugadorHumano().getChurrusqui()){
+                    ps.println("False");
+                }else{
+                    ps.println("True");
+                }
+            }
+            if(tipoPeticion.equals("Churrusqui")){
+                this.estadoJuegoOnline.hiceCurrusquiOnline=false;
+                this.estadoJuegoOnline.getJugadorBot().setChurrusqui(true);
+
+            }
+            if(tipoPeticion.equals("SolucionoBloqueo")){
+                this.estadoJuegoOnline.setRivalSimple(new JugadorSimple(dis.readLine()));
+                this.estadoJuegoOnline.setRivalSimpleModificado(true);
+                this.estadoJuegoOnline.setYoSimple(new JugadorSimple(dis.readLine()));
+                this.estadoJuegoOnline.setYoSimpleModificado(true);
+                this.estadoJuegoOnline.setMazodeApilar1Simple(new Mazo(dis.readLine()));
+                this.estadoJuegoOnline.setMazodeApilar1SimpleModificado(true);
+                this.estadoJuegoOnline.setMazodeApilar2Simple(new Mazo(dis.readLine()));
+                this.estadoJuegoOnline.setMazodeApilar2SimpleModificado(true);
+                MouseInput.botonIzquierdo=false;
+                this.estadoJuegoOnline.bloqueado=false;
+            }
+            if(tipoPeticion.equals("SolucionoChurrusqui")){
+                this.estadoJuegoOnline.setRivalSimple(new JugadorSimple(dis.readLine()));
+                this.estadoJuegoOnline.setRivalSimpleModificado(true);
+                this.estadoJuegoOnline.setYoSimple(new JugadorSimple(dis.readLine()));
+                this.estadoJuegoOnline.setYoSimpleModificado(true);
+                this.estadoJuegoOnline.setMazodeApilar1Simple(new Mazo(dis.readLine()));
+                this.estadoJuegoOnline.setMazodeApilar1SimpleModificado(true);
+                this.estadoJuegoOnline.setMazodeApilar2Simple(new Mazo(dis.readLine()));
+                this.estadoJuegoOnline.setMazodeApilar2SimpleModificado(true);
+                this.estadoJuegoOnline.getJugadorBot().setChurrusqui(false);
+                this.estadoJuegoOnline.getJugadorHumano().setChurrusqui(false);
+                this.estadoJuegoOnline.churrusqui=false;
+            }
+            ps.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+   /* @Override
     public void run() {
         try(DataInputStream dis=new DataInputStream(this.socket.getInputStream());
             PrintStream ps=new PrintStream(this.socket.getOutputStream())){
@@ -129,5 +212,5 @@ public class AtenderPeticionPartida implements Runnable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }

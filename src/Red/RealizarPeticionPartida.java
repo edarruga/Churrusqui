@@ -24,6 +24,56 @@ public class RealizarPeticionPartida extends Thread{
     @Override
     public void run() {
         try(Socket socket=new Socket(this.rival,9990);
+            DataInputStream dis=new DataInputStream(socket.getInputStream());
+            PrintStream ps=new PrintStream(socket.getOutputStream())){
+
+            switch (this.numeroDePeticion){
+                case 0:
+                    ps.println("ActualizoMiJugador");
+                    ps.println(this.estadoJuego.getJugadorHumano().pasarAJugadorSimple().toString());
+                    ps.flush();
+                    break;
+                case 1:
+                    ps.println("ActualizoTuJugador");
+                    ps.println(this.estadoJuego.getJugadorBot().pasarAJugadorSimple().toString());
+                    ps.flush();
+                    break;
+                case 2:
+                    ps.println("ActualizoMazo1");
+                    ps.println(this.estadoJuego.getMazoDeApilar1().getMazo().toString());
+                    ps.flush();
+                    break;
+                case 3:
+                    ps.println("ActualizoMazo2");
+                    ps.println(this.estadoJuego.getMazoDeApilar2().getMazo().toString());
+                    ps.flush();
+                    break;
+                case 4:
+                    ps.println("SolucionoBloqueo");
+                    ps.println(this.estadoJuego.getJugadorHumano().pasarAJugadorSimple().toString());
+                    ps.println(this.estadoJuego.getJugadorBot().pasarAJugadorSimple().toString());
+                    ps.println(this.estadoJuego.getMazoDeApilar1().getMazo().toString());
+                    ps.println(this.estadoJuego.getMazoDeApilar2().getMazo().toString());
+                    ps.flush();
+                    break;
+                case 5:
+                    ps.println("SolucionoChurrusqui");
+                    ps.println(this.estadoJuego.getJugadorHumano().pasarAJugadorSimple().toString());
+                    ps.println(this.estadoJuego.getJugadorBot().pasarAJugadorSimple().toString());
+                    ps.println(this.estadoJuego.getMazoDeApilar1().getMazo().toString());
+                    ps.println(this.estadoJuego.getMazoDeApilar2().getMazo().toString());
+                    ps.flush();
+                    break;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /*@Override
+    public void run() {
+        try(Socket socket=new Socket(this.rival,9990);
                 DataInputStream dis=new DataInputStream(socket.getInputStream());
                 PrintStream ps=new PrintStream(socket.getOutputStream())){
 
@@ -93,5 +143,5 @@ public class RealizarPeticionPartida extends Thread{
             throw new RuntimeException(e);
         }
 
-    }
+    }*/
 }
