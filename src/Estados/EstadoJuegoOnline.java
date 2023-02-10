@@ -202,19 +202,24 @@ public class EstadoJuegoOnline extends EstadoJuego{
             this.jugadorHumano.modificarEstado(this.getYoSimple());
             this.setYoSimpleModificado(false);
         }
+        System.out.println("---1");
         if(this.isRivalSimpleModificado()){
             this.jugadorBot.modificarEstado(this.getRivalSimple());
             this.setRivalSimpleModificado(false);
         }
+        System.out.println("---2");
         if(this.isMazodeApilar1SimpleModificado()){
             this.mazoDeApilar1.modificarEstado(this.getMazodeApilar1Simple());
             this.setMazodeApilar1SimpleModificado(false);
         }
+        System.out.println("---3");
         if(this.isMazodeApilar2SimpleModificado()){
             this.mazoDeApilar2.modificarEstado(this.getMazodeApilar2Simple());
             this.setMazodeApilar2SimpleModificado(false);
         }
+        System.out.println("---4");
         if(this.jugadorHumano.getTerminado() || this.jugadorBot.getTerminado()){
+            System.out.println("------5");
             this.finDeJuego=true;
             EstadoJuego.wait(1);
             hilo1.interrupt();
@@ -223,23 +228,31 @@ public class EstadoJuegoOnline extends EstadoJuego{
             Estado.cambiarEstado(new EstadoFinDePartida(this.jugadorHumano.getTerminado()));//Termina la partida
 
         }else{
+            System.out.println("---5");
             this.actualiza=true;
             this.mazoDeApilar1.actualizar();
+            System.out.println("---6");
             this.mazoDeApilar2.actualizar();
+            System.out.println("---7");
             if(this.jugadorHumano.getChurrusqui() || this.jugadorBot.getChurrusqui()){
+                System.out.println("---PPPPPPP");
                 this.churrusqui=true;
             }
+            System.out.println("---8");
             this.actualiza=false;
             //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
             //System.out.println(EstadoJuego.bloqueado);
             if(!this.churrusqui){
+                System.out.println("---9");
                 if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !this.bloqueado){
+                    System.out.println("---10");
                     //System.out.println(this.jugadorBot.prueba());
                     //this.dibujar(g);
                     this.bloqueado=true;
                     //System.out.println("Ce bloqueo");
 
                 }
+                System.out.println("---11");
             }
 
 
