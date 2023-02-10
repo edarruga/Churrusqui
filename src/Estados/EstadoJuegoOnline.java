@@ -65,8 +65,11 @@ public class EstadoJuegoOnline extends EstadoJuego{
             */
             //this.comunicador.enviarPrueba(777);
             this.comunicador.enviarJugador(this.rivalSimple);
+            System.out.println("===========");
             this.comunicador.enviarJugador(this.yoSimple);
+            System.out.println("===========");
             this.comunicador.enviarMazo(this.mazodeApilar1Simple);
+            System.out.println("===========");
             this.comunicador.enviarMazo(this.mazodeApilar2Simple);
             //RealizarPeticionPartida info=new RealizarPeticionPartida(this,this.getComunicador().getRival(),5);
             //info.start();
@@ -92,8 +95,11 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
             //System.out.println(this.comunicador.recivirPrueba());
             this.yoSimple=this.comunicador.recivirJugador();
+            System.out.println("===========");
             this.rivalSimple=this.comunicador.recivirJugador();
+            System.out.println("===========");
             this.mazodeApilar1Simple=this.comunicador.recivirMazo();
+            System.out.println("===========");
             this.mazodeApilar2Simple=this.comunicador.recivirMazo();
 
             this.prioridad=false;

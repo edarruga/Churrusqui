@@ -75,7 +75,7 @@ public class Comunicador {
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
-            System.out.println(s);
+            System.out.println("Jugador: "+s);
             return new JugadorSimple(s);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -129,7 +129,7 @@ public class Comunicador {
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
-            System.out.println(s);
+            System.out.println("Mazo: "+s);
             return new Mazo(s);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -140,7 +140,7 @@ public class Comunicador {
              PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.println(js.toString());
             ps.flush();
-            System.out.println(js.toString());
+            System.out.println("Jugador: "+js.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -150,7 +150,7 @@ public class Comunicador {
              PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.println(m.toString());
             ps.flush();
-            System.out.println(m.toString());
+            System.out.println("Mazo: "+m.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
