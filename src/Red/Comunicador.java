@@ -75,6 +75,7 @@ public class Comunicador {
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
+            System.out.println(s);
             return new JugadorSimple(s);
         } catch (IOException e) {
             throw new RuntimeException(e);
