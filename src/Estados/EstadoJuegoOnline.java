@@ -197,6 +197,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
     }
     @Override
     public void actualizar() {
+        System.out.println("Actualizando");
         if(this.isYoSimpleModificado()){
             this.jugadorHumano.modificarEstado(this.getYoSimple());
             this.setYoSimpleModificado(false);
@@ -247,6 +248,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
     @Override
     public void dibujar(Graphics g) {
+        System.out.println("Dibujando");
         if(this.bloqueado && !this.getChurrusqui()){
             g.drawImage(Assets.Bloqueo,((principal.Window.getAnchuraVentana()/2)-(CardHumano.getAnchuraCarta()/2)),((Window.getAlturaVentana()/2)-(CardHumano.getAnchuraCarta()/2)),null);
         }
