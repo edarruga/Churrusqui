@@ -26,31 +26,39 @@ public class MazoDeApilar1 extends MazoDeApilar{
             }
             return false;
         }else{//Caso de juego online
+            System.out.println("1else");
             if(!this.estadoJuego.isMazodeApilar1SimpleModificado()){
+                System.out.println("1elsee");
                 if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
+                    System.out.println("1elseee");
                     try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
                         DataInputStream dis=new DataInputStream(socket.getInputStream());
-                        PrintStream ps=new PrintStream(socket.getOutputStream());
-                        MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream())){
-
+                        PrintStream ps=new PrintStream(socket.getOutputStream())){
+                        System.out.println("1Try");
                         ps.println("IntroduzcoCartaEnMazo1");
-                        oos.writeObject(this.estadoJuego.getMazodeApilar1Simple());
-                        oos.flush();
+                        ps.println(this.estadoJuego.getMazodeApilar1Simple().toString());
+                        ps.flush();
+                        System.out.println("1Tryy");
                         String s=dis.readLine();
                         if(s.equals("OK")){
+                            System.out.println("1Ok");
                             return true;
                         }else{
+                            System.out.println("1No");
                             return false;
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
+                System.out.println("1No elseee");
                 return false;
             }
             if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
+                System.out.println("1Otra");
                 return true;
             }
+            System.out.println("1No elsee");
             return false;
         }
 
