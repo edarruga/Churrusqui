@@ -21,7 +21,7 @@ public class Mazo implements Serializable {
         }
     }
     public Mazo(String s){
-        String m[]=s.split(".");
+        String m[]=s.split("b");
         this.cards = new CartaSimple [40];
         this.num= Integer.parseInt(m[0]);
         for(int i=0;i<40;i++){
@@ -117,7 +117,7 @@ public class Mazo implements Serializable {
     public String toString(){
         String s= String.valueOf(this.num);
         for(int i=0;i<40;i++){
-            s=s+"."+this.cards[i].toString();
+            s=s+"b"+this.cards[i].toString();
         }
         return s;
     }
