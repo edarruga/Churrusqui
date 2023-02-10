@@ -65,10 +65,25 @@ public class EstadoJuegoOnline extends EstadoJuego{
             */
             //this.comunicador.enviarPrueba(777);
             this.comunicador.enviarJugador(this.rivalSimple);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("===========");
             this.comunicador.enviarJugador(this.yoSimple);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("===========");
             this.comunicador.enviarMazo(this.mazodeApilar1Simple);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("===========");
             this.comunicador.enviarMazo(this.mazodeApilar2Simple);
             //RealizarPeticionPartida info=new RealizarPeticionPartida(this,this.getComunicador().getRival(),5);
