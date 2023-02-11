@@ -128,6 +128,10 @@ public class EstadoJuegoOnline extends EstadoJuego{
         super.jugadorBot=new JugadorBot(this.rivalSimple,this);
         super.jugadorBot.desactivar();
         super.bloqueo=new Bloqueo(this);
+        this.setMazodeApilar1SimpleModificado(false);
+        this.setMazodeApilar2SimpleModificado(false);
+        this.setYoSimpleModificado(false);
+        this.setRivalSimpleModificado(false);
         hiloBloqueo=new Thread(bloqueo);
         hilo1=new Thread(jugadorHumano);
         hilo2=new Thread(jugadorBot);

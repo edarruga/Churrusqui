@@ -79,7 +79,7 @@ public class JugadorBot implements Runnable{
         this.carta2=new CardBot(this.mazo.robarCata(),this.posicionCarta2);
         this.carta3=new CardBot(this.mazo.robarCata(),this.posicionCarta3);
         this.carta4=new CardBot(this.mazo.robarCata(),this.posicionCarta4);
-        this.estadoJuego.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+        //this.estadoJuego.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
     }
 
     public void modificarEstado(JugadorSimple j){

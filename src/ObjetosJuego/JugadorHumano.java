@@ -57,7 +57,7 @@ public class JugadorHumano implements Runnable{
 
         this.estadoJuego=es;
 
-        this.estadoJuego.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
+        //this.estadoJuego.getMazoDeApilar1().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
         this.boton=new Boton(Assets.BotonBlancoOut,
                 Assets.BotonBlancoIn,
                 (int)(CardHumano.getAnchuraCarta()*(0.75)),
