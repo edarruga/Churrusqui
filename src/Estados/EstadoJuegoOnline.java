@@ -244,12 +244,19 @@ public class EstadoJuegoOnline extends EstadoJuego{
             //System.out.println(EstadoJuego.bloqueado);
             if(!this.churrusqui){
                 System.out.println("---9");
-                if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !this.bloqueado){
+                if(!jugadorBot.puedoJugarLocal() && !jugadorHumano.puedoJugarLocal() && !this.bloqueado){
                     System.out.println("---10");
-                    //System.out.println(this.jugadorBot.prueba());
-                    //this.dibujar(g);
-                    this.bloqueado=true;
-                    //System.out.println("Ce bloqueo");
+                    if(!this.getJugadorBot().getActivado()){
+                        if(!this.isMazodeApilar1SimpleModificado() && !this.isMazodeApilar2SimpleModificado() && !this.isRivalSimpleModificado() && !this.isYoSimpleModificado()){
+                            this.bloqueado=true;
+                        }
+                    }else{
+                        //System.out.println(this.jugadorBot.prueba());
+                        //this.dibujar(g);
+                        this.bloqueado=true;
+                        //System.out.println("Ce bloqueo");
+
+                    }
 
                 }
                 System.out.println("---11");

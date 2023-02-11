@@ -179,6 +179,22 @@ public class JugadorBot implements Runnable{
             return true;
         }
     }
+    public boolean puedoJugarLocal(){
+        if(!(this.estadoJuego.getMazoDeApilar1().esJugableLocal(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar1().esJugableLocal(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar1().esJugableLocal(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar1().esJugableLocal(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+                && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
+                && (!this.puedoRobar || this.mazo.estaVacio()))
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
     public CartaSimple solucionarBloqueo(){
         if(!this.mazo.estaVacio()){
             return this.mazo.robarCata();

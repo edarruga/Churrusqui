@@ -65,6 +65,12 @@ public abstract class MazoDeApilar extends ObjetoJuego{
         }
         return false;
     }
+    public synchronized boolean esJugableLocal(CartaSimple cNueva){
+        if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void dibujar(Graphics g) {
