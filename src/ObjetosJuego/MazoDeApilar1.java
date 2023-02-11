@@ -26,19 +26,19 @@ public class MazoDeApilar1 extends MazoDeApilar{
             }
             return false;
         }else{//Caso de juego online
-            System.out.println("1else");
+            //System.out.println("1else");
             if(!this.estadoJuego.isMazodeApilar1SimpleModificado()){
-                System.out.println("1elsee");
+                //System.out.println("1elsee");
                 if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
-                    System.out.println("1elseee");
+                    //System.out.println("1elseee");
                     try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
                         DataInputStream dis=new DataInputStream(socket.getInputStream());
                         PrintStream ps=new PrintStream(socket.getOutputStream())){
-                        System.out.println("1Try");
+                        //System.out.println("1Try");
                         ps.println("IntroduzcoCartaEnMazo1");
                         ps.println(this.estadoJuego.getMazodeApilar1Simple().toString());
                         ps.flush();
-                        System.out.println("1Tryy");
+                        //System.out.println("1Tryy");
                         String s=dis.readLine();
                         if(s.equals("OK")){
                             System.out.println("1Ok");
@@ -51,14 +51,14 @@ public class MazoDeApilar1 extends MazoDeApilar{
                         throw new RuntimeException(e);
                     }
                 }
-                System.out.println("1No elseee");
+                //System.out.println("1No elseee");
                 return false;
             }
             if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
-                System.out.println("1Otra");
+                //System.out.println("1Otra");
                 return true;
             }
-            System.out.println("1No elsee");
+            //System.out.println("1No elsee");
             return false;
         }
 

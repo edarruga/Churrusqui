@@ -27,39 +27,39 @@ public class MazoDeApilar2 extends MazoDeApilar{
             }
             return false;
         }else{//Caso de juego online
-            System.out.println("else");
+            //System.out.println("else");
             if(!this.estadoJuego.isMazodeApilar2SimpleModificado()){
-                System.out.println("elsee");
+                //System.out.println("elsee");
                 if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
-                    System.out.println("elseee");
+                    //System.out.println("elseee");
                     try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
                         DataInputStream dis=new DataInputStream(socket.getInputStream());
                         PrintStream ps=new PrintStream(socket.getOutputStream())){
-                        System.out.println("Try");
+                        //System.out.println("Try");
                         ps.println("IntroduzcoCartaEnMazo2");
                         ps.println(this.estadoJuego.getMazodeApilar2Simple().toString());
                         ps.flush();
-                        System.out.println("Tryy");
+                        //System.out.println("Tryy");
                         String s=dis.readLine();
                         if(s.equals("OK")){
-                            System.out.println("Ok");
+                            //System.out.println("Ok");
                             return true;
                         }else{
-                            System.out.println("No");
+                            //System.out.println("No");
                             return false;
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                System.out.println("No elseee");
+                //System.out.println("No elseee");
                 return false;
             }
             if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
-                System.out.println("Otra");
+                //System.out.println("Otra");
                 return true;
             }
-            System.out.println("No elsee");
+            //System.out.println("No elsee");
             return false;
         }
 
