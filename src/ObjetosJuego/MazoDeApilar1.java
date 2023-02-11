@@ -41,10 +41,10 @@ public class MazoDeApilar1 extends MazoDeApilar{
                         //System.out.println("1Tryy");
                         String s=dis.readLine();
                         if(s.equals("OK")){
-                            System.out.println("1Ok");
+                            //System.out.println("1Ok");
                             return true;
                         }else{
-                            System.out.println("1No");
+                            //System.out.println("1No");
                             return false;
                         }
                     } catch (IOException e) {
