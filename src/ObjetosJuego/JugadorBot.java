@@ -75,10 +75,10 @@ public class JugadorBot implements Runnable{
         this.mazo=new MazoDeRoboBot(this.posicionMazoDeRobo,j.getMazo(),this);
         this.puedoRobar=false;
 
-        this.carta1=new CardBot(this.mazo.robarCata(),this.posicionCarta1);
-        this.carta2=new CardBot(this.mazo.robarCata(),this.posicionCarta2);
-        this.carta3=new CardBot(this.mazo.robarCata(),this.posicionCarta3);
-        this.carta4=new CardBot(this.mazo.robarCata(),this.posicionCarta4);
+        this.carta1=new CardBot(j.getCarta1(),this.posicionCarta1);
+        this.carta2=new CardBot(j.getCarta2(),this.posicionCarta2);
+        this.carta3=new CardBot(j.getCarta3(),this.posicionCarta3);
+        this.carta4=new CardBot(j.getCarta4(),this.posicionCarta4);
         //this.estadoJuego.getMazoDeApilar2().aniadirNuevaCartaAlaFuerza(this.mazo.robarCata());
     }
 
