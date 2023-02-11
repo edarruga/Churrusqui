@@ -30,7 +30,7 @@ public class Mazo implements Serializable {
     }
     public Mazo(Mazo mazo){
         this.cards = new CartaSimple [40];
-        this.num=mazo.num;
+        //this.num=mazo.num;
         for(int i=0;i<40;i++){
             this.cards[i] = new CartaSimple(mazo.getCarta(i).getSuit(), mazo.getCarta(i).getValue());
         }

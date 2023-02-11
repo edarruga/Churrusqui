@@ -75,17 +75,17 @@ public abstract class MazoDeApilar extends ObjetoJuego{
 
     @Override
     public void dibujar(Graphics g) {
-        System.out.println("dibuja");
+        //System.out.println("dibuja");
         if(this.mazo.getNum()!=0){
-            System.out.println("Num!=0");
+            //System.out.println("Num!=0");
             if(this.seModifico){
-                System.out.println("seModifico");
+                //System.out.println("seModifico");
                 super.textura= Loader.cargadorDeImagenes(CardHumano.buscarRutaTextura(this.mazo.getUltimaCarta().getSuit(),this.mazo.getUltimaCarta().getValue()), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
                 this.seModifico=false;
             }
             g.drawImage(super.textura,(int)super.posicion.getX(),(int)super.posicion.getY(),null);
         }else{
-            System.out.println("Num==0");
+            //System.out.println("Num==0");
             g.drawImage(super.textura,-1000,-1000,null);
         }
     }

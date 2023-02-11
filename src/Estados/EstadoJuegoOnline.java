@@ -203,21 +203,25 @@ public class EstadoJuegoOnline extends EstadoJuego{
     public void actualizar() {
         //System.out.println("Actualizando");
         if(this.isYoSimpleModificado()){
+            System.out.println("Me han modificado");
             this.jugadorHumano.modificarEstado(this.getYoSimple());
             this.setYoSimpleModificado(false);
         }
         //System.out.println("---1");
         if(this.isRivalSimpleModificado()){
+            System.out.println("Han modificado el bot");
             this.jugadorBot.modificarEstado(this.getRivalSimple());
             this.setRivalSimpleModificado(false);
         }
         //System.out.println("---2");
         if(this.isMazodeApilar1SimpleModificado()){
+            System.out.println("Han modificado el mazo 1");
             this.mazoDeApilar1.modificarEstado(this.getMazodeApilar1Simple());
             this.setMazodeApilar1SimpleModificado(false);
         }
         //System.out.println("---3");
         if(this.isMazodeApilar2SimpleModificado()){
+            System.out.println("Han modificado el mazo 1");
             this.mazoDeApilar2.modificarEstado(this.getMazodeApilar2Simple());
             this.setMazodeApilar2SimpleModificado(false);
         }
