@@ -24,6 +24,7 @@ public abstract class MazoDeApilar extends ObjetoJuego{
         super(t, v2d);
         this.estadoJuego=es;
         this.hitBox=new Rectangle((int) v2d.getX(), (int) v2d.getY(), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta());
+        this.seModifico=true;
         this.mazo=m;
     }
     public void modificarEstado(Mazo mazo){
