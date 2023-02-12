@@ -144,6 +144,12 @@ public class EstadoJuegoOnline extends EstadoJuego{
     public Comunicador getComunicador() {
         return this.comunicador;
     }
+    public JugadorHumano getJugadorHumano(){
+        return this.jugadorHumano;
+    }
+    public JugadorBot getJugadorBot(){
+        return this.jugadorBot;
+    }
 
     public void setComunicador(Comunicador comunicador) {
         this.comunicador = comunicador;
