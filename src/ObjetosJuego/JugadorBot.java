@@ -304,10 +304,10 @@ public class JugadorBot implements Runnable{
                     this.carta2.actualizar();
                     this.carta3.actualizar();
                     this.carta4.actualizar();
-                    if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
-                        this.terminado=true;
-                    }
                 }
+            }
+            if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
+                this.terminado=true;
             }
         }
         this.mazo.actualizar();
