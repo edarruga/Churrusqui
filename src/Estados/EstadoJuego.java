@@ -76,18 +76,22 @@ public class EstadoJuego extends Estado{
         hilo2.start();
     }
     public EstadoJuego(){
+
+    }
+    public EstadoJuego(int n){
+        System.out.println("Me llaman");
         this.finDeJuego=false;
         this.mazo=new Mazo();
         this.mazo.llenarMazo();
         //this.mazo.showmazo();
         this.mazo.shuffle();
-        CartaSimple[] cs1=new CartaSimple[20];
-        CartaSimple[] cs2=new CartaSimple[20];
-        for(int i=0;i<20;i++){
+        CartaSimple[] cs1=new CartaSimple[n];
+        CartaSimple[] cs2=new CartaSimple[n];
+        for(int i=0;i<n;i++){
             cs1[i]=this.mazo.giveCard();
             //cs1[i].showCard();
         }
-        for(int i=0;i<20;i++){
+        for(int i=0;i<n;i++){
             cs2[i]=this.mazo.giveCard();
             //cs2[i].showCard();
         }

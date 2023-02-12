@@ -36,7 +36,7 @@ public class EstadoMenu extends Estado{
                 new Accion() {
                     @Override
                     public void hacerAccion() {
-                        Estado.cambiarEstado(new EstadoJuego());
+                        Estado.cambiarEstado(new EstadoJuego(20));
                     }
                 }
         );
