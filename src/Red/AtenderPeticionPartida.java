@@ -58,11 +58,17 @@ public class AtenderPeticionPartida implements Runnable{
                 }
             }
             if(tipoPeticion.equals("SolicitoGetChurrusqui")){
-                if(!this.estadoJuegoOnline.getJugadorHumano().getChurrusqui()){
-                    ps.println("False");
+                if(this.estadoJuegoOnline.getJugadorHumano()!=null){
+                    if(!this.estadoJuegoOnline.getJugadorHumano().getChurrusqui()){
+                        ps.println("False");
+                    }else{
+                        ps.println("True");
+                    }
                 }else{
-                    ps.println("True");
+                    System.out.println("Nulo");
+                    ps.println("False");
                 }
+
             }
             if(tipoPeticion.equals("Churrusqui")){
                 this.estadoJuegoOnline.hiceCurrusquiOnline=false;
