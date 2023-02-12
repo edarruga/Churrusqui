@@ -41,24 +41,18 @@ public class MazoDeApilar1 extends MazoDeApilar{
                         //System.out.println("1Tryy");
                         String s=dis.readLine();
                         if(s.equals("OK")){
-                            //System.out.println("1Ok");
+                            System.out.println("1Ok");
                             return true;
                         }else{
-                            //System.out.println("1No");
+                            System.out.println("1No");
                             return false;
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                //System.out.println("1No elseee");
-                return false;
             }
-            if((this.getUltimaCarta().ImmediatelyNext(cNueva)||this.getUltimaCarta().ImmediatelyPrevious(cNueva)) && !this.estadoJuego.getChurrusqui()){
-                //System.out.println("1Otra");
-                return true;
-            }
-            //System.out.println("1No elsee");
+            System.out.println("1No elsee");
             return false;
         }
 
