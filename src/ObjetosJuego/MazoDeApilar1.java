@@ -36,7 +36,7 @@ public class MazoDeApilar1 extends MazoDeApilar{
                         PrintStream ps=new PrintStream(socket.getOutputStream())){
                         //System.out.println("1Try");
                         ps.println("IntroduzcoCartaEnMazo1");
-                        ps.println(this.estadoJuego.getMazodeApilar1Simple().toString());
+                        ps.println(this.estadoJuego.getMazoDeApilar1().getMazo().toString());
                         ps.flush();
                         //System.out.println("1Tryy");
                         String s=dis.readLine();
