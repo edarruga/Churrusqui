@@ -59,9 +59,17 @@ public class RealizarPeticionPartida extends Thread{
                 case 5:
                     ps.println("SolucionoChurrusqui");
                     ps.println(this.estadoJuego.getJugadorHumano().pasarAJugadorSimple().toString());
+                    System.out.println("Jugador: "+this.estadoJuego.getJugadorHumano().pasarAJugadorSimple().toString());
+                    System.out.println("===============");
                     ps.println(this.estadoJuego.getJugadorBot().pasarAJugadorSimple().toString());
+                    System.out.println("Jugador: "+this.estadoJuego.getJugadorBot().pasarAJugadorSimple().toString());
+                    System.out.println("===============");
                     ps.println(this.estadoJuego.getMazoDeApilar1().getMazo().toString());
+                    System.out.println("Mazo 1: "+this.estadoJuego.getMazoDeApilar1().getMazo().toString());
+                    System.out.println("===============");
                     ps.println(this.estadoJuego.getMazoDeApilar2().getMazo().toString());
+                    System.out.println("Mazo 2: "+this.estadoJuego.getMazoDeApilar2().getMazo().toString());
+                    System.out.println("===============");
                     ps.flush();
                     break;
             }

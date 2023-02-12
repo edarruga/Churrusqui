@@ -42,6 +42,7 @@ public class Bloqueo implements Runnable{
 
                 }
                 if(this.estadoJuego.getChurrusqui()){
+                    System.out.println("Se produce churrusqui");
                     if(this.estadoJuego.getJugadorBot().getActivado()){
                         EstadoJuego.wait(4);
                         if(this.estadoJuego.getJugadorHumano().getChurrusqui()){
@@ -69,6 +70,7 @@ public class Bloqueo implements Runnable{
 
                     }else{//Caso de juego online
                         if(this.estadoJuego.hiceCurrusquiOnline){
+                            System.out.println("Hice el churrusqui");
                             EstadoJuego.wait(4);
                             if(this.estadoJuego.getJugadorHumano().getChurrusqui()){
                                 if(this.estadoJuego.esCorrectoElChurrusqui()){
@@ -95,6 +97,8 @@ public class Bloqueo implements Runnable{
 
                             RealizarPeticionPartida info=new RealizarPeticionPartida(this.estadoJuego,this.estadoJuego.getComunicador().getRival(),5);
                             info.start();
+                        }else{
+                            System.out.println("Me hicieron el churrusqui");
                         }
                     }
                 }
