@@ -198,19 +198,31 @@ public class JugadorHumano implements Runnable{
             if(!this.carta4.getYaJugada()){
                 this.carta4.setMeTienen(false);
                 this.carta4.setYaJugada(true);
-                return this.carta4.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta4.CartaACartaSimple().getSuit(),this.carta4.CartaACartaSimple().getValue());
+                this.carta4.setSuit(0);
+                this.carta4.setValue(0);
+                return cs;
             }else if(!this.carta3.getYaJugada()){
                 this.carta3.setMeTienen(false);
                 this.carta3.setYaJugada(true);
-                return this.carta3.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta3.CartaACartaSimple().getSuit(),this.carta3.CartaACartaSimple().getValue());
+                this.carta3.setSuit(0);
+                this.carta3.setValue(0);
+                return cs;
             }else if(!this.carta2.getYaJugada()){
-                this.carta2.setMeTienen(false);
+                this.carta3.setMeTienen(false);
                 this.carta2.setYaJugada(true);
-                return this.carta2.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta2.CartaACartaSimple().getSuit(),this.carta2.CartaACartaSimple().getValue());
+                this.carta2.setSuit(0);
+                this.carta2.setValue(0);
+                return cs;
             }else if(!this.carta1.getYaJugada()){
                 this.carta1.setMeTienen(false);
                 this.carta1.setYaJugada(true);
-                return this.carta1.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta1.CartaACartaSimple().getSuit(),this.carta1.CartaACartaSimple().getValue());
+                this.carta1.setSuit(0);
+                this.carta1.setValue(0);
+                return cs;
             }else{
                 return new CartaSimple();
             }

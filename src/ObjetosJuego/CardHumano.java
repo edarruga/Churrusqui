@@ -41,7 +41,12 @@ public class CardHumano extends Card{
         this.jugadorHumano=jh;
     }
     public void actualizarEstadoDeCarta(CartaSimple cs){
-        super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(cs.getSuit(),cs.getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta());
+        if(cs.getSuit()==0 && cs.getValue()==0){
+            this.setYaJugada(true);
+            super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
+        }else{
+            super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(cs.getSuit(),cs.getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta());
+        }
         super.posicion.setX(this.getPosicionInicial().getX());
         super.posicion.setY(this.getPosicionInicial().getY());
         this.setSuit(cs.getSuit());

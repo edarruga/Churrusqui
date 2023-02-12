@@ -12,10 +12,16 @@ public class CardBot extends Card{
     }
 
     public void actualizarEstadoDeCarta(CartaSimple cs){
-        super.textura=Loader.rotateImage(Loader.cargadorDeImagenes(CardHumano.buscarRutaTextura(cs.getSuit(),cs.getValue()), CardHumano.getAnchuraCarta(), CardHumano.getAlturaCarta()));
+        if(cs.getSuit()==0 && cs.getValue()==0){
+            this.setYaJugada(true);
+            super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
+        }else{
+            super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(cs.getSuit(),cs.getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta());
+            this.setYaJugada(false);
+        }
         this.setSuit(cs.getSuit());
         this.setValue(cs.getValue());
-        this.setYaJugada(false);
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package ObjetosJuego;
 
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
+import graficos.Loader;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -201,16 +202,28 @@ public class JugadorBot implements Runnable{
         }else{
             if(!this.carta4.getYaJugada()){
                 this.carta4.setYaJugada(true);
-                return this.carta4.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta4.CartaACartaSimple().getSuit(),this.carta4.CartaACartaSimple().getValue());
+                this.carta4.setSuit(0);
+                this.carta4.setValue(0);
+                return cs;
             }else if(!this.carta3.getYaJugada()){
                 this.carta3.setYaJugada(true);
-                return this.carta3.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta3.CartaACartaSimple().getSuit(),this.carta3.CartaACartaSimple().getValue());
+                this.carta3.setSuit(0);
+                this.carta3.setValue(0);
+                return cs;
             }else if(!this.carta2.getYaJugada()){
                 this.carta2.setYaJugada(true);
-                return this.carta2.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta2.CartaACartaSimple().getSuit(),this.carta2.CartaACartaSimple().getValue());
+                this.carta2.setSuit(0);
+                this.carta2.setValue(0);
+                return cs;
             }else if(!this.carta1.getYaJugada()){
                 this.carta1.setYaJugada(true);
-                return this.carta1.CartaACartaSimple();
+                CartaSimple cs=new CartaSimple(this.carta1.CartaACartaSimple().getSuit(),this.carta1.CartaACartaSimple().getValue());
+                this.carta1.setSuit(0);
+                this.carta1.setValue(0);
+                return cs;
             }else{
                 return new CartaSimple();
             }
@@ -239,41 +252,49 @@ public class JugadorBot implements Runnable{
                         if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta1.CartaACartaSimple())){
                                 this.carta1.setYaJugada(true);
+                                this.carta1.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta1.CartaACartaSimple())){
                                 this.carta1.setYaJugada(true);
+                                this.carta1.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }else if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta2.CartaACartaSimple())){
                                 this.carta2.setYaJugada(true);
+                                this.carta2.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta2.CartaACartaSimple())){
                                 this.carta2.setYaJugada(true);
+                                this.carta2.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }else if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta3.CartaACartaSimple())){
                                 this.carta3.setYaJugada(true);
+                                this.carta3.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta3.CartaACartaSimple())){
                                 this.carta3.setYaJugada(true);
+                                this.carta3.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }else if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta4.CartaACartaSimple())){
                                 this.carta4.setYaJugada(true);
+                                this.carta4.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta4.CartaACartaSimple())){
                                 this.carta4.setYaJugada(true);
+                                this.carta4.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }
