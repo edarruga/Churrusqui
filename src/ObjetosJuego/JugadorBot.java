@@ -173,7 +173,7 @@ public class JugadorBot implements Runnable{
                 && !(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
                 && !(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
                 && !(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
-                && (!this.puedoRobar || this.mazo.estaVacio()))
+                && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
         {
             return false;
         }else{
@@ -189,7 +189,7 @@ public class JugadorBot implements Runnable{
                 && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
                 && !(this.estadoJuego.getMazoDeApilar1().esJugableLocal(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
                 && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
-                && (!this.puedoRobar || this.mazo.estaVacio()))
+                && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
         {
             return false;
         }else{
@@ -305,7 +305,14 @@ public class JugadorBot implements Runnable{
                     this.carta3.actualizar();
                     this.carta4.actualizar();
                 }
+            }else{
+                if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
+                    this.puedoRobar=true;
+                }else{
+                    this.puedoRobar=false;
+                }
             }
+
             if(this.carta1.getYaJugada() && this.carta2.getYaJugada() && this.carta3.getYaJugada() && this.carta4.getYaJugada() && this.mazo.estaVacio()){
                 this.terminado=true;
             }

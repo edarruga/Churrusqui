@@ -165,7 +165,7 @@ public class JugadorHumano implements Runnable{
                 && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada())
                 && !(this.estadoJuego.getMazoDeApilar1().esJugableLocal(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
                 && !(this.estadoJuego.getMazoDeApilar2().esJugableLocal(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada())
-                && (!this.puedoRobar || this.mazo.estaVacio()))
+                && (!this.puedoRobar || (this.puedoRobar && this.mazo.estaVacio())))
         {
             return false;
         }else{
