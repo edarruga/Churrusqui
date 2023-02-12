@@ -42,6 +42,8 @@ public class AtenderPeticionPartida implements Runnable{
             if(tipoPeticion.equals("IntroduzcoCartaEnMazo1")){
                 Mazo mazo=new Mazo(dis.readLine());
                 Mazo mazoMi=new Mazo(this.estadoJuegoOnline.getMazoDeApilar1().getMazo());
+                System.out.println(mazoMi.toString());
+                System.out.println(mazo.toString());
                 if(mazoMi.equals(mazo)){
                     ps.println("OK");
                 }else{
