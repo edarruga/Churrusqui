@@ -79,7 +79,7 @@ public class EstadoJuego extends Estado{
 
     }
     public EstadoJuego(int n){
-        System.out.println("Me llaman");
+        //System.out.println("Me llaman");
         this.finDeJuego=false;
         this.mazo=new Mazo();
         this.mazo.llenarMazo();
@@ -196,7 +196,7 @@ public class EstadoJuego extends Estado{
         try{
             Thread.sleep(s*1000);
         }catch (InterruptedException e){
-            System.out.println(e);
+            //System.out.println(e);
         }
     }
 

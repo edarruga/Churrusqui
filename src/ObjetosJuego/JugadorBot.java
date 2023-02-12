@@ -240,7 +240,7 @@ public class JugadorBot implements Runnable{
                 if(!this.estadoJuego.bloqueado && !this.estadoJuego.getChurrusqui()){
                     if(this.estadoJuego.getMazoDeApilar1().getUltimaCarta().getValue()==this.estadoJuego.getMazoDeApilar2().getUltimaCarta().getValue()){
                         //Hacer lo de Churrusqui
-                        System.out.println("Churrusqui");
+                        //System.out.println("Churrusqui");
                         this.solicitarCurrusqui();
                     }else{
                         while(this.puedoRobar && !this.mazo.estaVacio()){

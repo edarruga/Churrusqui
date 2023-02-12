@@ -32,7 +32,7 @@ public class Comunicador {
         this.servidor=servidor;
         this.rival=cliente.getInetAddress();
         this.finDeComunicacion=false;
-        System.out.println("Constructor finalizado");
+        //System.out.println("Constructor finalizado");
         this.estadoJuegoOnline=estadoJuegoOnline;
         this.servidorDeComunicacion=new Servidor(this.estadoJuegoOnline);
         this.servidorDeComunicacion.start();
@@ -42,24 +42,24 @@ public class Comunicador {
     public boolean decidirInicio(){
         try (PrintStream psCliente =new PrintStream(this.cliente.getOutputStream());
              DataInputStream disServidor=new DataInputStream(this.servidor.getInputStream())){
-            System.out.println("Decidiendo el inicio");
+            //System.out.println("Decidiendo el inicio");
             int numero=(int) (Math.random()*1000);
-            System.out.println("Mi numero es: "+numero);
+            //System.out.println("Mi numero es: "+numero);
             psCliente.println(numero+"\r\n");
             String s=disServidor.readLine();
             int otro=Integer.parseInt(s);
-            System.out.println("Su numero es: "+otro);
+            //System.out.println("Su numero es: "+otro);
             while(otro==numero){
                 numero=(int) (Math.random()*1000);
-                System.out.println("--Mi numero es: "+numero);
+                //System.out.println("--Mi numero es: "+numero);
                 psCliente.println(numero+"\r\n");
                 s=disServidor.readLine();
                 otro=Integer.parseInt(s);
-                System.out.println("--Su numero es: "+otro);
+                //System.out.println("--Su numero es: "+otro);
             }
-            System.out.println(this.cliente);
-            System.out.println(this.servidor);
-            System.out.println(this.rival);
+            //System.out.println(this.cliente);
+            //System.out.println(this.servidor);
+            //System.out.println(this.rival);
             if(otro>numero){
                 return false;
             }else{
@@ -75,7 +75,7 @@ public class Comunicador {
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
-            System.out.println("Jugador: "+s);
+            //System.out.println("Jugador: "+s);
             return new JugadorSimple(s);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -88,13 +88,13 @@ public class Comunicador {
                 Socket socket=serverSocket.accept();
                 DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
-            System.out.println(s);
-            System.out.println(socket);
+            //System.out.println(s);
+            //System.out.println(socket);
             try{
                 ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
-                System.out.println("recivirPrueba");
+                //System.out.println("recivirPrueba");
                 Object o= ois.readObject();
-                System.out.println(o);
+                //System.out.println(o);
                 return (int)o;
             }catch (IOException e) {
                 throw new RuntimeException(e);
@@ -116,8 +116,8 @@ public class Comunicador {
                 MiObjectOutputStream oos=new MiObjectOutputStream(socket.getOutputStream());
                 PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.print("funcionaPlis\r\n");
-            System.out.println(socket);
-            System.out.println("enviarPrueba");
+            //ystem.out.println(socket);
+            //System.out.println("enviarPrueba");
             oos.writeObject(i);
             oos.flush();
         } catch (IOException e) {
@@ -129,7 +129,7 @@ public class Comunicador {
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
             String s=dis.readLine();
-            System.out.println("Mazo: "+s);
+            //System.out.println("Mazo: "+s);
             return new Mazo(s);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -140,7 +140,7 @@ public class Comunicador {
              PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.println(js.toString());
             ps.flush();
-            System.out.println("Jugador: "+js.toString());
+            //System.out.println("Jugador: "+js.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -150,7 +150,7 @@ public class Comunicador {
              PrintStream ps=new PrintStream(socket.getOutputStream())){
             ps.println(m.toString());
             ps.flush();
-            System.out.println("Mazo: "+m.toString());
+            //System.out.println("Mazo: "+m.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -42,8 +42,8 @@ public class AtenderPeticionPartida implements Runnable{
             if(tipoPeticion.equals("IntroduzcoCartaEnMazo1")){
                 Mazo mazo=new Mazo(dis.readLine());
                 Mazo mazoMi=new Mazo(this.estadoJuegoOnline.getMazoDeApilar1().getMazo());
-                System.out.println(mazoMi.toString());
-                System.out.println(mazo.toString());
+                //System.out.println(mazoMi.toString());
+                //System.out.println(mazo.toString());
                 if(mazoMi.equals(mazo)){
                     ps.println("OK");
                 }else{
@@ -53,8 +53,8 @@ public class AtenderPeticionPartida implements Runnable{
             if(tipoPeticion.equals("IntroduzcoCartaEnMazo2")){
                 Mazo mazo=new Mazo(dis.readLine());
                 Mazo mazoMi=new Mazo(this.estadoJuegoOnline.getMazoDeApilar2().getMazo());
-                System.out.println(mazoMi.toString());
-                System.out.println(mazo.toString());
+                //System.out.println(mazoMi.toString());
+                //System.out.println(mazo.toString());
                 if(mazoMi.equals(mazo)){
                     ps.println("OK");
                 }else{
@@ -82,20 +82,20 @@ public class AtenderPeticionPartida implements Runnable{
             if(tipoPeticion.equals("SolucionoBloqueo")){
                 this.estadoJuegoOnline.setRivalSimple(new JugadorSimple(dis.readLine()));
                 this.estadoJuegoOnline.setRivalSimpleModificado(true);
-                System.out.println("Jugador: "+this.estadoJuegoOnline.getRivalSimple().toString());
-                System.out.println("===============");
+                //System.out.println("Jugador: "+this.estadoJuegoOnline.getRivalSimple().toString());
+                //System.out.println("===============");
                 this.estadoJuegoOnline.setYoSimple(new JugadorSimple(dis.readLine()));
                 this.estadoJuegoOnline.setYoSimpleModificado(true);
-                System.out.println("Jugador: "+this.estadoJuegoOnline.getYoSimple().toString());
-                System.out.println("===============");
+                //System.out.println("Jugador: "+this.estadoJuegoOnline.getYoSimple().toString());
+                //System.out.println("===============");
                 this.estadoJuegoOnline.setMazodeApilar1Simple(new Mazo(dis.readLine()));
                 this.estadoJuegoOnline.setMazodeApilar1SimpleModificado(true);
-                System.out.println("Mazo 1: "+this.estadoJuegoOnline.getMazodeApilar1Simple().toString());
-                System.out.println("===============");
+                //System.out.println("Mazo 1: "+this.estadoJuegoOnline.getMazodeApilar1Simple().toString());
+                //System.out.println("===============");
                 this.estadoJuegoOnline.setMazodeApilar2Simple(new Mazo(dis.readLine()));
                 this.estadoJuegoOnline.setMazodeApilar2SimpleModificado(true);
-                System.out.println("Mazo 2: "+this.estadoJuegoOnline.getMazodeApilar2Simple().toString());
-                System.out.println("===============");
+                //System.out.println("Mazo 2: "+this.estadoJuegoOnline.getMazodeApilar2Simple().toString());
+                //System.out.println("===============");
                 MouseInput.botonIzquierdo=false;
                 this.estadoJuegoOnline.bloqueado=false;
             }

@@ -42,10 +42,10 @@ public class MazoDeApilar2 extends MazoDeApilar{
                         //System.out.println("Tryy");
                         String s=dis.readLine();
                         if(s.equals("OK")){
-                            System.out.println("Ok");
+                            //System.out.println("Ok");
                             return true;
                         }else{
-                            System.out.println("No");
+                            //System.out.println("No");
                             return false;
                         }
                     } catch (IOException e) {
@@ -55,7 +55,7 @@ public class MazoDeApilar2 extends MazoDeApilar{
                     }
                 }
             }
-            System.out.println("1No elsee");
+            //System.out.println("1No elsee");
             return false;
         }
 

@@ -28,11 +28,11 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
     public EstadoJuegoOnline(Socket cliente, Socket servidor){
         this.comunicador=new Comunicador(cliente,servidor,this);
-        System.out.println("Empiza el estado online");
+        //System.out.println("Empiza el estado online");
         this.comunicador=comunicador;
-        System.out.println("Comunicador asignado");
+        //System.out.println("Comunicador asignado");
         if(this.comunicador.decidirInicio()){
-            System.out.println("Lo mando yo");
+            //System.out.println("Lo mando yo");
             Mazo mazo=new Mazo();
             mazo.llenarMazo();
             //this.mazo.showmazo();
@@ -71,26 +71,26 @@ public class EstadoJuegoOnline extends EstadoJuego{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("===========");
+            //System.out.println("===========");
             this.comunicador.enviarJugador(this.yoSimple);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("===========");
+            //System.out.println("===========");
             this.comunicador.enviarMazo(this.mazodeApilar1Simple);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("===========");
+            //System.out.println("===========");
             this.comunicador.enviarMazo(this.mazodeApilar2Simple);
             //RealizarPeticionPartida info=new RealizarPeticionPartida(this,this.getComunicador().getRival(),5);
             //info.start();
         }else{
-            System.out.println("Me lo mandan");
+            //System.out.println("Me lo mandan");
             /*
             try {
                 Thread.sleep(10000);
@@ -111,11 +111,11 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
             //System.out.println(this.comunicador.recivirPrueba());
             this.yoSimple=this.comunicador.recivirJugador();
-            System.out.println("===========");
+            //System.out.println("===========");
             this.rivalSimple=this.comunicador.recivirJugador();
-            System.out.println("===========");
+            //System.out.println("===========");
             this.mazodeApilar1Simple=this.comunicador.recivirMazo();
-            System.out.println("===========");
+            //System.out.println("===========");
             this.mazodeApilar2Simple=this.comunicador.recivirMazo();
 
             this.prioridad=false;
@@ -201,7 +201,9 @@ public class EstadoJuegoOnline extends EstadoJuego{
                 return true;
 
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                this.getJugadorBot().activar();
+                return false;
+                //throw new RuntimeException(e);
             }
         }else{
             return false;
@@ -211,25 +213,25 @@ public class EstadoJuegoOnline extends EstadoJuego{
     public void actualizar() {
         //System.out.println("Actualizando");
         if(this.isYoSimpleModificado()){
-            System.out.println("Me han modificado");
+            //System.out.println("Me han modificado");
             this.jugadorHumano.modificarEstado(this.getYoSimple());
             this.setYoSimpleModificado(false);
         }
         //System.out.println("---1");
         if(this.isRivalSimpleModificado()){
-            System.out.println("Han modificado el bot");
+            //System.out.println("Han modificado el bot");
             this.jugadorBot.modificarEstado(this.getRivalSimple());
             this.setRivalSimpleModificado(false);
         }
         //System.out.println("---2");
         if(this.isMazodeApilar1SimpleModificado()){
-            System.out.println("Han modificado el mazo 1");
+            //System.out.println("Han modificado el mazo 1");
             this.mazoDeApilar1.modificarEstado(this.getMazodeApilar1Simple());
             this.setMazodeApilar1SimpleModificado(false);
         }
         //System.out.println("---3");
         if(this.isMazodeApilar2SimpleModificado()){
-            System.out.println("Han modificado el mazo 2");
+            //System.out.println("Han modificado el mazo 2");
             this.mazoDeApilar2.modificarEstado(this.getMazodeApilar2Simple());
             this.setMazodeApilar2SimpleModificado(false);
         }

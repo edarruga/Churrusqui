@@ -94,26 +94,26 @@ public class CardHumano extends Card{
             if(this.jugadorHumano.getMazoDeApilar1().getPosibleJugada()){
 
                 if(this.jugadorHumano.getMazoDeApilar1().esJugableLocal(this.CartaACartaSimple())){
-                    System.out.println("Es jugable en local");
+                    //System.out.println("Es jugable en local");
                     if(this.jugadorHumano.getMazoDeApilar1().aniadirNuevaCarta(this.CartaACartaSimple())){
-                        System.out.println("Se añadio");
+                        //System.out.println("Se añadio");
                         this.setYaJugada(true);
                         this.posicion.setX(-1000);
                         this.posicion.setY(-1000);
                     }else{
-                        System.out.println("No es jugable online");
+                        //System.out.println("No es jugable online");
                     }
                 }
             }else if(this.jugadorHumano.getMazoDeApilar2().getPosibleJugada()){
                 if(this.jugadorHumano.getMazoDeApilar2().esJugableLocal(this.CartaACartaSimple())){
-                    System.out.println("Es jugable en local");
+                    //System.out.println("Es jugable en local");
                     if(this.jugadorHumano.getMazoDeApilar2().aniadirNuevaCarta(this.CartaACartaSimple())){
-                        System.out.println("Se añadio");
+                        //System.out.println("Se añadio");
                         this.setYaJugada(true);
                         this.posicion.setX(-1000);
                         this.posicion.setY(-1000);
                     }else{
-                        System.out.println("No es jugable online");
+                        //System.out.println("No es jugable online");
                     }
                 }
             }

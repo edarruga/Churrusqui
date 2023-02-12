@@ -20,21 +20,21 @@ public class AtenderPeticion implements Runnable{
 		try (DataInputStream dis=new DataInputStream(this.socket.getInputStream());
 				PrintStream ps=new PrintStream(this.socket.getOutputStream());){
 			
-			System.out.println("Empezo el Atender petición");
+			//System.out.println("Empezo el Atender petición");
 			if(!this.b.getEnlazado()) {
 				respuesta=dis.readLine();
-				System.out.println("Continua:"+respuesta);
+				//System.out.println("Continua:"+respuesta);
 				if(respuesta.equals("BuscoRival")) {
 					if(!this.b.getEnlazado()) {
 						ps.print("OK\r\n");
 						ps.print("BuscoRival\r\n");
 						respuesta=dis.readLine();
-						System.out.println("Continua 2:"+respuesta);
+						//System.out.println("Continua 2:"+respuesta);
 						if(respuesta.equals("OK") && !this.b.getEnlazado()) {
 							this.b.cliente=new Socket(this.socket.getInetAddress(),9988);
 							this.b.setEnlazado(true);
 							this.b.rival=this.socket.getInetAddress().getHostAddress();
-							System.out.println("Atender: "+this.b.rival);
+							//System.out.println("Atender: "+this.b.rival);
 							//=========================================
 							this.b.mensajeAEnlazador();
 							this.b.mensajeATrazador();
