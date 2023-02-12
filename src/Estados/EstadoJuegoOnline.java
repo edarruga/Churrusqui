@@ -227,7 +227,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         }
         //System.out.println("---3");
         if(this.isMazodeApilar2SimpleModificado()){
-            System.out.println("Han modificado el mazo 1");
+            System.out.println("Han modificado el mazo 2");
             this.mazoDeApilar2.modificarEstado(this.getMazodeApilar2Simple());
             this.setMazodeApilar2SimpleModificado(false);
         }

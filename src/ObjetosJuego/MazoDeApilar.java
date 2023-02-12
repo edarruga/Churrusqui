@@ -29,6 +29,7 @@ public abstract class MazoDeApilar extends ObjetoJuego{
     }
     public void modificarEstado(Mazo mazo){
         this.mazo.modificarEstado(mazo);
+        super.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(this.mazo.getUltimaCarta().getSuit(),this.mazo.getUltimaCarta().getValue()),Card.getAnchuraCarta(),Card.getAlturaCarta());
     }
 
     public synchronized CartaSimple getUltimaCarta(){
