@@ -93,10 +93,10 @@ public class JugadorBot implements Runnable{
 
     public JugadorSimple pasarAJugadorSimple(){
         Mazo m=this.mazo.mazo;
-        CartaSimple c1=this.carta1.CartaACartaSimple();
-        CartaSimple c2=this.carta2.CartaACartaSimple();
-        CartaSimple c3=this.carta3.CartaACartaSimple();
-        CartaSimple c4=this.carta4.CartaACartaSimple();
+        CartaSimple c1=this.carta1.CartaACartaSimpleParaEnvio();
+        CartaSimple c2=this.carta2.CartaACartaSimpleParaEnvio();
+        CartaSimple c3=this.carta3.CartaACartaSimpleParaEnvio();
+        CartaSimple c4=this.carta4.CartaACartaSimpleParaEnvio();
         return new JugadorSimple(m,c1,c2,c3,c4);
     }
     public boolean getPuedoJugar(){

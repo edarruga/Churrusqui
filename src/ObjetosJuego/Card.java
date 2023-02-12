@@ -61,6 +61,13 @@ public abstract class Card extends ObjetoJuego{
     public CartaSimple CartaACartaSimple(){
         return new CartaSimple(this.getSuit(),this.getValue());
     }
+    public CartaSimple CartaACartaSimpleParaEnvio(){
+        if(this.yaJugada){
+            return new CartaSimple(0,0);
+        }else{
+            return new CartaSimple(this.getSuit(),this.getValue());
+        }
+    }
     public boolean sameCard(CardHumano c){
         //PRECONDITION:
         //POSTCONDITION: returns true if 2 cards have the same value and suit, false otherwise
