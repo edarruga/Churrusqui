@@ -252,7 +252,7 @@ public class JugadorHumano implements Runnable{
             JugadorHumano.cartaJugada.setSuit(0);
             JugadorHumano.cartaJugada.setValue(0);
         }
-        if(this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()){
+        if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
             this.puedoRobar=true;
         }else{
             this.puedoRobar=false;

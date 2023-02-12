@@ -114,7 +114,8 @@ public class AtenderPeticionPartida implements Runnable{
             }
             ps.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            this.estadoJuegoOnline.getJugadorBot().activar();
+            //throw new RuntimeException(e);
         }
     }
 

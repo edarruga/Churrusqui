@@ -49,7 +49,9 @@ public class MazoDeApilar2 extends MazoDeApilar{
                             return false;
                         }
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        this.estadoJuego.getJugadorBot().activar();
+                        return false;
+                        //throw new RuntimeException(e);
                     }
                 }
             }

@@ -134,7 +134,9 @@ public class JugadorBot implements Runnable{
                     return false;
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                this.activado=true;
+                return false;
+                //throw new RuntimeException(e);
             }
         }
 
