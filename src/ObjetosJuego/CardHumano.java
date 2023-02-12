@@ -107,8 +107,6 @@ public class CardHumano extends Card{
                         this.posicion.setY(-1000);
                     }
                 }
-            }else{
-                this.setYaJugada(false);
             }
         }
         if(!this.meTienen && !this.getYaJugada() && this.tocada ){
