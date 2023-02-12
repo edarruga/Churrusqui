@@ -7,6 +7,7 @@ import Red.MiObjectOutputStream;
 import Red.RealizarPeticionPartida;
 import graficos.Assets;
 import graficos.Loader;
+import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
@@ -138,6 +139,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         hiloBloqueo.start();
         hilo1.start();
         hilo2.start();
+        MouseInput.botonIzquierdo=false;
 
     }
 
