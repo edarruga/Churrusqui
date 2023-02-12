@@ -99,6 +99,7 @@ public class Bloqueo implements Runnable{
                             info.start();
                         }else{
                             System.out.println("Me hicieron el churrusqui");
+                            EstadoJuego.wait(4);
                         }
                     }
                 }
