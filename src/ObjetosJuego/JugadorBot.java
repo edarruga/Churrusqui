@@ -221,7 +221,8 @@ public class JugadorBot implements Runnable{
             if(this.activado){
                 if(!this.estadoJuego.bloqueado && !this.estadoJuego.getChurrusqui()){
                     if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
-                        this.puedoJugarLocal=this.puedoJugar();
+                        this.puedoJugar=this.puedoJugar();
+                        this.puedoJugarLocal=this.puedoJugar;
                     }
                     if(this.estadoJuego.getMazoDeApilar1().getUltimaCarta().getValue()==this.estadoJuego.getMazoDeApilar2().getUltimaCarta().getValue()){
                         //Hacer lo de Churrusqui
@@ -241,6 +242,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta1.setYaJugada(true);
                                 this.carta1.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -251,6 +253,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta1.setYaJugada(true);
                                 this.carta1.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -261,6 +264,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta2.setYaJugada(true);
                                 this.carta2.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -271,6 +275,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta2.setYaJugada(true);
                                 this.carta2.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -281,6 +286,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta3.setYaJugada(true);
                                 this.carta3.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -291,6 +297,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta3.setYaJugada(true);
                                 this.carta3.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -301,6 +308,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta4.setYaJugada(true);
                                 this.carta4.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -311,6 +319,7 @@ public class JugadorBot implements Runnable{
                                 if(!this.mazo.estaVacio()){
                                     this.puedoRobar=true;
                                     this.puedoJugar=true;
+                                    this.puedoJugarLocal=true;
                                 }
                                 this.carta4.setYaJugada(true);
                                 this.carta4.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
@@ -333,7 +342,7 @@ public class JugadorBot implements Runnable{
                 }
             }else{
                 if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
-                    this.puedoJugarLocal=this.puedoJugarLocal();
+                    this.puedoJugarLocal=this.puedoJugar();
                 }
                 try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
                     DataInputStream dis=new DataInputStream(socket.getInputStream());
@@ -355,7 +364,6 @@ public class JugadorBot implements Runnable{
                     this.puedoJugarLocal=true;
                 }else{
                     this.puedoRobar=false;
-                    this.puedoJugarLocal=false;
                 }
             }
 
