@@ -1,5 +1,7 @@
 package ObjetosJuego;
 
+import Estados.Estado;
+import Estados.EstadoFinDePartida;
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import Red.MiObjectOutputStream;
@@ -49,9 +51,16 @@ public class MazoDeApilar2 extends MazoDeApilar{
                             return false;
                         }
                     } catch (IOException e) {
-                        this.estadoJuego.getJugadorBot().activar();
-                        return false;
-                        //throw new RuntimeException(e);
+                        JugadorBot.activar();
+                        System.out.println("Peto por mazo 2");
+
+                        this.estadoJuego.hilo1.interrupt();
+                        this.estadoJuego.hilo2.interrupt();
+                        this.estadoJuego.hiloBloqueo.interrupt();
+                        Estado.cambiarEstado(new EstadoFinDePartida(true));
+
+                        //return false;
+                        throw new RuntimeException(e);
                     }
                 }
             }

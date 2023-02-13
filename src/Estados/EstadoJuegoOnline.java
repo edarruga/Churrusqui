@@ -29,7 +29,6 @@ public class EstadoJuegoOnline extends EstadoJuego{
     public EstadoJuegoOnline(Socket cliente, Socket servidor){
         this.comunicador=new Comunicador(cliente,servidor,this);
         //System.out.println("Empiza el estado online");
-        this.comunicador=comunicador;
         //System.out.println("Comunicador asignado");
         if(this.comunicador.decidirInicio()){
             //System.out.println("Lo mando yo");
@@ -127,7 +126,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         super.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)),this,this.mazodeApilar2Simple);
         super.jugadorHumano=new JugadorHumano(this.yoSimple,this);
         super.jugadorBot=new JugadorBot(this.rivalSimple,this);
-        super.jugadorBot.desactivar();
+        JugadorBot.desactivar();
         super.bloqueo=new Bloqueo(this);
         this.setMazodeApilar1SimpleModificado(false);
         this.setMazodeApilar2SimpleModificado(false);
@@ -201,9 +200,16 @@ public class EstadoJuegoOnline extends EstadoJuego{
                 return true;
 
             } catch (IOException e) {
-                this.getJugadorBot().activar();
-                return false;
-                //throw new RuntimeException(e);
+                JugadorBot.activar();
+                System.out.println("Peta por churrusqui en estado de juego online");
+
+                hilo1.interrupt();
+                hilo2.interrupt();
+                hiloBloqueo.interrupt();
+                Estado.cambiarEstado(new EstadoFinDePartida(true));
+
+                //return false;
+                throw new RuntimeException(e);
             }
         }else{
             return false;
@@ -211,7 +217,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
     }
     @Override
     public void actualizar() {
-        //System.out.println("Actualizando");
+        //System.out.println(JugadorBot.activado);
         if(this.isYoSimpleModificado()){
             //System.out.println("Me han modificado");
             this.jugadorHumano.modificarEstado(this.getYoSimple());

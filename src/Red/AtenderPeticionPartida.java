@@ -1,7 +1,10 @@
 package Red;
 
+import Estados.Estado;
+import Estados.EstadoFinDePartida;
 import Estados.EstadoJuegoOnline;
 import ObjetosJuego.CartaSimple;
+import ObjetosJuego.JugadorBot;
 import ObjetosJuego.JugadorSimple;
 import ObjetosJuego.Mazo;
 import input.MouseInput;
@@ -114,8 +117,14 @@ public class AtenderPeticionPartida implements Runnable{
             }
             ps.flush();
         } catch (IOException e) {
-            this.estadoJuegoOnline.getJugadorBot().activar();
-            //throw new RuntimeException(e);
+            JugadorBot.activar();
+            System.out.println("Peto al atender la Peticion");
+
+            this.estadoJuegoOnline.hilo1.interrupt();
+            this.estadoJuegoOnline.hilo2.interrupt();
+            this.estadoJuegoOnline.hiloBloqueo.interrupt();
+            Estado.cambiarEstado(new EstadoFinDePartida(true));
+            throw new RuntimeException(e);
         }
     }
 

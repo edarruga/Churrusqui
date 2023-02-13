@@ -1,5 +1,7 @@
 package ObjetosJuego;
 
+import Estados.Estado;
+import Estados.EstadoFinDePartida;
 import Estados.EstadoJuego;
 import Matematica.Vector2D;
 import graficos.Loader;
@@ -29,7 +31,7 @@ public class JugadorBot implements Runnable{
     public boolean puedoJugarLocal=true;
     private boolean terminado=false;
     private boolean churrusqui=false;
-    private boolean activado=true;
+    public static boolean activado=true;
 
     public JugadorBot(CartaSimple[] csv,EstadoJuego es){
         //Posicion de carta 1
@@ -111,11 +113,11 @@ public class JugadorBot implements Runnable{
         }
 
     }
-    public void activar(){
-        this.activado=true;
+    public static void activar(){
+        activado=true;
     }
-    public void desactivar(){
-        this.activado=false;
+    public static void desactivar(){
+        activado=false;
     }
     public boolean getActivado(){
         return this.activado;
@@ -215,10 +217,12 @@ public class JugadorBot implements Runnable{
     }
 
     public void actualizar(){
+        System.out.println("Se actualizo el bot");
         if(this.estadoJuego.finDeJuego){
             EstadoJuego.wait(5);
         }else{
-            if(this.activado){
+            if(activado){
+                //System.out.println("Se actualizo como bot");
                 if(!this.estadoJuego.bloqueado && !this.estadoJuego.getChurrusqui()){
                     if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
                         this.puedoJugar=this.puedoJugar();
@@ -355,10 +359,16 @@ public class JugadorBot implements Runnable{
                         this.churrusqui=false;
                     }
                 } catch (IOException e) {
-                    this.activado=true;
+                    System.out.println("Peto por solicitar churrusqui");
+                    activado=true;
                     this.churrusqui=false;
-                    this.actualizar();
-                    //throw new RuntimeException(e);
+
+                    this.estadoJuego.hilo1.interrupt();
+                    this.estadoJuego.hilo2.interrupt();
+                    this.estadoJuego.hiloBloqueo.interrupt();
+                    Estado.cambiarEstado(new EstadoFinDePartida(true));
+                    //this.actualizar();
+                    throw new RuntimeException(e);
                 }
                 if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
                     this.puedoRobar=true;

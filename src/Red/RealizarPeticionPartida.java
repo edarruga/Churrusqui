@@ -1,7 +1,10 @@
 package Red;
 
+import Estados.Estado;
+import Estados.EstadoFinDePartida;
 import Estados.EstadoJuego;
 import Estados.EstadoJuegoOnline;
+import ObjetosJuego.JugadorBot;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -74,8 +77,13 @@ public class RealizarPeticionPartida extends Thread{
                     break;
             }
         } catch (IOException e) {
-            this.estadoJuego.getJugadorBot().activar();
-            //throw new RuntimeException(e);
+            JugadorBot.activar();
+            System.out.println("Peto al realizar la Peticion");
+            this.estadoJuego.hilo1.interrupt();
+            this.estadoJuego.hilo2.interrupt();
+            this.estadoJuego.hiloBloqueo.interrupt();
+            Estado.cambiarEstado(new EstadoFinDePartida(true));
+            throw new RuntimeException(e);
         }
 
     }

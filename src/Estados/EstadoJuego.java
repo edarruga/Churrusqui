@@ -29,9 +29,9 @@ public class EstadoJuego extends Estado{
     protected JugadorHumano jugadorHumano;
     protected JugadorBot jugadorBot;
     protected Bloqueo bloqueo;
-    protected Thread hilo1;
-    protected Thread hilo2;
-    protected Thread hiloBloqueo;
+    public Thread hilo1;
+    public Thread hilo2;
+    public Thread hiloBloqueo;
     protected MazoDeApilar1 mazoDeApilar1;
     protected MazoDeApilar2 mazoDeApilar2;
     protected Mazo mazo;
@@ -196,7 +196,7 @@ public class EstadoJuego extends Estado{
         try{
             Thread.sleep(s*1000);
         }catch (InterruptedException e){
-            //System.out.println(e);
+            System.out.println(e);
         }
     }
 
