@@ -25,7 +25,8 @@ public class JugadorBot implements Runnable{
     private EstadoJuego estadoJuego;
     protected boolean puedoRobar=false;
     protected boolean funcionando;
-    private boolean puedoJugar=true;
+    public boolean puedoJugar=true;
+    public boolean puedoJugarLocal=true;
     private boolean terminado=false;
     private boolean churrusqui=false;
     private boolean activado=true;
@@ -120,26 +121,7 @@ public class JugadorBot implements Runnable{
         return this.activado;
     }
     public boolean getChurrusqui(){
-        if(this.activado){
-            return this.churrusqui;
-        }else{//En caso que este desactivado, es decir, que sea modo online
-            try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
-                DataInputStream dis=new DataInputStream(socket.getInputStream());
-                PrintStream ps=new PrintStream(socket.getOutputStream())){
-                ps.println("SolicitoGetChurrusqui");
-                String s=dis.readLine();
-                if(s.equals("True")){
-                    return true;
-                }else{
-                    return false;
-                }
-            } catch (IOException e) {
-                this.activado=true;
-                return false;
-                //throw new RuntimeException(e);
-            }
-        }
-
+        return this.churrusqui;
     }
     public void setChurrusqui(boolean b){
         this.churrusqui=b;
@@ -238,6 +220,9 @@ public class JugadorBot implements Runnable{
         }else{
             if(this.activado){
                 if(!this.estadoJuego.bloqueado && !this.estadoJuego.getChurrusqui()){
+                    if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
+                        this.puedoJugarLocal=this.puedoJugar();
+                    }
                     if(this.estadoJuego.getMazoDeApilar1().getUltimaCarta().getValue()==this.estadoJuego.getMazoDeApilar2().getUltimaCarta().getValue()){
                         //Hacer lo de Churrusqui
                         //System.out.println("Churrusqui");
@@ -253,48 +238,80 @@ public class JugadorBot implements Runnable{
                         }
                         if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta1.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta1.setYaJugada(true);
                                 this.carta1.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta1.CartaACartaSimple()) && !this.carta1.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta1.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta1.setYaJugada(true);
                                 this.carta1.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }else if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta2.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta2.setYaJugada(true);
                                 this.carta2.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta2.CartaACartaSimple()) && !this.carta2.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta2.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta2.setYaJugada(true);
                                 this.carta2.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }else if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta3.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta3.setYaJugada(true);
                                 this.carta3.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta3.CartaACartaSimple()) && !this.carta3.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta3.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta3.setYaJugada(true);
                                 this.carta3.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         }else if(this.estadoJuego.getMazoDeApilar1().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada()){
                             if(this.estadoJuego.getMazoDeApilar1().aniadirNuevaCarta(this.carta4.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta4.setYaJugada(true);
                                 this.carta4.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
                             }
                         } else if(this.estadoJuego.getMazoDeApilar2().esJugable(this.carta4.CartaACartaSimple()) && !this.carta4.getYaJugada()) {
                             if(this.estadoJuego.getMazoDeApilar2().aniadirNuevaCarta(this.carta4.CartaACartaSimple())){
+                                if(!this.mazo.estaVacio()){
+                                    this.puedoRobar=true;
+                                    this.puedoJugar=true;
+                                }
                                 this.carta4.setYaJugada(true);
                                 this.carta4.textura=Loader.cargadorDeImagenes(Card.buscarRutaTextura(5,5),Card.getAnchuraCarta(),Card.getAlturaCarta());
                                 this.puedoRobar=true;
@@ -307,11 +324,38 @@ public class JugadorBot implements Runnable{
                     this.carta3.actualizar();
                     this.carta4.actualizar();
                 }
-            }else{
                 if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
                     this.puedoRobar=true;
+                    this.puedoJugar=true;
                 }else{
                     this.puedoRobar=false;
+                    this.puedoJugar=false;
+                }
+            }else{
+                if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
+                    this.puedoJugarLocal=this.puedoJugarLocal();
+                }
+                try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
+                    DataInputStream dis=new DataInputStream(socket.getInputStream());
+                    PrintStream ps=new PrintStream(socket.getOutputStream())){
+                    ps.println("SolicitoGetChurrusqui");
+                    String s=dis.readLine();
+                    if(s.equals("True")){
+                        this.churrusqui=true;
+                    }else{
+                        this.churrusqui=false;
+                    }
+                } catch (IOException e) {
+                    this.activado=true;
+                    this.churrusqui=false;
+                    //throw new RuntimeException(e);
+                }
+                if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
+                    this.puedoRobar=true;
+                    this.puedoJugarLocal=true;
+                }else{
+                    this.puedoRobar=false;
+                    this.puedoJugarLocal=false;
                 }
             }
 

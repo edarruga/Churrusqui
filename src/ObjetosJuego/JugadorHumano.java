@@ -31,6 +31,8 @@ public class JugadorHumano implements Runnable{
     private boolean terminado=false;
     private static boolean churrusqui=false;
     private Boton boton;
+    public boolean puedoJugar;
+    public boolean puedoJugarLocal=true;
 
     public JugadorHumano(JugadorSimple j, EstadoJuego es){
         this.posicionCarta1=new Vector2D(CardHumano.getAnchuraCarta()*(3.25), CardHumano.getAlturaCarta()*(2.65));
@@ -247,6 +249,16 @@ public class JugadorHumano implements Runnable{
     public void actualizar(){
         if(this.estadoJuego.finDeJuego){
             EstadoJuego.wait(5);
+        }
+        if(!this.estadoJuego.getJugadorBot().getActivado()){
+            if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
+                this.puedoJugarLocal=this.puedoJugarLocal();
+            }
+        }else{
+            if(!(this.estadoJuego.churrusqui || this.estadoJuego.bloqueado)){
+                this.puedoJugar=this.puedoJugar();
+                this.puedoJugarLocal=this.puedoJugar;
+            }
         }
         if(!MouseInput.tengoCarta){
             JugadorHumano.cartaJugada.setSuit(0);

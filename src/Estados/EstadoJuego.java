@@ -220,11 +220,14 @@ public class EstadoJuego extends Estado{
             this.actualiza=false;
             //System.out.println("Bot: "+this.jugadorBot.puedoJugar()+" ,Humano:"+this.jugadorHumano.puedoJugar());
             //System.out.println(EstadoJuego.bloqueado);
+            //System.out.println("Jugador: "+jugadorHumano.puedoJugar+", Bot: "+jugadorBot.puedoJugar);
             if(!this.churrusqui){
-                if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !this.bloqueado){
+                if(!jugadorBot.puedoJugar && !jugadorHumano.puedoJugar && !this.bloqueado){
                     //System.out.println(this.jugadorBot.prueba());
                     //this.dibujar(g);
-                    this.bloqueado=true;
+                    if(!jugadorBot.puedoJugar() && !jugadorHumano.puedoJugar() && !this.bloqueado){
+                        this.bloqueado=true;
+                    }
                     //System.out.println("Ce bloqueo");
 
                 }

@@ -97,6 +97,10 @@ public class CardHumano extends Card{
                     //System.out.println("Es jugable en local");
                     if(this.jugadorHumano.getMazoDeApilar1().aniadirNuevaCarta(this.CartaACartaSimple())){
                         //System.out.println("Se añadio");
+                        if(!this.jugadorHumano.mazo.estaVacio()){
+                            this.jugadorHumano.puedoRobar=true;
+                            this.jugadorHumano.puedoJugar=true;
+                        }
                         this.setYaJugada(true);
                         this.posicion.setX(-1000);
                         this.posicion.setY(-1000);
@@ -108,6 +112,10 @@ public class CardHumano extends Card{
                 if(this.jugadorHumano.getMazoDeApilar2().esJugableLocal(this.CartaACartaSimple())){
                     //System.out.println("Es jugable en local");
                     if(this.jugadorHumano.getMazoDeApilar2().aniadirNuevaCarta(this.CartaACartaSimple())){
+                        if(!this.jugadorHumano.mazo.estaVacio()){
+                            this.jugadorHumano.puedoRobar=true;
+                            this.jugadorHumano.puedoJugar=true;
+                        }
                         //System.out.println("Se añadio");
                         this.setYaJugada(true);
                         this.posicion.setX(-1000);
