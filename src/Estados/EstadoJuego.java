@@ -5,6 +5,7 @@ import ObjetosJuego.*;
 import Red.Comunicador;
 import graficos.Assets;
 import graficos.Loader;
+import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
@@ -63,6 +64,7 @@ public class EstadoJuego extends Estado{
 
     //-----------------------------------------------------------------//
     public EstadoJuego(JugadorSimple yo, JugadorSimple rival,Mazo mazo1,Mazo mazo2){
+        MouseInput.botonIzquierdo=false;
         this.mazoDeApilar1=new MazoDeApilar1(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(4.5), Card.getAlturaCarta()*(1.4)),this,mazo1);
         this.mazoDeApilar2=new MazoDeApilar2(Loader.cargadorDeImagenes("recursos/Cartas/Invisible.png", Card.getAnchuraCarta(), Card.getAlturaCarta()),new Vector2D(Card.getAnchuraCarta()*(6.5), Card.getAlturaCarta()*(1.4)),this,mazo2);
         this.jugadorHumano=new JugadorHumano(yo,this);
@@ -76,9 +78,10 @@ public class EstadoJuego extends Estado{
         hilo2.start();
     }
     public EstadoJuego(){
-
+        MouseInput.botonIzquierdo=false;
     }
     public EstadoJuego(int n){
+        MouseInput.botonIzquierdo=false;
         //System.out.println("Me llaman");
         this.finDeJuego=false;
         this.mazo=new Mazo();

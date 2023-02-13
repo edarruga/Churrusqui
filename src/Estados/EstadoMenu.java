@@ -5,6 +5,7 @@ import Componentes.Boton;
 import Matematica.Vector2D;
 import graficos.Assets;
 import graficos.Texto;
+import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class EstadoMenu extends Estado{
     private Boton salir;
 
     public EstadoMenu(){
+        MouseInput.botonIzquierdo=false;
         this.online=new Boton(Assets.BotonMarronOut,
                 Assets.BotonMarronIn,
                 Window.getAnchuraVentana()  / 2 - Assets.BotonBlancoIn.getWidth() / 2,

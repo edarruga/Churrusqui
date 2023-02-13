@@ -3,6 +3,7 @@ package Estados;
 import Componentes.Accion;
 import Componentes.Boton;
 import graficos.Assets;
+import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class EstadoFinDePartida extends Estado{
 
 
     public EstadoFinDePartida(boolean victoria){
+        MouseInput.botonIzquierdo=false;
         if(victoria){
             this.resultado=Assets.Victoria;
         }else{

@@ -51,7 +51,7 @@ public class MazoDeApilar1 extends MazoDeApilar{
                         }
                     } catch (IOException e) {
                         JugadorBot.activar();
-                        System.out.println("Peto por mazo 1");
+                        //System.out.println("Peto por mazo 1");
 
                         this.estadoJuego.hilo1.interrupt();
                         this.estadoJuego.hilo2.interrupt();

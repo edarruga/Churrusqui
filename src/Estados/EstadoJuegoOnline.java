@@ -201,7 +201,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
             } catch (IOException e) {
                 JugadorBot.activar();
-                System.out.println("Peta por churrusqui en estado de juego online");
+                //System.out.println("Peta por churrusqui en estado de juego online");
 
                 hilo1.interrupt();
                 hilo2.interrupt();

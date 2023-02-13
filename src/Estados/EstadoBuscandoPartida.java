@@ -7,6 +7,7 @@ import Matematica.Vector2D;
 import Red.Buscador;
 import graficos.Assets;
 import graficos.Texto;
+import input.MouseInput;
 import principal.Window;
 
 import java.awt.*;
@@ -20,6 +21,7 @@ public class EstadoBuscandoPartida extends Estado{
 
     public EstadoBuscandoPartida(){
         this.buscador=new Buscador();
+        MouseInput.botonIzquierdo=false;
         this.buscador.start();
         this.volver=new Boton(Assets.BotonGrisOut,
                 Assets.BotonGrisIn,

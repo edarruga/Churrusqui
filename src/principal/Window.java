@@ -22,7 +22,7 @@ public class Window extends JFrame implements Runnable{
     private boolean funcionando = false;//Controlar si el hilo tiene que estar funcionando o tine que parar
     private BufferStrategy bs;//Para organizar la memoria
     private static Graphics g;//permiten que una aplicación se dibuje en componentes que se realizan en varios dispositivos, así como en imágenes fuera de pantalla
-    private final int FPS=6000;//Numero maximo de fotogramas por segundo que mostrará la aplicación
+    private final int FPS=60;//Numero maximo de fotogramas por segundo que mostrará la aplicación
     private double targettime=1000000000/FPS;//Objetivo para fijar los fotogramas, lo definimos en nanosegundos para ser lo más precisos posibles
     private double tiempoTranscurrido=0;//Almacenamos el tiempo que transcurra en el programa
     private int promedioFPS=FPS;//Nos permitirá conocer a cuantos FPS esta funcionado la aplicación
@@ -78,9 +78,9 @@ public class Window extends JFrame implements Runnable{
         Estado.getEstadoActual().dibujar(g);
         g.setColor(Color.white);
         g.setFont(Assets.propiedades);
-        g.drawString("FPS: "+promedioFPS,10,15); //Dibuja el contador de fotogramas
-        g.drawString("Anchura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().width,10,27);
-        g.drawString("Altura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().height,10,42);
+        //g.drawString("FPS: "+promedioFPS,10,15); //Dibuja el contador de fotogramas
+        //g.drawString("Anchura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().width,10,27);
+        //g.drawString("Altura pantalla: "+Toolkit.getDefaultToolkit().getScreenSize().height,10,42);
         //----Termina de dibujar----
         g.dispose();
         bs.show();

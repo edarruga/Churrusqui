@@ -217,7 +217,7 @@ public class JugadorBot implements Runnable{
     }
 
     public void actualizar(){
-        System.out.println("Se actualizo el bot");
+        //System.out.println("Se actualizo el bot");
         if(this.estadoJuego.finDeJuego){
             EstadoJuego.wait(5);
         }else{
@@ -359,7 +359,7 @@ public class JugadorBot implements Runnable{
                         this.churrusqui=false;
                     }
                 } catch (IOException e) {
-                    System.out.println("Peto por solicitar churrusqui");
+                    //System.out.println("Peto por solicitar churrusqui");
                     activado=true;
                     this.churrusqui=false;
 

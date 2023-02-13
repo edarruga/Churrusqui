@@ -3,6 +3,7 @@ package Red;
 import Estados.Estado;
 import Estados.EstadoJuego;
 import Estados.EstadoJuegoOnline;
+import Estados.EstadoMenu;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -23,7 +24,6 @@ public class Buscador extends Thread{
 	public boolean finalizado;
 	public String mensaje;
 	public Socket cliente;
-	public ServerSocket servidor;
 	
 	public Buscador() {
 		this.enlazado=false;
@@ -35,8 +35,7 @@ public class Buscador extends Thread{
 	}
 	
 	public void run(){
-		try{
-			this.servidor=new ServerSocket(9988);
+		try(ServerSocket servidor=new ServerSocket(9988)){
 			//System.out.println("1");
 			File file=new File("prueba.txt");
 			String ruta = null;
@@ -75,9 +74,14 @@ public class Buscador extends Thread{
 				e1.printStackTrace();
 			}finally {
 				try {
-					dis.close();
+					if(dis!=null){
+						dis.close();
+					}
 					file.delete();
 				} catch (IOException e) {
+					System.out.println("No se puede obtener la información de la red necesaria, se requieren permisos para crear y eliminar archivos por consola");
+					this.finalizarBusqueda();
+					Estado.cambiarEstado(new EstadoMenu());
 					e.printStackTrace();
 				}
 			}
@@ -104,7 +108,7 @@ public class Buscador extends Thread{
 				//Socket s=this.servidor.accept();
 				//System.out.println(s.getInetAddress()+", "+this.cliente.getPort());
 
-				Estado.cambiarEstado(new EstadoJuegoOnline(this.cliente,this.servidor.accept()));
+				Estado.cambiarEstado(new EstadoJuegoOnline(this.cliente,servidor.accept()));
 			}else{
 				//System.out.println("No entro");
 				if(this.cliente!=null){
@@ -117,6 +121,7 @@ public class Buscador extends Thread{
 			}
 
 		} catch (IOException e) {
+			System.out.println("El puerto que se usa para el servidor esta siendo usado");
 			throw new RuntimeException(e);
 		}
 

@@ -72,7 +72,7 @@ public class AtenderPeticionPartida implements Runnable{
                         ps.println("True");
                     }
                 }else{
-                    System.out.println("Nulo");
+                    //System.out.println("Nulo");
                     ps.println("False");
                 }
 
@@ -118,7 +118,7 @@ public class AtenderPeticionPartida implements Runnable{
             ps.flush();
         } catch (IOException e) {
             JugadorBot.activar();
-            System.out.println("Peto al atender la Peticion");
+            //System.out.println("Peto al atender la Peticion");
 
             this.estadoJuegoOnline.hilo1.interrupt();
             this.estadoJuegoOnline.hilo2.interrupt();
