@@ -31,6 +31,7 @@ public class Window extends JFrame implements Runnable{
     private KeyBoardInput keyBoardInput;
     public Window(){
         setTitle("Churrusqui");//Titulo de la ventana
+        setIconImage(Toolkit.getDefaultToolkit().getImage("recursos/Otros/Icono.png"));
         setSize(anchuraVentana,alturaVentana);//Definimos las dimensiones de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//La ventana se cerrará al pulsar la "X"
         setResizable(false);//la ventana no se podrá redimensionar en tiempo de ejecución

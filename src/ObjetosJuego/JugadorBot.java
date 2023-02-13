@@ -120,26 +120,7 @@ public class JugadorBot implements Runnable{
         return this.activado;
     }
     public boolean getChurrusqui(){
-        if(this.activado){
-            return this.churrusqui;
-        }else{//En caso que este desactivado, es decir, que sea modo online
-            try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
-                DataInputStream dis=new DataInputStream(socket.getInputStream());
-                PrintStream ps=new PrintStream(socket.getOutputStream())){
-                ps.println("SolicitoGetChurrusqui");
-                String s=dis.readLine();
-                if(s.equals("True")){
-                    return true;
-                }else{
-                    return false;
-                }
-            } catch (IOException e) {
-                this.activado=true;
-                return false;
-                //throw new RuntimeException(e);
-            }
-        }
-
+        return this.churrusqui;
     }
     public void setChurrusqui(boolean b){
         this.churrusqui=b;
@@ -308,6 +289,21 @@ public class JugadorBot implements Runnable{
                     this.carta4.actualizar();
                 }
             }else{
+                try(Socket socket=new Socket(this.estadoJuego.getComunicador().getRival(),9990);
+                    DataInputStream dis=new DataInputStream(socket.getInputStream());
+                    PrintStream ps=new PrintStream(socket.getOutputStream())){
+                    ps.println("SolicitoGetChurrusqui");
+                    String s=dis.readLine();
+                    if(s.equals("True")){
+                        this.churrusqui=true;
+                    }else{
+                        this.churrusqui=false;
+                    }
+                } catch (IOException e) {
+                    this.activado=true;
+                    this.churrusqui=false;
+                    //throw new RuntimeException(e);
+                }
                 if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
                     this.puedoRobar=true;
                 }else{
