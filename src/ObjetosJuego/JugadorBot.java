@@ -357,6 +357,7 @@ public class JugadorBot implements Runnable{
                 } catch (IOException e) {
                     this.activado=true;
                     this.churrusqui=false;
+                    this.actualizar();
                     //throw new RuntimeException(e);
                 }
                 if((this.carta1.getYaJugada() || this.carta2.getYaJugada() || this.carta3.getYaJugada() || this.carta4.getYaJugada()) && !this.mazo.estaVacio()){
