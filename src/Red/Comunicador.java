@@ -8,8 +8,6 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class Comunicador {
 
@@ -70,7 +68,7 @@ public class Comunicador {
         }
     }
 
-    public JugadorSimple recivirJugador(){
+    public JugadorSimple recibirJugador(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){
@@ -83,7 +81,7 @@ public class Comunicador {
 
 
     }
-    public int recivirPrueba(){
+    public int recibirPrueba(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
                 Socket socket=serverSocket.accept();
                 DataInputStream dis=new DataInputStream(socket.getInputStream())){
@@ -124,7 +122,7 @@ public class Comunicador {
             throw new RuntimeException(e);
         }
     }
-    public Mazo recivirMazo(){
+    public Mazo recibirMazo(){
         try (ServerSocket serverSocket=new ServerSocket(9999);
              Socket socket=serverSocket.accept();
              DataInputStream dis=new DataInputStream(socket.getInputStream())){

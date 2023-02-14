@@ -3,8 +3,6 @@ package Estados;
 import Matematica.Vector2D;
 import ObjetosJuego.*;
 import Red.Comunicador;
-import Red.MiObjectOutputStream;
-import Red.RealizarPeticionPartida;
 import graficos.Assets;
 import graficos.Loader;
 import input.MouseInput;
@@ -12,7 +10,6 @@ import principal.Window;
 
 import java.awt.*;
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EstadoJuegoOnline extends EstadoJuego{
@@ -109,13 +106,13 @@ public class EstadoJuegoOnline extends EstadoJuego{
             }*/
 
             //System.out.println(this.comunicador.recivirPrueba());
-            this.yoSimple=this.comunicador.recivirJugador();
+            this.yoSimple=this.comunicador.recibirJugador();
             //System.out.println("===========");
-            this.rivalSimple=this.comunicador.recivirJugador();
+            this.rivalSimple=this.comunicador.recibirJugador();
             //System.out.println("===========");
-            this.mazodeApilar1Simple=this.comunicador.recivirMazo();
+            this.mazodeApilar1Simple=this.comunicador.recibirMazo();
             //System.out.println("===========");
-            this.mazodeApilar2Simple=this.comunicador.recivirMazo();
+            this.mazodeApilar2Simple=this.comunicador.recibirMazo();
 
             this.prioridad=false;
         }
