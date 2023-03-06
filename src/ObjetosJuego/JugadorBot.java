@@ -3,6 +3,7 @@ package ObjetosJuego;
 import Estados.Estado;
 import Estados.EstadoFinDePartida;
 import Estados.EstadoJuego;
+import Estados.EstadoJuegoOnline;
 import Matematica.Vector2D;
 import graficos.Loader;
 
@@ -362,7 +363,7 @@ public class JugadorBot implements Runnable{
                     //System.out.println("Peto por solicitar churrusqui");
                     activado=true;
                     this.churrusqui=false;
-
+                    ((EstadoJuegoOnline)this.estadoJuego).cerrarServidor();
                     this.estadoJuego.hilo1.interrupt();
                     this.estadoJuego.hilo2.interrupt();
                     this.estadoJuego.hiloBloqueo.interrupt();

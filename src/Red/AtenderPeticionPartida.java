@@ -119,7 +119,7 @@ public class AtenderPeticionPartida implements Runnable{
         } catch (IOException e) {
             JugadorBot.activar();
             //System.out.println("Peto al atender la Peticion");
-
+            this.estadoJuegoOnline.cerrarServidor();
             this.estadoJuegoOnline.hilo1.interrupt();
             this.estadoJuegoOnline.hilo2.interrupt();
             this.estadoJuegoOnline.hiloBloqueo.interrupt();

@@ -200,6 +200,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
 
             } catch (IOException e) {
                 JugadorBot.activar();
+                this.cerrarServidor();
                 //System.out.println("Peta por churrusqui en estado de juego online");
 
                 hilo1.interrupt();
@@ -244,7 +245,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         if(this.jugadorHumano.getTerminado() || this.jugadorBot.getTerminado()){
             //System.out.println("------5");
             this.finDeJuego=true;
-            this.comunicador.finDeComunicacion=true;
+
             this.cerrarServidor();
 
             EstadoJuego.wait(1);
@@ -309,6 +310,7 @@ public class EstadoJuegoOnline extends EstadoJuego{
         this.jugadorHumano.dibujar(g);
     }
     public void cerrarServidor(){
+        this.comunicador.finDeComunicacion=true;
         try(Socket socket=new Socket(InetAddress.getLocalHost(),9990);
             PrintStream ps=new PrintStream(socket.getOutputStream())){
 

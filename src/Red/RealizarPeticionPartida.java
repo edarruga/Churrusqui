@@ -79,6 +79,7 @@ public class RealizarPeticionPartida extends Thread{
         } catch (IOException e) {
             JugadorBot.activar();
             //System.out.println("Peto al realizar la Peticion");
+            ((EstadoJuegoOnline)this.estadoJuego).cerrarServidor();
             this.estadoJuego.hilo1.interrupt();
             this.estadoJuego.hilo2.interrupt();
             this.estadoJuego.hiloBloqueo.interrupt();

@@ -3,6 +3,7 @@ package ObjetosJuego;
 import Estados.Estado;
 import Estados.EstadoFinDePartida;
 import Estados.EstadoJuego;
+import Estados.EstadoJuegoOnline;
 import Matematica.Vector2D;
 import Red.MiObjectOutputStream;
 import Red.RealizarPeticionPartida;
@@ -53,7 +54,7 @@ public class MazoDeApilar2 extends MazoDeApilar{
                     } catch (IOException e) {
                         JugadorBot.activar();
                         //System.out.println("Peto por mazo 2");
-
+                        ((EstadoJuegoOnline)this.estadoJuego).cerrarServidor();
                         this.estadoJuego.hilo1.interrupt();
                         this.estadoJuego.hilo2.interrupt();
                         this.estadoJuego.hiloBloqueo.interrupt();
